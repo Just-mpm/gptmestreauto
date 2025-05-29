@@ -1,0 +1,72 @@
+# GPT MESTRE AUTÔNOMO - .gitignore
+
+# === ARQUIVOS SENSÍVEIS ===
+.env
+*.env
+.env.local
+.env.production
+
+# === CHAVES E CREDENCIAIS ===
+**/api_keys/
+**/credentials/
+**/*key*
+**/*secret*
+**/*token*
+
+# === LOGS E CACHE ===
+logs/
+*.log
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# === MEMÓRIA E DADOS ===
+memory/chroma_db/
+memory/backups/
+*.db
+*.sqlite
+*.sqlite3
+
+# === AMBIENTE VIRTUAL ===
+venv/
+env/
+ENV/
+.venv/
+
+# === IDEs ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# === SISTEMA ===
+.DS_Store
+Thumbs.db
+*.tmp
+*.temp
+
+# === BACKUPS ===
+backups/
+*.backup
+*.bak
+
+# === STREAMLIT ===
+.streamlit/secrets.toml

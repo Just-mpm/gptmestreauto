@@ -1,0 +1,45 @@
+# GPT MESTRE AUTÔNOMO - Dependências
+# Fase 1: Fundação e Núcleo Cognitivo Básico
+
+# Core LLM e Orquestração
+openai==1.30.0
+langchain==0.2.5
+langchain-openai==0.1.8
+langchain-community==0.2.5
+
+# Interface de Chat (Streamlit para MVP)
+streamlit==1.34.0
+streamlit-chat==0.1.1
+
+# Backend API
+fastapi==0.111.0
+uvicorn==0.29.0
+pydantic==2.7.1
+
+# Memória Vetorial (Fase 2 - já incluindo)
+chromadb==0.5.0
+sentence-transformers==2.7.0
+
+# Utilitários
+python-dotenv==1.0.1
+requests==2.31.0
+pandas==2.2.2
+numpy==1.26.4
+
+# Scheduler (Fase 3)
+APScheduler==3.10.4
+
+# Integrações (Fase 4 - comentado por enquanto)
+# python-telegram-bot==20.8
+# google-api-python-client==2.130.0
+
+# Logging e Monitoramento
+loguru==0.7.2
+
+# Testes
+pytest==8.2.1
+pytest-asyncio==0.23.7
+
+# Desenvolvimento
+black==24.4.2
+flake8==7.0.0
