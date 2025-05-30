@@ -1,6 +1,6 @@
 """
-GPT MESTRE AUTÔNOMO - Interface Streamlit Principal
-VERSÃO CORRIGIDA PARA USAR carlos.py
+GPT MESTRE AUTÔNOMO - Interface Streamlit v2.0
+VERSÃO COM MEMÓRIA INTELIGENTE
 """
 
 import streamlit as st
@@ -11,39 +11,44 @@ import json
 
 # Configuração da página
 st.set_page_config(
-    page_title="GPT Mestre Autônomo v2.0",
-    page_icon="🤖",
+    page_title="GPT Mestre Autônomo v2.0 - Memória Inteligente",
+    page_icon="🧠",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# ===== IMPORTS CORRIGIDOS PARA carlos.py =====
+# ===== IMPORTS ATUALIZADOS PARA v2.0 =====
 try:
     from config import config
-    # CORRIGIDO: Importar do carlos.py (não mais carlos_v2.py)
-    from agents.carlos import criar_carlos_integrado
+    from agents.carlos import criar_carlos_integrado  # Carlos v2.0
     from utils.logger import get_logger
     
-    system_logger = get_logger("system")
-    
-    # Usar sempre Carlos v2.0 integrado
-    USE_CARLOS_V2 = True
+    system_logger = get_logger("streamlit")
     
 except ImportError as e:
     st.error(f"❌ Erro ao importar módulos: {e}")
-    st.error("Certifique-se de que todos os arquivos estão no local correto.")
+    st.error("📦 Instale as dependências da Fase 2:")
+    st.code("pip install chromadb sentence-transformers", language="bash")
     st.stop()
 
-# CSS customizado
+# CSS atualizado com tema de memória
 st.markdown("""
 <style>
 .main-header {
-    background: linear-gradient(90deg, #1e3c72 0%, #2a5298 100%);
+    background: linear-gradient(90deg, #1e3c72 0%, #2a5298 50%, #764ba2 100%);
     padding: 1rem;
     border-radius: 10px;
     color: white;
     text-align: center;
     margin-bottom: 2rem;
+}
+
+.memory-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    color: white;
 }
 
 .stats-card {
@@ -56,45 +61,92 @@ st.markdown("""
 
 .agent-active { color: #28a745; font-weight: bold; }
 .agent-inactive { color: #dc3545; font-weight: bold; }
+.memory-active { color: #6f42c1; font-weight: bold; }
+
+.version-badge {
+    background: #007bff;
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
 </style>
 """, unsafe_allow_html=True)
 
-# ===== INICIALIZAÇÃO =====
+# ===== INICIALIZAÇÃO v2.0 =====
 def init_session_state():
-    """Inicializa o estado da sessão com Carlos v2.0"""
+    """Inicializa sessão com Carlos v2.0 + Memória Inteligente"""
     if "session_id" not in st.session_state:
         st.session_state.session_id = str(uuid.uuid4())[:8]
     
     if "carlos" not in st.session_state:
         try:
-            # CORRIGIDO: Usar função do carlos.py
+            # Carlos v2.0 com memória vetorial + reflexor
             st.session_state.carlos = criar_carlos_integrado(
-                supervisor_ativo=True,
-                reflexor_ativo=True
+                supervisor_ativo=True,  # Futuro
+                reflexor_ativo=True     # Ativo
             )
-            system_logger.info(f"🚀 Carlos v2.0 + SupervisorAI inicializado para sessão {st.session_state.session_id}")
+            system_logger.info(f"🧠 Carlos v2.0 inicializado para sessão {st.session_state.session_id}")
                 
         except Exception as e:
-            st.error(f"❌ Erro ao inicializar Carlos: {e}")
+            st.error(f"❌ Erro ao inicializar Carlos v2.0: {e}")
+            
+            # Diagnóstico específico
+            if "chromadb" in str(e).lower():
+                st.error("🔧 **ChromaDB não encontrado!**")
+                st.code("pip install chromadb sentence-transformers", language="bash")
+            elif "sentence" in str(e).lower():
+                st.error("🔧 **Sentence Transformers não encontrado!**")
+                st.code("pip install sentence-transformers", language="bash")
+            
+            st.info("💡 A memória vetorial é opcional. O sistema funcionará em modo básico.")
             st.stop()
     
     if "messages" not in st.session_state:
         st.session_state.messages = []
+        # Mensagem de boas-vindas v2.0
+        st.session_state.messages.append({
+            "role": "assistant",
+            "content": """🧠 **Olá! Sou o Carlos v2.0 com Memória Inteligente!**
+
+🚀 **Principais novidades:**
+• **Memória Vetorial**: Lembro de TODAS as nossas conversas
+• **Busca Semântica**: Encontro automaticamente contexto relevante  
+• **Aprendizado Contínuo**: Cada conversa me torna mais inteligente
+• **Reflexor v1.5+**: Auditoria automática de qualidade
+
+💬 **Como funciona:**
+Converse naturalmente! Automaticamente busco conversas anteriores similares e aprendizados relevantes para dar respostas mais precisas.
+
+**Experimente:** "Volte ao assunto que falamos sobre..." ou "Lembra quando discutimos...?"
+
+**Comandos:** `/help`, `/status`, `/memory`""",
+            "timestamp": datetime.now().strftime("%H:%M:%S")
+        })
     
     if "user_name" not in st.session_state:
         st.session_state.user_name = ""
 
-# ===== SIDEBAR =====
+# ===== SIDEBAR v2.0 =====
 def render_sidebar():
-    """Renderiza sidebar com informações do Carlos v2.0"""
+    """Sidebar atualizada com informações de memória"""
     with st.sidebar:
-        st.header("🎛️ GPT Mestre v2.0")
+        st.header("🧠 GPT Mestre v2.0")
+        st.markdown('<span class="version-badge">MEMÓRIA INTELIGENTE</span>', unsafe_allow_html=True)
         
         # Status do sistema
         st.subheader("📊 Status do Sistema")
         st.markdown("**Carlos:** <span class='agent-active'>v2.0 ativo</span>", unsafe_allow_html=True)
-        st.markdown("**SupervisorAI:** <span class='agent-active'>✅ Ativo</span>", unsafe_allow_html=True)
-        st.markdown("**Reflexor:** <span class='agent-active'>✅ Ativo</span>", unsafe_allow_html=True)
+        st.markdown("**Reflexor:** <span class='agent-active'>✅ v1.5+</span>", unsafe_allow_html=True)
+        
+        # Status da memória
+        if hasattr(st.session_state.carlos, 'memoria_ativa'):
+            if st.session_state.carlos.memoria_ativa:
+                st.markdown("**Memória:** <span class='memory-active'>🧠 Ativa</span>", unsafe_allow_html=True)
+                st.markdown("**ChromaDB:** <span class='memory-active'>✅ Conectado</span>", unsafe_allow_html=True)
+            else:
+                st.markdown("**Memória:** <span class='agent-inactive'>❌ Inativa</span>", unsafe_allow_html=True)
         
         # Informações da sessão
         st.subheader("📋 Sessão")
@@ -105,131 +157,170 @@ def render_sidebar():
         if user_name != st.session_state.user_name:
             st.session_state.user_name = user_name
         
-        # Estatísticas do Carlos v2.0
-        if hasattr(st.session_state.carlos, 'stats_integrado'):
-            st.subheader("📈 Estatísticas v2.0")
-            stats = st.session_state.carlos.stats_integrado
-            
-            col1, col2 = st.columns(2)
-            with col1:
-                st.metric("Processamentos", stats.get('total_processamentos', 0))
-                st.metric("Tempo Médio", f"{stats.get('tempo_medio_processamento', 0):.2f}s")
-            with col2:
-                st.metric("Auto-ativações", stats.get('ativacoes_automaticas', 0))
-                st.metric("Score Médio", f"{stats.get('score_medio_qualidade', 0):.1f}/10")
+        # Estatísticas de memória
+        if hasattr(st.session_state.carlos, 'get_memory_stats'):
+            try:
+                stats = st.session_state.carlos.get_memory_stats()
+                
+                st.subheader("🧠 Memória Inteligente")
+                
+                # Stats principais
+                processing = stats.get('processing_stats', {})
+                col1, col2 = st.columns(2)
+                
+                with col1:
+                    st.metric("💬 Conversas", processing.get('with_memory', 0))
+                    st.metric("🔍 Buscas", processing.get('semantic_searches', 0))
+                
+                with col2:
+                    st.metric("🎯 Contexto", processing.get('context_retrieved', 0))
+                    st.metric("📚 Aprendizados", processing.get('learnings_saved', 0))
+                
+                # Qualidade média
+                quality = processing.get('avg_quality_score', 0.0)
+                if quality > 0:
+                    st.metric("⭐ Qualidade", f"{quality:.1f}/10")
+                
+                # Progresso visual
+                session_total = stats['session_memory']['conversations']
+                if session_total > 0:
+                    progress = min(session_total / 20, 1.0)
+                    st.progress(progress)
+                    st.caption(f"Sessão: {session_total}/20 interações")
+                
+            except Exception as e:
+                st.error(f"Erro nas stats: {str(e)[:50]}...")
         
         # Botões de controle
         st.subheader("🔧 Ações")
         
-        if st.button("🧹 Limpar Conversa"):
-            st.session_state.messages = []
-            if hasattr(st.session_state.carlos, 'conversa_memoria'):
-                st.session_state.carlos.conversa_memoria.clear()
-            st.success("Conversa limpa!")
-            st.rerun()
-        
-        # Comandos rápidos
-        st.subheader("⚡ Comandos Rápidos")
-        
         col1, col2 = st.columns(2)
         with col1:
-            if st.button("📊 Status"):
-                st.session_state.messages.append({
-                    "role": "user",
-                    "content": "/status",
-                    "timestamp": datetime.now().strftime("%H:%M:%S")
-                })
+            if st.button("🧹 Limpar"):
+                st.session_state.messages = []
+                if hasattr(st.session_state.carlos, 'conversa_memoria'):
+                    st.session_state.carlos.conversa_memoria.clear()
+                st.success("✅ Sessão limpa!")
                 st.rerun()
         
         with col2:
-            if st.button("🤖 Agentes"):
-                st.session_state.messages.append({
-                    "role": "user", 
-                    "content": "/agents",
-                    "timestamp": datetime.now().strftime("%H:%M:%S")
-                })
-                st.rerun()
+            if st.button("🔄 Reset"):
+                if st.button("⚠️ Confirmar?"):
+                    st.session_state.clear()
+                    st.rerun()
         
-        # Mais comandos
-        col3, col4 = st.columns(2)
-        with col3:
-            if st.button("🧠 SupervisorAI"):
-                st.session_state.messages.append({
-                    "role": "user",
-                    "content": "/supervisor",
-                    "timestamp": datetime.now().strftime("%H:%M:%S")
-                })
-                st.rerun()
+        # Comandos rápidos v2.0
+        st.subheader("⚡ Comandos v2.0")
         
-        with col4:
-            if st.button("📈 Stats"):
-                st.session_state.messages.append({
-                    "role": "user",
-                    "content": "/stats", 
-                    "timestamp": datetime.now().strftime("%H:%M:%S")
-                })
-                st.rerun()
+        comandos = [
+            ("📊", "Status", "/status"),
+            ("🧠", "Memória", "/memory"),
+            ("🤖", "Agentes", "/agents"),
+            ("📈", "Stats", "/stats")
+        ]
+        
+        col1, col2 = st.columns(2)
+        for i, (icon, label, cmd) in enumerate(comandos):
+            col = col1 if i % 2 == 0 else col2
+            with col:
+                if st.button(f"{icon} {label}"):
+                    add_message("user", cmd)
         
         # Informações do sistema
         st.subheader("ℹ️ Sistema")
-        st.text(f"Versão: Carlos v2.0")
-        st.text(f"LLM: Claude 3 Haiku")
-        st.text(f"SupervisorAI: ✅ Ativo")
-        st.text(f"Reflexor: ✅ Ativo")
-        st.text(f"Debug: {'Ativo' if config.DEBUG else 'Inativo'}")
+        st.text("🤖 Carlos v2.0")
+        st.text("🔗 Claude 3 Haiku")
+        st.text("🧠 ChromaDB")
+        st.text("🔍 Reflexor v1.5+")
+        st.text(f"🐛 Debug: {'On' if config.DEBUG else 'Off'}")
 
-# ===== FUNÇÃO PRINCIPAL =====
+def add_message(role: str, content: str):
+    """Adiciona mensagem e força rerun"""
+    st.session_state.messages.append({
+        "role": role,
+        "content": content,
+        "timestamp": datetime.now().strftime("%H:%M:%S")
+    })
+    st.rerun()
+
+def show_memory_indicator(response_text: str):
+    """Mostra indicador de uso da memória"""
+    if "CONTEXTO RELEVANTE" in response_text or "conversa anterior" in response_text.lower():
+        st.info("🧠 **Memória Inteligente Ativada** - Esta resposta foi enriquecida com contexto de conversas anteriores!")
+
+# ===== INTERFACE PRINCIPAL v2.0 =====
 def main():
-    """Interface principal do GPT Mestre Autônomo v2.0"""
+    """Interface principal v2.0 com memória inteligente"""
     
     # Inicializa sessão
     init_session_state()
     
-    # Header personalizado
+    # Header v2.0
     st.markdown("""
     <div class="main-header">
-        <h1>🤖 GPT Mestre Autônomo v2.0</h1>
-        <p>Sistema com SupervisorAI • Ativação Automática de Agentes • Conversa Natural</p>
+        <h1>🧠 GPT Mestre Autônomo v2.0</h1>
+        <p>Sistema com Memória Inteligente • Busca Semântica • Aprendizado Contínuo</p>
+        <small>✨ Powered by ChromaDB + Claude 3 Haiku + Reflexor v1.5+</small>
     </div>
     """, unsafe_allow_html=True)
     
     # Sidebar
     render_sidebar()
     
-    # Área principal - Chat
+    # Área principal
     st.header("💬 Conversa com Carlos v2.0")
+    st.caption("🧠 Sistema de memória inteligente ativo - Nunca esqueço nada!")
     
-    # Instruções rápidas
-    with st.expander("💡 Como usar o Carlos v2.0", expanded=False):
+    # Instruções v2.0
+    with st.expander("💡 Como usar a Memória Inteligente v2.0", expanded=False):
         st.markdown("""
-        **🚀 Novidade: Conversa 100% Natural!**
+        **🧠 Sistema de Memória Vetorial Ativo!**
         
-        Simplesmente fale comigo normalmente. Eu ativo automaticamente os agentes necessários:
+        **🔍 Busca Automática:**
+        - Cada pergunta busca automaticamente conversas similares
+        - Recupera aprendizados relevantes do histórico  
+        - Aplica contexto para respostas mais precisas
         
-        **Exemplos:**
-        - *"Analise este produto do AliExpress"* → Ativa DeepAgent + ScoutAI + AutoPrice
-        - *"Preciso de uma decisão estratégica"* → Ativa Oráculo + Assembleia  
-        - *"Crie um anúncio otimizado"* → Ativa CopyBooster + PromptCrafter
-        - *"Oi Carlos, como você está?"* → Resposta direta, sem agentes
+        **💡 Exemplos de Continuidade:**
+        - *"Volte ao tema de precificação"* → Encontra discussões anteriores
+        - *"Como ficou aquela análise?"* → Busca análises relacionadas
+        - *"Lembra do produto que discutimos?"* → Recupera contexto específico
         
-        **Comandos especiais:** /help, /status, /agents, /supervisor, /memory, /clear, /stats
+        **📚 Aprendizado Contínuo:**
+        - Respostas de alta qualidade são salvas automaticamente
+        - Padrões são identificados e reutilizados
+        - Conhecimento cresce a cada interação
+        
+        **🔍 Reflexor v1.5+:**
+        - Auditoria automática de qualidade
+        - Score de confiança em tempo real
+        - Melhoria contínua das respostas
+        
+        **💾 Persistência:**
+        - Todas as conversas ficam salvas localmente
+        - Funciona offline (ChromaDB local)
+        - Sem dependência de serviços externos
         """)
     
-    # Container para as mensagens
+    # Container do chat
     chat_container = st.container()
     
-    # Exibe histórico de mensagens
+    # Histórico de mensagens
     with chat_container:
         for message in st.session_state.messages:
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
                 if message.get("timestamp"):
                     st.caption(f"*{message['timestamp']}*")
+                
+                # Indicador de memória para respostas do assistente
+                if message["role"] == "assistant" and len(message["content"]) > 200:
+                    show_memory_indicator(message["content"])
     
     # Input do usuário
-    if prompt := st.chat_input("Fale naturalmente comigo... (Carlos v2.0 ativa agentes automaticamente)"):
+    if prompt := st.chat_input("💬 Converse comigo... Lembro de tudo que conversamos! 🧠"):
         
-        # Adiciona mensagem do usuário ao histórico
+        # Mensagem do usuário
         timestamp = datetime.now().strftime("%H:%M:%S")
         st.session_state.messages.append({
             "role": "user",
@@ -237,78 +328,128 @@ def main():
             "timestamp": timestamp
         })
         
-        # Exibe mensagem do usuário
         with st.chat_message("user"):
             st.markdown(prompt)
             st.caption(f"*{timestamp}*")
         
-        # Processa com Carlos v2.0
+        # Resposta do Carlos v2.0
         with st.chat_message("assistant"):
-            with st.spinner("Carlos v2.0 processando (SupervisorAI analisando e ativando agentes)..."):
+            with st.spinner("🧠 Carlos v2.0 processando (buscando na memória vetorial...)"):
+                
                 context = {
                     "session_id": st.session_state.session_id,
                     "user_name": st.session_state.user_name,
-                    "timestamp": timestamp
+                    "timestamp": timestamp,
+                    "interface": "streamlit_v2.0"
                 }
                 
                 try:
-                    # CORRIGIDO: Usar método processar do Carlos v2.0
+                    # Processar com Carlos v2.0
                     resposta = st.session_state.carlos.processar(prompt, context)
                     
                 except Exception as e:
-                    system_logger.error(f"Erro no processamento: {e}")
+                    system_logger.error(f"Erro no processamento v2.0: {e}")
                     resposta = f"❌ Erro no processamento: {str(e)}"
+                    
+                    # Sugestões para erros comuns
+                    if "chroma" in str(e).lower():
+                        resposta += "\n\n💡 **Solução**: `pip install chromadb sentence-transformers`"
+                    elif "memory" in str(e).lower():
+                        resposta += "\n\n💡 Sistema funcionará sem memória vetorial."
             
             # Exibir resposta
             st.markdown(resposta)
             response_time = datetime.now().strftime("%H:%M:%S")
-            st.caption(f"*{response_time}*")
+            st.caption(f"*{response_time} - Carlos v2.0 com memória*")
             
-            # Adicionar resposta ao histórico
+            # Mostrar indicador se usou memória
+            show_memory_indicator(resposta)
+            
+            # Adicionar ao histórico
             st.session_state.messages.append({
-                "role": "assistant",
+                "role": "assistant", 
                 "content": resposta,
                 "timestamp": response_time
             })
     
-    # Painel de debug (se ativo)
+    # Debug expandido v2.0
     if config.DEBUG:
-        with st.expander("🔧 Debug Info (Carlos v2.0)", expanded=False):
-            try:
-                if hasattr(st.session_state.carlos, 'obter_status_completo'):
-                    debug_info = st.session_state.carlos.obter_status_completo()
-                    st.json(debug_info)
-                else:
-                    st.write("Método obter_status_completo não disponível")
-            except Exception as e:
-                st.write(f"Erro no debug: {e}")
+        with st.expander("🔧 Debug v2.0 (Memória + Reflexor)", expanded=False):
+            
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.subheader("📊 Stats Gerais")
+                try:
+                    if hasattr(st.session_state.carlos, 'stats'):
+                        st.json(st.session_state.carlos.stats)
+                except Exception as e:
+                    st.error(f"Erro stats: {e}")
+            
+            with col2:
+                st.subheader("🧠 Stats de Memória")
+                try:
+                    if hasattr(st.session_state.carlos, 'get_memory_stats'):
+                        memory_stats = st.session_state.carlos.get_memory_stats()
+                        st.json(memory_stats)
+                except Exception as e:
+                    st.error(f"Erro memória: {e}")
+            
+            # Informações técnicas
+            st.subheader("🔧 Info Técnica")
+            info_tecnica = {
+                "versao_carlos": "2.0",
+                "memoria_ativa": getattr(st.session_state.carlos, 'memoria_ativa', False),
+                "reflexor_ativo": getattr(st.session_state.carlos, 'reflexor_ativo', False),
+                "session_id": st.session_state.session_id,
+                "total_messages": len(st.session_state.messages)
+            }
+            st.json(info_tecnica)
 
-# Footer
+# ===== FOOTER v2.0 =====
 def show_footer():
-    """Exibe footer atualizado"""
+    """Footer atualizado para v2.0"""
     st.markdown("---")
     st.markdown(
         """
         <div style='text-align: center; color: #666;'>
-            <p>🤖 GPT Mestre Autônomo v2.0 | Desenvolvido por Matheus Meireles</p>
-            <p>Sistema com SupervisorAI • Ativação Automática • Claude 3 Haiku • Conversa Natural</p>
-            <p>🧠 SupervisorAI v1.3 • 🤖 Carlos v2.0 • 🔍 Reflexor Integrado</p>
+            <p>🧠 <strong>GPT Mestre Autônomo v2.0</strong> | Desenvolvido por Matheus Meireles</p>
+            <p>✨ Sistema com Memória Vetorial • ChromaDB • Busca Semântica • Claude 3 Haiku</p>
+            <p>🤖 Carlos v2.0 • 🔍 Reflexor v1.5+ • 💾 Memória Permanente Local</p>
+            <p><small>🚀 Fase 2 Concluída - Sistema Inteligente com Aprendizado Contínuo</small></p>
         </div>
         """,
         unsafe_allow_html=True
     )
 
+# ===== EXECUÇÃO PRINCIPAL =====
 if __name__ == "__main__":
     try:
         main()
         show_footer()
     except Exception as e:
         try:
-            system_logger.error(f"❌ Erro na aplicação principal: {e}")
+            system_logger.error(f"❌ Erro na aplicação v2.0: {e}")
         except:
             pass
-        st.error(f"❌ Erro na aplicação: {e}")
         
-        # Botão para reiniciar em caso de erro
-        if st.button("🔄 Reiniciar Aplicação"):
+        st.error(f"❌ Erro na aplicação v2.0: {e}")
+        
+        # Diagnóstico inteligente
+        if "chromadb" in str(e).lower() or "sentence" in str(e).lower():
+            st.error("🔧 **PROBLEMA DE DEPENDÊNCIAS**")
+            st.code("pip install chromadb sentence-transformers", language="bash")
+            st.info("Depois reinicie: `streamlit run app.py`")
+        
+        elif "anthropic" in str(e).lower():
+            st.error("🔑 **PROBLEMA DE API KEY**")
+            st.info("Configure ANTHROPIC_API_KEY no arquivo .env")
+        
+        elif "import" in str(e).lower():
+            st.error("📦 **PROBLEMA DE IMPORTS**")
+            st.info("Verifique se todos os arquivos estão no local correto")
+        
+        # Botão de emergência
+        if st.button("🚨 Reiniciar Sistema"):
+            st.session_state.clear()
             st.rerun()
