@@ -60,68 +60,6 @@ class AgenteReflexor(BaseAgent):
             description="Sistema de auditoria e melhoria contínua"
         )
         
-"""
-Agente Reflexor v1.5+ - Sistema de Auditoria Avançado
-Sistema de análise e melhoria contínua de respostas
-"""
-
-import json
-import time
-from datetime import datetime
-from typing import Dict, List, Optional, Any
-from dataclasses import dataclass
-from enum import Enum
-
-from agents.base_agent import BaseAgent
-from utils.logger import get_logger
-
-logger = get_logger(__name__)
-
-class ModoReflexor(Enum):
-    """Modos de operação do Reflexor"""
-    PONTUAL = "pontual"
-    CONTINUO = "continuo"
-    META_AUDITORIA = "meta_auditoria"
-    TUTOR = "tutor"
-    RED_FLAG = "red_flag"
-
-@dataclass
-class ReflexaoAnalise:
-    """Estrutura de análise do Reflexor"""
-    score_qualidade: float  # 1-10
-    pontos_positivos: List[str]
-    pontos_melhorar: List[str] 
-    sugestoes_melhoria: List[str]
-    precisa_revisao: bool
-    categoria_problema: Optional[str] = None
-    red_flags_detectados: List[str] = None
-    nota_confianca: float = 0.0
-    timestamp: str = None
-    
-    def __post_init__(self):
-        if self.timestamp is None:
-            self.timestamp = datetime.now().isoformat()
-        if self.red_flags_detectados is None:
-            self.red_flags_detectados = []
-
-class AgenteReflexor(BaseAgent):
-    """
-    Reflexor v1.5+ - Sistema de Auditoria Avançado
-    
-    Funcionalidades:
-    - Análise de qualidade de respostas
-    - Detecção de red flags
-    - Sugestões de melhoria
-    - Múltiplos modos de operação
-    - Sistema de aprendizado contínuo
-    """
-    
-    def __init__(self, llm=None, modo_inicial: ModoReflexor = ModoReflexor.PONTUAL):
-        super().__init__(
-            name="Reflexor",
-            description="Sistema de auditoria e melhoria contínua"
-        )
-        
         # Configuração do LLM
         if llm is None:
             self._inicializar_llm()
