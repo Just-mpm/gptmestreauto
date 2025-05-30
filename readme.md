@@ -1,74 +1,74 @@
 # 🤖 GPT Mestre Autônomo
 
-Sistema operacional autônomo com agentes inteligentes baseado em GPT-4 e LangChain.
+> Sistema operacional autônomo com agentes inteligentes baseado em Claude 3 e LangChain
 
-## 📋 Visão Geral
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.34+-red.svg)](https://streamlit.io)
+[![Claude 3](https://img.shields.io/badge/Claude%203-Haiku-orange.svg)](https://anthropic.com)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+## 🌟 Visão Geral
 
 O GPT Mestre Autônomo é um sistema de agentes inteligentes que permite:
 
-- **Conversa natural** com interface "Carlos"
-- **Agentes especializados** (Reflexor, Oráculo, DeepAgent, etc.)
-- **Memória persistente** entre sessões
-- **Integração com APIs externas**
-- **Automações e rotinas em background**
-- **Evolução contínua** com aprendizado
-
-## 🏗️ Arquitetura
-
-### Camadas do Sistema
-
-1. **Interface** - Chat frontend (Streamlit/React)
-2. **Núcleo Cognitivo** - LLM + Agentes (GPT-4 + LangChain)  
-3. **Execução & Automação** - Python + APIs + Scheduler
-4. **Memória Persistente** - ChromaDB (vetorial)
-5. **Integrações Externas** - APIs diversas
-
-### Agentes Principais
-
-- **Carlos** - Interface principal e coordenador
-- **Reflexor** - Auditor interno e validador
-- **Oráculo** - Tomador de decisões estratégicas
-- **DeepAgent** - Análise profunda e pesquisa
-- **AutoMaster** - Automações e execuções
+- **🗣️ Conversa natural** com interface "Carlos"
+- **🤖 Agentes especializados** (Reflexor, Oráculo, DeepAgent, etc.)
+- **🧠 Memória persistente** entre sessões
+- **🔗 Integração com APIs externas**
+- **⚙️ Automações e rotinas** em background
+- **📈 Evolução contínua** com aprendizado
 
 ## 🚀 Instalação Rápida
 
 ### Pré-requisitos
-
 - Python 3.8+
-- Chave API da OpenAI
+- Chave API da Anthropic (Claude 3)
 - Git (opcional)
 
-### Passo a Passo
-
-1. **Clone o projeto** (ou baixe os arquivos)
+### 1. Clone o repositório
 ```bash
-git clone <repository-url>
+git clone https://github.com/seu-usuario/gpt-mestre-autonomo.git
 cd gpt-mestre-autonomo
 ```
 
-2. **Configuração inicial**
-```bash
-python run.py --setup
-```
-
-3. **Instale dependências**
+### 2. Instale as dependências
 ```bash
 pip install -r requirements.txt
 ```
 
-4. **Configure sua API Key**
-- Edite o arquivo `.env`
-- Adicione sua `OPENAI_API_KEY=sk-sua-chave-aqui`
-
-5. **Execute o sistema**
+### 3. Configure as variáveis de ambiente
 ```bash
-python run.py
+cp .env.example .env
+# Edite o .env e adicione sua ANTHROPIC_API_KEY
 ```
 
-6. **Acesse no navegador**
-- Abra: `http://localhost:8501`
-- Comece a conversar com Carlos!
+### 4. Execute o sistema
+```bash
+python run.py
+# OU
+streamlit run app.py
+```
+
+### 5. Acesse no navegador
+```
+http://localhost:8501
+```
+
+## 🏗️ Arquitetura
+
+### Camadas do Sistema
+1. **Interface** - Chat frontend (Streamlit)
+2. **Núcleo Cognitivo** - LLM + Agentes (Claude 3 + LangChain)  
+3. **Execução & Automação** - Python + APIs + Scheduler
+4. **Memória Persistente** - ChromaDB (vetorial)
+5. **Integrações Externas** - APIs diversas
+
+### 🤖 Agentes Principais
+- **Carlos** - Interface principal e coordenador ✅
+- **Reflexor** - Auditor interno e validador (Fase 2)
+- **Oráculo** - Tomador de decisões estratégicas (Fase 3)
+- **DeepAgent** - Análise profunda e pesquisa (Fase 3)
+- **AutoMaster** - Automações e execuções (Fase 3)
 
 ## 📁 Estrutura do Projeto
 
@@ -92,64 +92,39 @@ gpt-mestre-autonomo/
 ## 🎯 Como Usar
 
 ### Interface Principal
-
 1. **Conversa Normal**
-   - Digite qualquer pergunta para Carlos
-   - Ele responde naturalmente e mantém contexto
-   - Exemplo: "Olá Carlos, me ajude a criar um plano de marketing"
+   ```
+   "Olá Carlos, me ajude a criar um plano de marketing"
+   ```
 
 2. **Comandos Especiais**
-   - `/help` - Mostra ajuda completa
-   - `/status` - Status do sistema  
-   - `/memory` - Informações da memória
-   - `/clear` - Limpa a sessão atual
-   - `/agents` - Lista agentes disponíveis
+   ```
+   /help    - Mostra ajuda completa
+   /status  - Status do sistema  
+   /memory  - Informações da memória
+   /clear   - Limpa a sessão atual
+   /agents  - Lista agentes disponíveis
+   ```
 
-### Exemplos de Uso
-
-```
-Usuário: "Analise este texto e me dê sugestões de melhoria"
-Carlos: Vou analisar seu texto detalhadamente...
-
-Usuário: "/status" 
-Carlos: 📊 Status do GPT Mestre Autônomo:
-        ✅ Carlos ativo e operacional...
-
-Usuário: "Crie um cronograma para meu projeto"
-Carlos: Vou criar um cronograma estruturado para você...
-```
-
-## ⚙️ Configuração Avançada
+## ⚙️ Configuração
 
 ### Arquivo .env
-
-```bash
+```env
 # Configurações principais
 DEBUG=False
-OPENAI_API_KEY=sk-sua-chave-openai-aqui
+ANTHROPIC_API_KEY=sk-ant-api03-sua_chave_aqui
 
-# Configurações opcionais  
-LOG_LEVEL=INFO
-API_HOST=0.0.0.0
-API_PORT=8000
-
-# Integrações futuras
-TELEGRAM_BOT_TOKEN=
-NOTION_API_KEY=
+# Configurações opcionais (futuras fases)
+TELEGRAM_BOT_TOKEN=seu_token_aqui
+NOTION_API_KEY=sua_chave_aqui
 ```
 
-### Parâmetros do Sistema
+### Modelos Suportados
+- **Claude 3 Haiku** (padrão) - Rápido e econômico
+- **Claude 3 Sonnet** - Qualidade superior
+- **Claude 3 Opus** - Máxima qualidade
 
-Edite `config.py` para ajustar:
-
-- **Modelo LLM**: `DEFAULT_MODEL = "gpt-4-turbo"`
-- **Temperatura**: `TEMPERATURE = 0.7`
-- **Máximo de tokens**: `MAX_TOKENS = 4000`
-- **Agentes ativos**: `AGENTES_ATIVOS = [...]`
-
-## 🔧 Desenvolvimento
-
-### Fases de Desenvolvimento
+## 🔄 Fases de Desenvolvimento
 
 **✅ Fase 1 - MVP Básico** (Atual)
 - Interface Streamlit com Carlos
@@ -157,7 +132,7 @@ Edite `config.py` para ajustar:
 - Configuração base
 - Memória básica
 
-**🔄 Fase 2 - Memória Vetorial** (Próxima)
+**🔄 Fase 2 - Memória Vetorial**
 - ChromaDB integrado
 - Busca semântica
 - Agente Reflexor
@@ -168,7 +143,7 @@ Edite `config.py` para ajustar:
 - Executor de funções
 
 **⏳ Fase 4 - Integrações**
-- APIs externas
+- APIs externas (Telegram, Notion)
 - Webhooks
 - Painel de controle
 
@@ -177,68 +152,6 @@ Edite `config.py` para ajustar:
 - Meta-agentes
 - Auto-evolução
 
-### Adicionando Novos Agentes
-
-1. Crie arquivo em `agents/novo_agente.py`
-2. Herde de `BaseAgent`
-3. Implemente `_default_personality()` e `process_message()`
-4. Registre em `config.py`
-
-Exemplo:
-```python
-from agents.base_agent import BaseAgent
-
-class NovoAgent(BaseAgent):
-    def _default_personality(self):
-        return "Personalidade do seu agente..."
-    
-    async def process_message(self, message, context=None):
-        return await self.think(f"Processe: {message}")
-```
-
-## 🐛 Solução de Problemas
-
-### Problemas Comuns
-
-**❌ "Module not found"**
-```bash
-pip install -r requirements.txt
-```
-
-**❌ "API key missing"**  
-- Configure `OPENAI_API_KEY` no arquivo `.env`
-
-**❌ "Permission denied"**
-- Execute como administrador/sudo
-- Verifique permissões dos diretórios
-
-**❌ Interface não carrega**
-- Verifique se porta 8501 está livre
-- Execute: `python run.py --check`
-
-### Logs e Debug
-
-- **Logs gerais**: `logs/gpt_mestre.log`
-- **Logs de erros**: `logs/errors.log`  
-- **Logs de agentes**: `logs/agents.log`
-- **Debug mode**: Configure `DEBUG=True` no `.env`
-
-### Comandos Úteis
-
-```bash
-# Verificar sistema
-python run.py --check
-
-# Configuração inicial
-python run.py --setup
-
-# Mostrar ajuda
-python run.py --help
-
-# Executar com logs verbose
-DEBUG=True python run.py
-```
-
 ## 💰 Custos Estimados
 
 ### Desenvolvimento
@@ -246,38 +159,48 @@ DEBUG=True python run.py
 - **Tempo**: 3-9 meses (conforme complexidade)
 
 ### Operação Mensal
-- **OpenAI API**: R$ 150-500+ (conforme uso)
-- **Hospedagem**: R$ 50-150 (para produção)
-- **Memória Vetorial**: R$ 0 (ChromaDB local)
-- **Total**: R$ 210-780+/mês
+- **Claude 3 Haiku API**: R$ 5-30/mês (uso básico)
+- **Hospedagem local**: R$ 0
+- **Total**: R$ 5-30/mês para uso pessoal
 
-## 🔮 Roadmap
+## 🛠️ Desenvolvimento
 
-### Próximas Funcionalidades
+### Adicionando Novos Agentes
+1. Crie arquivo em `agents/novo_agente.py`
+2. Herde de `BaseAgent`
+3. Implemente `_default_personality()` e `process_message()`
+4. Registre em `config.py`
 
-- [ ] Sistema de memória vetorial (ChromaDB)
-- [ ] Agente Reflexor para auditoria
-- [ ] Agente Oráculo para decisões
-- [ ] Scheduler para automações
-- [ ] API REST para integração
-- [ ] Painel de métricas
-- [ ] Integração com Telegram
-- [ ] Integração com Notion/Sheets
-- [ ] Sistema de webhooks
-- [ ] Meta-agentes auto-evolutivos
+### Comandos Úteis
+```bash
+# Verificar sistema
+python run.py --check
 
-### Integrações Planejadas
+# Configuração inicial
+python run.py --setup
 
-- **E-commerce**: Shopee, Magalu, AliExpress
-- **Produtividade**: Notion, Google Sheets, Calendário
-- **Comunicação**: Telegram, Discord, Slack
-- **Análise**: Google Analytics, métricas personalizadas
+# Executar testes
+python test_basic.py
+
+# Limpar cache
+rm -rf __pycache__ logs/*.log
+```
+
+## 🐛 Solução de Problemas
+
+### Problemas Comuns
+- **"Module not found"**: Execute `pip install -r requirements.txt`
+- **"API key missing"**: Configure `ANTHROPIC_API_KEY` no `.env`
+- **Interface não carrega**: Verifique se porta 8501 está livre
+
+### Logs e Debug
+- **Logs gerais**: `logs/gpt_mestre.log`
+- **Logs de erros**: `logs/errors.log`  
+- **Debug mode**: Configure `DEBUG=True` no `.env`
 
 ## 🤝 Contribuição
 
-Este é um projeto em desenvolvimento ativo. Contribuições são bem-vindas!
-
-### Como Contribuir
+Contribuições são bem-vindas! Por favor:
 
 1. Faça fork do projeto
 2. Crie uma branch para sua feature
@@ -285,7 +208,6 @@ Este é um projeto em desenvolvimento ativo. Contribuições são bem-vindas!
 4. Submeta um pull request
 
 ### Áreas que Precisam de Ajuda
-
 - Novos agentes especializados
 - Integrações com APIs
 - Melhorias na interface
@@ -294,16 +216,23 @@ Este é um projeto em desenvolvimento ativo. Contribuições são bem-vindas!
 
 ## 📄 Licença
 
-Projeto em desenvolvimento por Matheus Meireles.
+Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+
+## 🙏 Agradecimentos
+
+- [Anthropic](https://anthropic.com) pelo Claude 3
+- [LangChain](https://langchain.com) pelo framework
+- [Streamlit](https://streamlit.io) pela interface
+- Comunidade open-source
 
 ## 📞 Suporte
 
-- **Logs**: Verifique `logs/` para diagnóstico
-- **Issues**: Reporte problemas e sugestões
-- **Documentação**: Este README e comentários no código
+- **Issues**: [GitHub Issues](https://github.com/seu-usuario/gpt-mestre-autonomo/issues)
+- **Discussões**: [GitHub Discussions](https://github.com/seu-usuario/gpt-mestre-autonomo/discussions)
+- **Email**: seu-email@exemplo.com
 
 ---
 
-**🚀 Desenvolvido com ❤️ por Matheus Meireles**
+**🚀 Desenvolvido com ❤️ por [Seu Nome](https://github.com/seu-usuario)**
 
 *Sistema de agentes inteligentes para automação e produtividade*

@@ -93,3 +93,38 @@ if __name__ == "__main__":
     validate_config()
     print(f"✅ Configuração do {config.PROJECT_NAME} v{config.VERSION} validada com sucesso!")
     print(f"🤖 Usando Claude 3: {config.DEFAULT_MODEL}")
+
+    # ADICIONAR NO FINAL DO ARQUIVO config.py (após a linha do print)
+
+# === COMPATIBILIDADE - Variáveis diretas ===
+# Para compatibilidade com imports diretos
+ANTHROPIC_API_KEY = config.ANTHROPIC_API_KEY
+DEFAULT_MODEL = config.DEFAULT_MODEL
+CLAUDE_MODEL = config.DEFAULT_MODEL
+MAX_TOKENS = config.MAX_TOKENS
+CLAUDE_MAX_TOKENS = config.MAX_TOKENS
+TEMPERATURE = config.TEMPERATURE
+CLAUDE_TEMPERATURE = config.TEMPERATURE
+LOG_LEVEL = config.LOG_LEVEL
+LOG_FORMAT = config.LOG_FORMAT
+
+# Telegram e outras APIs
+TELEGRAM_BOT_TOKEN = config.TELEGRAM_BOT_TOKEN
+NOTION_API_KEY = config.NOTION_API_KEY
+
+# Configurações de memória
+CHROMA_DB_PATH = config.CHROMA_PERSIST_DIR
+MEMORY_COLLECTION = "gpt_mestre_memory"
+
+# Configurações de interface
+STREAMLIT_THEME = "dark"
+PAGE_TITLE = config.PROJECT_NAME
+PAGE_ICON = config.STREAMLIT_CONFIG["page_icon"]
+
+# Configurações de logs
+LOG_FILE = str(config.LOGS_DIR / "gpt_mestre.log")
+LOG_ROTATION = "100 MB"
+LOG_RETENTION = "30 days"
+
+print(f"🔧 Variáveis de compatibilidade configuradas")
+print(f"🔑 ANTHROPIC_API_KEY: {'✅ Configurada' if ANTHROPIC_API_KEY else '❌ Não encontrada'}")

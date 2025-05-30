@@ -26,6 +26,9 @@ requests==2.31.0
 pandas==2.2.2
 numpy==1.26.4
 
+# Visualização e Gráficos (Reflexor v1.5+ - Fase 2)
+plotly==5.17.0
+
 # Scheduler (Fase 3)
 APScheduler==3.10.4
 
@@ -43,3 +46,4 @@ pytest-asyncio==0.23.7
 # Desenvolvimento
 black==24.4.2
 flake8==7.0.0
+anthropic>=0.25.0
