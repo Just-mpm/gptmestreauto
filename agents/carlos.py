@@ -483,7 +483,7 @@ Apenas digite sua pergunta ou solicitação normalmente. O sistema automaticamen
             logger.error(f"Erro ao melhorar resposta: {e}")
         return None
 
-# Funções de criação e export
+    # Funções de criação e export
 def create_carlos() -> CarlosAgent:
     """Cria uma instância do Carlos sem Reflexor"""
     return CarlosAgent(reflexor_ativo=False)
@@ -491,30 +491,35 @@ def create_carlos() -> CarlosAgent:
 def create_carlos_com_reflexor(reflexor_ativo: bool = True, llm=None) -> CarlosAgent:
     """Cria uma instância do Carlos com Reflexor integrado"""
     return CarlosAgent(reflexor_ativo=reflexor_ativo, llm=llm)
+        
+def criar_carlos_integrado(supervisor_ativo: bool = True, reflexor_ativo: bool = True, llm=None):
+    """Cria instância do Carlos integrado (compatibilidade com app.py)"""
+    return create_carlos_com_reflexor(reflexor_ativo=reflexor_ativo, llm=llm)
+   
 
 def diagnosticar_carlos():
-    """Diagnóstica o status do Carlos"""
-    try:
-        carlos = create_carlos()
-        reflexor_status = hasattr(carlos, 'reflexor') and carlos.reflexor is not None
-        
-        return {
-            "carlos_ok": True,
-            "reflexor_integrado": reflexor_status,
-            "memoria_ativa": hasattr(carlos, 'conversa_memoria'),
-            "config_ok": carlos.llm is not None
-        }
-    except Exception as e:
-        return {
-            "carlos_ok": False,
-            "erro": str(e)
-        }
+        """Diagnóstica o status do Carlos"""
+        try:
+            carlos = create_carlos()
+            reflexor_status = hasattr(carlos, 'reflexor') and carlos.reflexor is not None
+            
+            return {
+                "carlos_ok": True,
+                "reflexor_integrado": reflexor_status,
+                "memoria_ativa": hasattr(carlos, 'conversa_memoria'),
+                "config_ok": carlos.llm is not None
+            }
+        except Exception as e:
+            return {
+                "carlos_ok": False,
+                "erro": str(e)
+            }
 
 if __name__ == "__main__":
     print("🧪 Testando Carlos...")
     diag = diagnosticar_carlos()
     print(f"📊 Diagnóstico: {diag}")
-    
+        
     if diag.get("carlos_ok"):
         print("✅ Carlos OK!")
     else:
