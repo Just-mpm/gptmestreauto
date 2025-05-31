@@ -1,14 +1,13 @@
-# GPT MESTRE AUTÔNOMO - Dependências
-# Fase 1: Fundação e Núcleo Cognitivo Básico
+# GPT MESTRE AUTÔNOMO - Dependências CORRETAS Python 3.13
+# Fase 2.5: Busca Web Real com Claude 3.5 Haiku
 
-# Core LLM e Orquestração
-openai==1.30.0
-langchain==0.2.5
-langchain-openai==0.1.8
-langchain-community==0.2.5
-langchain-anthropic==0.25.0
+# Core LLM e Orquestração - VERSÕES COMPATÍVEIS ✅
+anthropic>=0.25.0                    # Web search support
+langchain>=0.3.0                     # Versão atual compatível
+langchain-core>=0.3.0                # Core atualizado  
+langchain-anthropic>=0.3.14          # ✅ Versão compatível existente
 
-# Interface de Chat (Streamlit para MVP)
+# Interface de Chat
 streamlit==1.34.0
 streamlit-chat==0.1.1
 
@@ -17,28 +16,23 @@ fastapi==0.111.0
 uvicorn==0.29.0
 pydantic==2.7.1
 
-# === NOVA FASE 2: MEMÓRIA VETORIAL ===
-# Sistema de memória inteligente
+# === MEMÓRIA VETORIAL ===
 chromadb==0.5.0
 sentence-transformers==2.7.0
 
-# Utilitários
+# Utilitários - ATUALIZADOS PARA PYTHON 3.13
 python-dotenv==1.0.1
 requests==2.31.0
 pandas==2.2.2
-numpy==1.26.4
+numpy<2.0.0,>=1.19.3                 # ✅ Compatível com Streamlit
 
-# Visualização e Gráficos (Reflexor v1.5+ - Fase 2)
+# Visualização
 plotly==5.17.0
 
-# Scheduler (Fase 3)
+# Scheduler
 APScheduler==3.10.4
 
-# Integrações (Fase 4 - comentado por enquanto)
-# python-telegram-bot==20.8
-# google-api-python-client==2.130.0
-
-# Logging e Monitoramento
+# Logging
 loguru==0.7.2
 
 # Testes
@@ -48,4 +42,9 @@ pytest-asyncio==0.23.7
 # Desenvolvimento
 black==24.4.2
 flake8==7.0.0
-anthropic>=0.25.0
+
+# 🆕 WEB SEARCH - Versões compatíveis
+httpx>=0.24.0                        # Para requisições HTTP
+beautifulsoup4>=4.12.0               # Para parsing HTML (opcional)
+urllib3>=2.0.0                       # Para URLs
+duckduckgo-search>=6.2.0             # 🦆 Web search GRATUITO!

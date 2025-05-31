@@ -70,3 +70,20 @@ backups/
 
 # === STREAMLIT ===
 .streamlit/secrets.toml
+
+# === ARQUIVOS DE TESTE E DEBUG ===
+test_*.py
+teste_*.py
+debug_*.py
+sistema_offline.py
+verificar_*.py
+instalar_*.py
+instalar_*.bat
+corrigir_*.py
+*_teste.py
+*_debug.py
+*_temp.py
+
+# === ARQUIVOS DE VERSÃO TEMPORÁRIOS ===
+[0-9]*.[0-9]*.[0-9]*
+[0-9]*.[0-9]*.[0-9]*'
