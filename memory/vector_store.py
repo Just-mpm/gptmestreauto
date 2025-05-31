@@ -184,6 +184,11 @@ class MemoryManager:
             logger.error(f"❌ Erro ao recuperar contexto: {e}")
             return "CONTEXTO RELEVANTE: Erro na busca.\n\n"
     
+    def save_memory(self, user_input: str, assistant_response: str, 
+                   agent_name: str = "Carlos", session_id: str = None):
+        """Método de compatibilidade para salvar memória (alias para remember_conversation)"""
+        return self.remember_conversation(user_input, assistant_response, agent_name, session_id)
+    
     def get_stats(self) -> Dict[str, Any]:
         """Estatísticas completas da memória"""
         if not self.memory_active:

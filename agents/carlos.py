@@ -1,7 +1,7 @@
 """
-CARLOS v4.0 - O MAESTRO AUTÔNOMO DO GPT MESTRE
-Agente Central com Orquestração Inteligente e Execução Autônoma
-REVOLUÇÃO TOTAL: Quebra de tarefas, execução paralela e autonomia completa
+🧠 CARLOS v5.0 - MAESTRO SUPREMO COM ROBUSTEZ TOTAL
+Agente Central com Orquestração Avançada + BaseAgentV2 Robustez
+EVOLUÇÃO v5.0: Circuit Breakers, Rate Limiting, Thread Safety, Auto-Recovery
 """
 
 import json
@@ -12,7 +12,7 @@ from typing import Dict, List, Optional, Tuple, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
 
-from agents.base_agent import BaseAgent
+from agents.base_agent_v2 import BaseAgentV2
 
 # Logger com fallback
 try:
@@ -75,38 +75,71 @@ class ItemAgenda:
     status: StatusExecucao = StatusExecucao.PENDENTE
     observacoes: str = ""
 
-class CarlosMaestro(BaseAgent):
+class CarlosMaestroV5(BaseAgentV2):
     """
-    CARLOS v3.0 - O CABEÇA DO GPT MESTRE AUTÔNOMO
+    🧠 CARLOS v5.0 - MAESTRO SUPREMO COM ROBUSTEZ TOTAL
     
-    MISSÃO:
-    - Atuar como Maestro: organizar, comandar, deliberar e supervisionar todos os agentes
-    - Interpretar qualquer pedido de Matheus em ações concretas
-    - Decidir quais agentes ativar, como e em que ordem
-    - Garantir persistência de conhecimento e aprendizado contínuo
-    - Funcionar como sistema proativo de vigilância e otimização
+    MISSÃO EVOLUTIVA v5.0:
+    - Orquestração inteligente com robustez extrema (BaseAgentV2)
+    - Coordenação autônoma com circuit breakers e auto-recovery
+    - Rate limiting inteligente para gestão de recursos
+    - Thread safety para execução paralela real
+    - Persistência automática com backup de estados
+    - Performance monitoring e alertas proativos
     
-    🧠 CARACTERÍSTICAS AVANÇADAS:
-    - Agenda Interna de Prioridades Estratégicas
+    🛡️ ROBUSTEZ v5.0 (Herdada de BaseAgentV2):
+    - ✅ Circuit Breaker para proteção contra falhas
+    - ✅ Rate Limiting inteligente com burst allowance
+    - ✅ Thread Safety para execução paralela real
+    - ✅ Auto-Recovery e fallback robusto
+    - ✅ Performance Monitoring avançado
+    - ✅ Persistent Memory com backup automático
+    - ✅ Cache inteligente com TTL
+    - ✅ Retry automático com backoff exponencial
+    
+    🧠 CARACTERÍSTICAS AVANÇADAS MANTIDAS:
+    - Agenda Interna de Prioridades Estratégicas  
     - Sistema de microtags para rastreamento
     - ShadowChain para execuções paralelas
     - DNA de herança de execuções anteriores
     - Comando Espelho para simulações reversas
     - Sentinela de execuções esquecidas
+    - SUPERVISÃO SUPREMA DO ORÁCULO (Regente do Sistema)
     """
     
     def __init__(self, reflexor_ativo: bool = True, supervisor_ativo: bool = True, 
                  memoria_ativa: bool = True, deepagent_ativo: bool = True, 
                  oraculo_ativo: bool = True, automaster_ativo: bool = True,
-                 taskbreaker_ativo: bool = True, modo_proativo: bool = True, llm=None):
+                 taskbreaker_ativo: bool = True, psymind_ativo: bool = True,
+                 modo_proativo: bool = True, config: Optional[Dict] = None, **kwargs):
+        
+        # Configuração robusta para Carlos v5.0
+        carlos_config = {
+            "rate_limit_per_minute": 120,  # Carlos precisa de mais throughput
+            "burst_allowance": 20,        # Burst maior para coordenação
+            "failure_threshold": 3,       # Mais sensível a falhas
+            "recovery_timeout": 45,       # Recovery mais rápido
+            "cache_enabled": True,
+            "cache_ttl_seconds": 300,
+            "persistent_memory": True,
+            "max_retry_attempts": 3,
+            "timeout_seconds": 60         # Timeout maior para coordenação
+        }
+        
+        if config:
+            carlos_config.update(config)
+        
         super().__init__(
             name="Carlos",
-            description="Maestro Central v3.0 - Coordenador Inteligente do GPT Mestre Autônomo"
+            description="🧠 Maestro Central v5.0 - Coordenador Robusto do GPT Mestre Autônomo",
+            config=carlos_config,
+            **kwargs
         )
         
         # === SISTEMAS CORE ===
         self.memoria_ativa = memoria_ativa
-        self.memory_manager = None
+        # Não sobrescrever memory_manager do BaseAgentV2 - será inicializado automaticamente
+        self.vector_memory_manager = None  # Manager específico para conversas
         self.reflexor_ativo = reflexor_ativo
         self.reflexor = None
         self.supervisor_ativo = supervisor_ativo
@@ -119,6 +152,8 @@ class CarlosMaestro(BaseAgent):
         self.taskbreaker = None
         self.deepagent_ativo = deepagent_ativo
         self.deepagent = None
+        self.psymind_ativo = psymind_ativo
+        self.psymind = None
         self.modo_proativo = modo_proativo
         
         # === AGENDA INTERNA ESTRATÉGICA ===
@@ -135,11 +170,13 @@ class CarlosMaestro(BaseAgent):
         self.comando_espelho_ativo = True
         self.sentinela_ativo = True
         
-        # Configurar LLM
-        if llm is None:
-            self._inicializar_llm()
-        else:
-            self.llm = llm
+        # Configurar LLM se não foi inicializado pelo BaseAgentV2
+        if not self.llm_available:
+            if kwargs.get('llm'):
+                self.llm = kwargs['llm']
+                self.llm_available = True
+            else:
+                self._inicializar_llm_carlos()
         
         # Inicializar sistemas
         self._inicializar_sistemas()
@@ -221,10 +258,11 @@ class CarlosMaestro(BaseAgent):
             "decisoes_autonomas": 0
         })
         
-        logger.info(f"Carlos v3.0 MAESTRO inicializado - Modo Proativo: {'✅' if self.modo_proativo else '❌'}")
+        logger.info(f"🧠 Carlos v5.0 MAESTRO ROBUSTO inicializado - Modo Proativo: {'✅' if self.modo_proativo else '❌'}")
+        logger.info(f"🛡️ Robustez v5.0: Circuit Breaker ✅ | Rate Limiter ✅ | Thread Safety ✅")
     
-    def _inicializar_llm(self):
-        """Inicializa o LLM otimizado para Carlos Maestro"""
+    def _inicializar_llm_carlos(self):
+        """Inicializa o LLM otimizado para Carlos Maestro v5.0"""
         try:
             from langchain_anthropic import ChatAnthropic
             import config
@@ -238,7 +276,8 @@ class CarlosMaestro(BaseAgent):
                 temperature=0.8,  # Mais criativo para interpretação
                 anthropic_api_key=config.ANTHROPIC_API_KEY,
             )
-            logger.info("LLM Claude otimizado para Carlos v3.0 Maestro")
+            self.llm_available = True
+            logger.info("🧠 LLM Claude otimizado para Carlos v5.0 Maestro Robusto")
             
         except Exception as e:
             logger.warning(f"⚠️ Erro ao inicializar LLM: {e}")
@@ -247,12 +286,12 @@ class CarlosMaestro(BaseAgent):
     
     def _inicializar_sistemas(self):
         """Inicializa todos os sistemas integrados"""
-        # Memória vetorial
+        # Memória vetorial (separada do BaseAgentV2)
         if self.memoria_ativa:
             try:
                 from memory.vector_store import get_memory_manager
-                self.memory_manager = get_memory_manager()
-                if self.memory_manager.memory_active:
+                self.vector_memory_manager = get_memory_manager()
+                if self.vector_memory_manager.memory_active:
                     logger.info("🧠 Memória vetorial integrada ao Maestro!")
                 else:
                     self.memoria_ativa = False
@@ -319,22 +358,34 @@ class CarlosMaestro(BaseAgent):
             except ImportError:
                 logger.warning("⚠️ TaskBreaker não disponível")
                 self.taskbreaker_ativo = False
-    
-    def processar(self, mensagem: str, contexto: Optional[Dict] = None) -> str:
-        """
-        PROCESSAMENTO MAESTRO v4.0 - AUTONOMIA TOTAL
         
-        FLUXO AUTÔNOMO COM SUPERVISÃO SUPREMA:
-        1. 🧠 Interpretação autônoma do comando
-        2. Análise de complexidade e quebra de tarefas (TaskBreaker)
-        3. Seleção dinâmica de agentes por capacidade
-        4. Execução paralela/serial inteligente
-        5. 🧠 SUPERVISÃO SUPREMA DO ORÁCULO (Regente do Sistema)
-        6. Aprovação/Melhoria/Refazer conforme padrões de excelência
-        7. Auditoria e otimização contínua
-        8. Síntese de resultados de múltiplos agentes
-        9. Registro e aprendizado (DNA + microtags)
-        10. Sugestões proativas para agenda
+        # PsyMind
+        if self.psymind_ativo:
+            try:
+                from agents.psymind import criar_psymind_v2
+                self.psymind = criar_psymind_v2()
+                logger.info("🧠 PsyMind v2.0 integrado ao Maestro!")
+            except ImportError:
+                logger.warning("⚠️ PsyMind não disponível")
+                self.psymind_ativo = False
+    
+    def _processar_interno(self, mensagem: str, contexto: Optional[Dict] = None) -> str:
+        """
+        🧠 PROCESSAMENTO MAESTRO v5.0 - ROBUSTEZ + AUTONOMIA TOTAL
+        
+        FLUXO ROBUSTO COM SUPERVISÃO SUPREMA:
+        1. 🛡️ Verificações de robustez (Rate Limit, Circuit Breaker)
+        2. 🧠 Interpretação autônoma do comando com cache inteligente
+        3. 📋 Análise de complexidade e quebra de tarefas (TaskBreaker)
+        4. 🤖 Seleção dinâmica de agentes por capacidade
+        5. ⚡ Execução paralela/serial com thread safety
+        6. 🧠 SUPERVISÃO SUPREMA DO ORÁCULO (Regente do Sistema)
+        7. ✅ Aprovação/Melhoria/Refazer com padrões de excelência
+        8. 🔍 Auditoria e otimização contínua
+        9. 🔗 Síntese robusta de resultados múltiplos
+        10. 📝 Registro persistente e aprendizado (DNA + microtags)
+        11. 🚀 Sugestões proativas para agenda estratégica
+        12. 📊 Performance monitoring e alertas
         """
         inicio_processamento = time.time()
         
@@ -343,13 +394,28 @@ class CarlosMaestro(BaseAgent):
             if mensagem.startswith('/'):
                 return self._processar_comando_especial(mensagem)
             
-            # 1. INTERPRETAÇÃO AUTÔNOMA
+            # 1. INTERPRETAÇÃO AUTÔNOMA + DETECÇÃO PSICOLÓGICA
             interpretacao = self._interpretar_comando(mensagem)
             tipo_comando = interpretacao['tipo']
             parametros = interpretacao['parametros']
             confianca = interpretacao['confianca']
             
+            # Detecção automática de contexto emocional/psicológico
+            contexto_psicologico = self._detectar_contexto_psicologico(mensagem)
+            
             logger.info(f"Comando interpretado: {tipo_comando.value} (confiança: {confianca:.1f})")
+            if contexto_psicologico:
+                logger.info(f"🧠 Contexto psicológico detectado: {contexto_psicologico}")
+                
+            # Se contexto psicológico forte, delegar ao PsyMind
+            if contexto_psicologico and self.psymind_ativo and self.psymind:
+                resultado_psymind = self.psymind.processar(mensagem, contexto)
+                # Oráculo ainda supervisiona
+                if self.oraculo_ativo and self.oraculo:
+                    resultado = self._supervisao_oraculo(mensagem, resultado_psymind, ["psymind"])
+                else:
+                    resultado = resultado_psymind
+                return resultado
             
             # 2. ANÁLISE DE COMPLEXIDADE E QUEBRA DE TAREFAS
             if self.taskbreaker_ativo and confianca > 0.7:
@@ -756,6 +822,66 @@ class CarlosMaestro(BaseAgent):
         else:
             logger.info("Shadow Chain: Escolhido resultado B")
             return resultado_b
+    
+    def _detectar_contexto_psicologico(self, mensagem: str) -> Optional[str]:
+        """Detecta se a mensagem tem contexto emocional/psicológico forte"""
+        if not self.psymind_ativo:
+            return None
+            
+        mensagem_lower = mensagem.lower()
+        
+        # Padrões emocionais/psicológicos fortes
+        padroes_psicologicos = [
+            # Emoções intensas
+            r"me sinto (muito )?(triste|ansioso|deprimido|perdido|confuso)",
+            r"estou (muito )?(angustiado|preocupado|estressado)",
+            r"não consigo (parar de|deixar de)",
+            
+            # Questões existenciais
+            r"não sei (mais )?(quem eu sou|o que fazer|qual meu propósito)",
+            r"(qual|onde) (é|está) meu lugar",
+            r"me sinto (vazio|sem direção|desconectado)",
+            
+            # Linguagem terapêutica
+            r"preciso de ajuda (emocional|psicológica)",
+            r"quero conversar sobre",
+            r"me ajude a entender",
+            
+            # Padrões de autossabotagem
+            r"sempre (estrago|saboto|falho)",
+            r"não (mereço|consigo|sou capaz)",
+            
+            # Relacionamentos e família
+            r"problemas? com (meu|minha) (família|namorado|relacionamento)",
+            r"(brigamos|discutimos|terminamos)",
+            
+            # Trabalho e carreira emocional
+            r"odeio meu trabalho",
+            r"não aguento mais",
+            r"burnout"
+        ]
+        
+        for padrao in padroes_psicologicos:
+            if re.search(padrao, mensagem_lower):
+                return "emocional_forte"
+        
+        # Palavras-chave emocionais (menos intensas)
+        palavras_emocionais = [
+            "sentimento", "emoção", "coração", "alma", "espírito",
+            "tristeza", "alegria", "raiva", "medo", "ansiedade",
+            "amor", "relacionamento", "família", "amizade",
+            "autoestima", "confiança", "insegurança", "vergonha",
+            "culpa", "perdão", "aceitação", "crescimento pessoal"
+        ]
+        
+        contador_emocional = sum(1 for palavra in palavras_emocionais if palavra in mensagem_lower)
+        
+        if contador_emocional >= 2:
+            return "emocional_moderado"
+        elif contador_emocional >= 1 and len(mensagem.split()) < 20:
+            return "emocional_leve"
+        
+        return None
     
     def _analisar_oportunidades_proativas(self, mensagem: str, resultado: str):
         """Análise proativa para detectar oportunidades"""
@@ -1244,28 +1370,36 @@ Crie uma resposta completamente nova que seja excelente:"""
 
 # === FUNÇÕES DE CRIAÇÃO ===
 
-def criar_carlos_maestro(modo_proativo: bool = True, **kwargs) -> CarlosMaestro:
-    """Cria Carlos v4.0 Maestro Autonomo com configuracoes completas"""
-    return CarlosMaestro(
-        reflexor_ativo=kwargs.get('reflexor_ativo', True),
-        supervisor_ativo=kwargs.get('supervisor_ativo', True),
-        memoria_ativa=kwargs.get('memoria_ativa', True),
-        deepagent_ativo=kwargs.get('deepagent_ativo', True),
-        oraculo_ativo=kwargs.get('oraculo_ativo', True),
-        automaster_ativo=kwargs.get('automaster_ativo', True),
-        taskbreaker_ativo=kwargs.get('taskbreaker_ativo', True),
-        modo_proativo=modo_proativo,
-        llm=kwargs.get('llm', None)
-    )
+def criar_carlos_maestro(modo_proativo: bool = True, **kwargs) -> CarlosMaestroV5:
+    """🧠 Cria Carlos v5.0 Maestro Robusto com configurações completas + BaseAgentV2"""
+    # Extrair configurações específicas para evitar duplicatas
+    config_carlos = {
+        'reflexor_ativo': kwargs.pop('reflexor_ativo', True),
+        'supervisor_ativo': kwargs.pop('supervisor_ativo', True),
+        'memoria_ativa': kwargs.pop('memoria_ativa', True),
+        'deepagent_ativo': kwargs.pop('deepagent_ativo', True),
+        'oraculo_ativo': kwargs.pop('oraculo_ativo', True),
+        'automaster_ativo': kwargs.pop('automaster_ativo', True),
+        'taskbreaker_ativo': kwargs.pop('taskbreaker_ativo', True),
+        'psymind_ativo': kwargs.pop('psymind_ativo', True),
+        'modo_proativo': modo_proativo,
+        'config': kwargs.pop('config', None)
+    }
+    
+    # Combinar com kwargs restantes
+    config_carlos.update(kwargs)
+    
+    return CarlosMaestroV5(**config_carlos)
 
-# Alias para compatibilidade
+# Alias para compatibilidade e novas versões
 create_carlos = criar_carlos_maestro
+criar_carlos_maestro_v5 = criar_carlos_maestro  # Para compatibilidade com __init__.py
 
 if __name__ == "__main__":
-    print("Testando Carlos v4.0 Maestro...")
+    print("🧠 Testando Carlos v5.0 Maestro Robusto...")
     
     carlos = criar_carlos_maestro()
     diagnostico = carlos.diagnosticar_sistema()
     
-    print(f"Diagnostico: {diagnostico}")
-    print("Carlos v4.0 Maestro OK!")
+    print(f"Diagnóstico: {diagnostico}")
+    print("✅ Carlos v5.0 Maestro Robusto OK!")
