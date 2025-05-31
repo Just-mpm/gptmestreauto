@@ -22,6 +22,14 @@ except ImportError as e:
     print(f"⚠️ Erro ao importar Reflexor: {e}")
     REFLEXOR_AVAILABLE = False
 
+# Imports do Oráculo v8.1 Plus+ (Assembleia Dinâmica)
+try:
+    from .oraculo import OraculoV8Plus, criar_oraculo_v8_plus, create_oraculo
+    ORACULO_AVAILABLE = True
+except ImportError as e:
+    print(f"⚠️ Erro ao importar Oráculo v8.1 Plus+: {e}")
+    ORACULO_AVAILABLE = False
+
 # Versão do módulo de agentes
 __version__ = "1.5.1"
 
@@ -34,12 +42,16 @@ if CARLOS_AVAILABLE:
 if REFLEXOR_AVAILABLE:
     AGENTES_DISPONIVEIS.append("Reflexor")
 
+if ORACULO_AVAILABLE:
+    AGENTES_DISPONIVEIS.append("Oráculo")
+
 # Função para verificar status dos agentes
 def verificar_agentes():
     """Verifica quais agentes estão disponíveis"""
     status = {
         "carlos": CARLOS_AVAILABLE,
         "reflexor": REFLEXOR_AVAILABLE,
+        "oraculo": ORACULO_AVAILABLE,
         "total_disponiveis": len(AGENTES_DISPONIVEIS),
         "agentes": AGENTES_DISPONIVEIS
     }
@@ -60,11 +72,14 @@ def criar_sistema_completo():
 # Exports principais
 __all__ = [
     'BaseAgent',
-    'CarlosAgent', 
+    'CarlosMaestro', 
     'AgenteReflexor',
+    'OraculoV8Plus',
     'create_carlos',
-    'create_carlos_com_reflexor',
+    'criar_carlos_maestro',
     'criar_reflexor_gpt_mestre',
+    'criar_oraculo_v8_plus',
+    'create_oraculo',
     'verificar_agentes',
     'criar_sistema_completo',
     'AGENTES_DISPONIVEIS'
