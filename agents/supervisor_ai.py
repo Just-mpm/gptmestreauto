@@ -291,7 +291,7 @@ class SupervisorAI(BaseAgent):
             complexidade += 1.0
             
         # Perguntas abertas vs específicas
-        if mensagem.endswith('?') and len(palavras) < 10:
+        if mensagem.endswith('?') and palavras < 10:
             complexidade -= 0.5
             
         return min(10.0, max(1.0, complexidade))

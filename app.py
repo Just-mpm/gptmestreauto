@@ -18,10 +18,10 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ===== IMPORTS ATUALIZADOS PARA v2.1 =====
+# ===== IMPORTS ATUALIZADOS PARA v3.0 =====
 try:
     from config import config
-    from agents.carlos import criar_carlos_integrado  # Carlos v2.1 com DeepAgent
+    from agents.carlos import criar_carlos_maestro  # Carlos v3.0 Maestro
     from utils.logger import get_logger
     
     system_logger = get_logger("streamlit")
@@ -102,16 +102,19 @@ def init_session_state():
     
     if "carlos" not in st.session_state:
         try:
-            # Carlos v2.1 com TODO O SISTEMA ativado
-            st.session_state.carlos = criar_carlos_integrado(
-                supervisor_ativo=True,   # SupervisorAI v1.4
-                reflexor_ativo=True,     # Reflexor v1.5+
-                deepagent_ativo=True     # 🆕 DeepAgent v1.3R
+            # Carlos v4.0 Maestro Autônomo com TODO O SISTEMA ativado
+            st.session_state.carlos = criar_carlos_maestro(
+                supervisor_ativo=True,     # SupervisorAI v1.4
+                reflexor_ativo=True,       # Reflexor v1.5+
+                deepagent_ativo=True,      # DeepAgent v2.0
+                oraculo_ativo=True,        # 🆕 Oráculo v8.1
+                automaster_ativo=True,     # 🆕 AutoMaster v4.0
+                taskbreaker_ativo=True     # 🆕 TaskBreaker v1.0
             )
-            system_logger.info(f"🔍 Carlos v2.1 COMPLETO inicializado para sessão {st.session_state.session_id}")
+            system_logger.info(f"🚀 Carlos v4.0 Maestro AUTÔNOMO inicializado para sessão {st.session_state.session_id}")
                 
         except Exception as e:
-            st.error(f"❌ Erro ao inicializar Carlos v2.1: {e}")
+            st.error(f"❌ Erro ao inicializar Carlos v4.0: {e}")
             
             # Diagnóstico específico
             if "deep_agent" in str(e).lower():
@@ -132,26 +135,28 @@ def init_session_state():
         # Mensagem de boas-vindas v2.1
         st.session_state.messages.append({
             "role": "assistant",
-            "content": """🔍 **Olá! Sou o Carlos v2.1 com DeepAgent Integrado!**
+            "content": """🚀 **Olá! Sou o Carlos v4.0 Maestro Autônomo - Revolução Total!**
 
-🚀 **Sistema Completo Ativo:**
-• **SupervisorAI v1.4**: Classifica tarefas automaticamente
-• **DeepAgent v1.3R**: Pesquisa e análise de produtos 🆕  
-• **Memória Vetorial**: Lembro de TODAS as nossas conversas
+🚀 **Sistema Autônomo Revolucionário:**
+• **Oráculo v8.1**: Decisões complexas com assembleia dinâmica
+• **AutoMaster v4.0**: Planejamento estratégico e autonomia
+• **TaskBreaker v1.0**: Quebra tarefas complexas automaticamente
+• **SupervisorAI v1.4**: Classificação inteligente de tarefas
+• **DeepAgent v2.0**: Pesquisa web real em tempo real
 • **Reflexor v1.5+**: Auditoria automática de qualidade
-• **Detecção Inteligente**: Ativo o DeepAgent automaticamente!
+• **Memória Vetorial**: Persistência total de conversas
 
-💬 **Como funciona a detecção automática:**
-Quando você menciona produtos, análises ou pesquisas, o sistema detecta automaticamente e ativa o DeepAgent para dar respostas mais completas!
+💡 **AUTONOMIA TOTAL:**
+O sistema quebra tarefas complexas, seleciona agentes dinamicamente e executa em paralelo automaticamente!
 
-**Experimente:** 
-• "Analise patinhos decorativos" 
-• "Este produto tem potencial?"
-• "Pesquise viabilidade de produtos de casa"
+**Experimente Tarefas Complexas:** 
+• "Crie um plano completo de carreira como programador"
+• "Analise e compare 3 produtos de decoração"
+• "Desenvolva uma estratégia de monetização para infoprodutos"
 
 **Comandos:** `/help`, `/status`, `/deepagent`, `/agents`
 
-🎯 **O sistema mais inteligente até agora!**""",
+🚀 **A revolução da autonomia chegou!**""",
             "timestamp": datetime.now().strftime("%H:%M:%S")
         })
     
@@ -162,19 +167,19 @@ Quando você menciona produtos, análises ou pesquisas, o sistema detecta automa
 def render_sidebar():
     """Sidebar atualizada com DeepAgent integrado"""
     with st.sidebar:
-        st.header("🔍 GPT Mestre v2.1")
-        st.markdown('<span class="version-badge">SISTEMA COMPLETO</span> <span class="deepagent-badge">DEEPAGENT</span>', unsafe_allow_html=True)
+        st.header("🚀 GPT Mestre v4.0")
+        st.markdown('<span class="version-badge">AUTONOMIA TOTAL</span> <span class="deepagent-badge">REVOLUCIONÁRIO</span>', unsafe_allow_html=True)
         
         # Status do sistema
         st.subheader("📊 Status do Sistema")
-        st.markdown("**Carlos:** <span class='agent-active'>v2.1 ativo</span>", unsafe_allow_html=True)
+        st.markdown("**Carlos:** <span class='agent-active'>v4.0 Autônomo</span>", unsafe_allow_html=True)
         st.markdown("**SupervisorAI:** <span class='agent-active'>✅ v1.4</span>", unsafe_allow_html=True)
         st.markdown("**Reflexor:** <span class='agent-active'>✅ v1.5+</span>", unsafe_allow_html=True)
         
         # 🆕 Status do DeepAgent
         if hasattr(st.session_state.carlos, 'deepagent_ativo'):
             if st.session_state.carlos.deepagent_ativo:
-                st.markdown("**DeepAgent:** <span class='deepagent-active'>🔍 v1.3R Ativo</span>", unsafe_allow_html=True)
+                st.markdown("**DeepAgent:** <span class='deepagent-active'>🌐 v2.0 Ativo</span>", unsafe_allow_html=True)
             else:
                 st.markdown("**DeepAgent:** <span class='agent-inactive'>❌ Inativo</span>", unsafe_allow_html=True)
         

@@ -1,21 +1,13 @@
-# GPT MESTRE AUTÔNOMO - .gitignore
+# GPT Mestre Autônomo - .gitignore
 
-# === ARQUIVOS SENSÍVEIS ===
+# Environment variables
 .env
-*.env
 .env.local
-.env.production
+.env.development.local
+.env.test.local
+.env.production.local
 
-# === CHAVES E CREDENCIAIS ===
-**/api_keys/
-**/credentials/
-**/*key*
-**/*secret*
-**/*token*
-
-# === LOGS E CACHE ===
-logs/
-*.log
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
@@ -33,57 +25,77 @@ parts/
 sdist/
 var/
 wheels/
+pip-wheel-metadata/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
-# === MEMÓRIA E DADOS ===
-memory/chroma_db/
-memory/backups/
-*.db
-*.sqlite
-*.sqlite3
-
-# === AMBIENTE VIRTUAL ===
+# Virtual Environment
 venv/
 env/
 ENV/
-.venv/
+env.bak/
+venv.bak/
 
-# === IDEs ===
+# Logs
+logs/
+*.log
+
+# ChromaDB (Database files)
+memory/chroma_db/
+*.sqlite3
+
+# Streamlit
+.streamlit/
+
+# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# === SISTEMA ===
+# OS
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+
+# Temporary files
 *.tmp
 *.temp
+temp/
+tmp/
 
-# === BACKUPS ===
-backups/
-*.backup
+# Backup files
 *.bak
+*_backup.py
+*_old.py
 
-# === STREAMLIT ===
-.streamlit/secrets.toml
+# Test coverage
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
 
-# === ARQUIVOS DE TESTE E DEBUG ===
-test_*.py
-teste_*.py
-debug_*.py
-sistema_offline.py
-verificar_*.py
-instalar_*.py
-instalar_*.bat
-corrigir_*.py
-*_teste.py
-*_debug.py
-*_temp.py
+# API Keys (extra protection)
+*api_key*
+*secret*
+*token*
 
-# === ARQUIVOS DE VERSÃO TEMPORÁRIOS ===
-[0-9]*.[0-9]*.[0-9]*
-[0-9]*.[0-9]*.[0-9]*'
+# Documentation drafts
+*_draft.md
+*_temp.md
+CORREÇÕES*.md
+SISTEMA_FINAL*.md

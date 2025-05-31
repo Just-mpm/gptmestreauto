@@ -15,6 +15,8 @@ from enum import Enum
 from agents.base_agent import BaseAgent
 from utils.logger import get_logger
 
+logger = get_logger(__name__)
+
 # Importar o novo sistema de web search gratuito
 try:
     from utils.web_search import web_search, TipoBusca
@@ -22,8 +24,6 @@ try:
 except ImportError:
     WEB_SEARCH_DISPONIVEL = False
     logger.warning("⚠️ Web Search não disponível. Instale: pip install duckduckgo-search")
-
-logger = get_logger(__name__)
 
 class ModoOperacional(Enum):
     """Modos operacionais do DeepAgent"""

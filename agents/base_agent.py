@@ -21,7 +21,20 @@ try:
 except ImportError:
     CONFIG_AVAILABLE = False
 
-from utils.logger import get_agent_logger, log_function_call
+# Logger com fallback
+try:
+    from utils.logger import get_agent_logger, log_function_call
+except ImportError:
+    # Fallback simples para logger
+    class SimpleLogger:
+        def __init__(self, name): self.name = name
+        def info(self, msg): print(f"[INFO] {self.name}: {msg}")
+        def warning(self, msg): print(f"[WARNING] {self.name}: {msg}")  
+        def error(self, msg): print(f"[ERROR] {self.name}: {msg}")
+        def debug(self, msg): print(f"[DEBUG] {self.name}: {msg}")
+    
+    def get_agent_logger(name): return SimpleLogger(name)
+    def log_function_call(*args, **kwargs): pass
 
 @dataclass
 class AgentMemory:

@@ -1,4 +1,3 @@
- 
 """
 Agente Reflexor v1.5+ - Sistema de Auditoria Avançado
 Sistema de análise e melhoria contínua de respostas

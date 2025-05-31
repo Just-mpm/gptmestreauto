@@ -38,6 +38,14 @@ except ImportError as e:
     print(f"⚠️ Erro ao importar AutoMaster v4.0: {e}")
     AUTOMASTER_AVAILABLE = False
 
+# Imports do TaskBreaker v1.0 (Decomposição de Tarefas)
+try:
+    from .task_breaker import TaskBreaker, criar_task_breaker, PlanoExecucao, Subtarefa
+    TASKBREAKER_AVAILABLE = True
+except ImportError as e:
+    print(f"⚠️ Erro ao importar TaskBreaker v1.0: {e}")
+    TASKBREAKER_AVAILABLE = False
+
 # Versão do módulo de agentes
 __version__ = "1.5.1"
 
@@ -55,6 +63,9 @@ if ORACULO_AVAILABLE:
 
 if AUTOMASTER_AVAILABLE:
     AGENTES_DISPONIVEIS.append("AutoMaster")
+
+if TASKBREAKER_AVAILABLE:
+    AGENTES_DISPONIVEIS.append("TaskBreaker")
 
 # Função para verificar status dos agentes
 def verificar_agentes():
