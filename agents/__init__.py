@@ -6,12 +6,12 @@ Centraliza todos os imports dos agentes do sistema
 # Imports dos agentes base
 from .base_agent import BaseAgent
 
-# Imports do Carlos (Agente Principal)
+# Imports do Carlos v3.0 Maestro (Agente Principal)
 try:
-    from .carlos import CarlosAgent, create_carlos, create_carlos_com_reflexor
+    from .carlos import CarlosMaestro, criar_carlos_maestro, create_carlos
     CARLOS_AVAILABLE = True
 except ImportError as e:
-    print(f"⚠️ Erro ao importar Carlos: {e}")
+    print(f"⚠️ Erro ao importar Carlos v3.0 Maestro: {e}")
     CARLOS_AVAILABLE = False
 
 # Imports do Reflexor (Sistema de Auditoria)
