@@ -30,6 +30,14 @@ except ImportError as e:
     print(f"⚠️ Erro ao importar Oráculo v8.1 Plus+: {e}")
     ORACULO_AVAILABLE = False
 
+# Imports do AutoMaster v4.0 (Autonomia Econômica e Estratégica)
+try:
+    from .automaster import AutoMasterV4, criar_automaster_v4, create_automaster
+    AUTOMASTER_AVAILABLE = True
+except ImportError as e:
+    print(f"⚠️ Erro ao importar AutoMaster v4.0: {e}")
+    AUTOMASTER_AVAILABLE = False
+
 # Versão do módulo de agentes
 __version__ = "1.5.1"
 
@@ -45,6 +53,9 @@ if REFLEXOR_AVAILABLE:
 if ORACULO_AVAILABLE:
     AGENTES_DISPONIVEIS.append("Oráculo")
 
+if AUTOMASTER_AVAILABLE:
+    AGENTES_DISPONIVEIS.append("AutoMaster")
+
 # Função para verificar status dos agentes
 def verificar_agentes():
     """Verifica quais agentes estão disponíveis"""
@@ -52,6 +63,7 @@ def verificar_agentes():
         "carlos": CARLOS_AVAILABLE,
         "reflexor": REFLEXOR_AVAILABLE,
         "oraculo": ORACULO_AVAILABLE,
+        "automaster": AUTOMASTER_AVAILABLE,
         "total_disponiveis": len(AGENTES_DISPONIVEIS),
         "agentes": AGENTES_DISPONIVEIS
     }
@@ -75,11 +87,14 @@ __all__ = [
     'CarlosMaestro', 
     'AgenteReflexor',
     'OraculoV8Plus',
+    'AutoMasterV4',
     'create_carlos',
     'criar_carlos_maestro',
     'criar_reflexor_gpt_mestre',
     'criar_oraculo_v8_plus',
     'create_oraculo',
+    'criar_automaster_v4',
+    'create_automaster',
     'verificar_agentes',
     'criar_sistema_completo',
     'AGENTES_DISPONIVEIS'
