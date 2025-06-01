@@ -10,12 +10,27 @@ from datetime import datetime
 import uuid
 import json
 
-# Configuração da página
+# Configuração da página - Mobile-First
 st.set_page_config(
-    page_title="GPT Mestre Autônomo v2.1 - Sistema Completo com DeepAgent",
-    page_icon="🔍",
+    page_title="GPT Mestre Autônomo v5.0",
+    page_icon="🧠",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed",  # Mobile-friendly
+    menu_items={
+        'Get Help': 'https://github.com/seu-repo/issues',
+        'Report a bug': 'https://github.com/seu-repo/issues',
+        'About': '''
+        # 🧠 GPT Mestre Autônomo v5.0
+        Sistema revolucionário com 9 agentes autônomos:
+        - Oráculo com assembleia dinâmica
+        - AutoMaster para autonomia econômica  
+        - TaskBreaker para decomposição inteligente
+        - Reflexor para auditoria de qualidade
+        - E muito mais!
+        
+        Powered by Claude 3 + LangChain
+        '''
+    }
 )
 
 # ===== IMPORTS ATUALIZADOS PARA v3.0 =====
