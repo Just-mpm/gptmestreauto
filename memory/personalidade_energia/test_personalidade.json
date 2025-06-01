@@ -1,0 +1,59 @@
+{
+  "agente_id": "test",
+  "temperamento": "melancolico",
+  "estilo_cognitivo": "explorador_criativo",
+  "tracos": {
+    "extroversao": 0.18749478167457495,
+    "amabilidade": 0.5523342806067845,
+    "conscienciosidade": 0.68389760931127,
+    "neuroticismo": 0.6249853424852146,
+    "abertura": 0.815110929922624,
+    "persistencia": 0.7624034107930928,
+    "curiosidade": 0.49482310474638325,
+    "criatividade": 0.7936155236448921,
+    "empatia": 0.44252575491485235,
+    "assertividade": 0.5089468385762849,
+    "flexibilidade": 0.3242790144720182,
+    "perfeccionismo": 0.5232915465178768
+  },
+  "motivacoes_primarias": [
+    "liberdade",
+    "criação",
+    "harmonía"
+  ],
+  "valores_core": [
+    "colaboração",
+    "inovação",
+    "autenticidade"
+  ],
+  "preferencias_interacao": {
+    "prefer_grupos": 0.18749478167457495,
+    "prefer_individual": 0.8125052183254251,
+    "prefer_formal": 0.68389760931127,
+    "prefer_casual": 0.31610239068873003,
+    "prefer_colaborativo": 0.5523342806067845,
+    "prefer_competitivo": 0.44766571939321553,
+    "sensibilidade_emocional": 0.44252575491485235,
+    "tolerancia_conflito": 0.37501465751478535
+  },
+  "niveis_energia": {
+    "mental": 100.0,
+    "emocional": 100.0,
+    "criativa": 100.0,
+    "fisica": 100.0,
+    "espiritual": 100.0,
+    "social": 100.0,
+    "adaptativa": 100.0
+  },
+  "fadiga_acumulada": 0.0,
+  "stress_level": 0.0,
+  "motivacao_atual": 100.0,
+  "burnout_risk": 0.0,
+  "ultimo_descanso": null,
+  "humor_atual": "neutro",
+  "produtividade_atual": 1.0,
+  "criatividade_atual": 1.0,
+  "sociabilidade_atual": 1.0,
+  "tolerancia_stress": 50.0,
+  "ultima_atualizacao": "2025-06-01T14:41:47.286074"
+}

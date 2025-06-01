@@ -22,7 +22,8 @@
       "Bash(apt list:*)",
       "Bash(mkdir:*)",
       "Bash(touch:*)",
-      "WebFetch(domain:www.hostinger.com)"
+      "WebFetch(domain:www.hostinger.com)",
+      "Bash(timeout:*)"
     ],
     "deny": []
   }

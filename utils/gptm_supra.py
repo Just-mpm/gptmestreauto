@@ -70,7 +70,7 @@ class GPTMSupra:
     """
     
     def __init__(self):
-        self.eventos_observados: List[EventoEvento] = []
+        self.eventos_observados: List[EventoEcossistema] = []
         self.capitulos_epicos: List[CapituloEpico] = []
         self.metanarrativas: Dict[str, Any] = {}
         
@@ -475,7 +475,7 @@ class GPTMSupra:
             "narrativa_epica": narrativa
         }
     
-    def _identificar_tema_dominante(self, eventos: List[EventoEvento]) -> str:
+    def _identificar_tema_dominante(self, eventos: List[EventoEcossistema]) -> str:
         """Identifica tema dominante nos eventos"""
         
         # Analisar padrões nos eventos
@@ -497,7 +497,7 @@ class GPTMSupra:
         else:
             return random.choice(self.temas_universais)
     
-    def _gerar_narrativa_periodo(self, eventos: List[EventoEvento], 
+    def _gerar_narrativa_periodo(self, eventos: List[EventoEcossistema], 
                                tema: str) -> str:
         """Gera narrativa épica do período"""
         

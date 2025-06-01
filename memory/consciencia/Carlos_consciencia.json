@@ -1,0 +1,1048 @@
+{
+  "agente_id": "Carlos",
+  "nivel_atual": 1,
+  "experiencia_nivel": {
+    "1": 639.0,
+    "2": 0.0,
+    "3": 0.0,
+    "4": 0.0,
+    "5": 0.0
+  },
+  "transicoes_realizadas": 0,
+  "momento_ultima_evolucao": null,
+  "bloqueios_evolutivos": [],
+  "insights_acumulados": [],
+  "historico_consciencia": [
+    {
+      "timestamp": "2025-06-01T14:38:45.402428",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "b3bbb55b",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Oi"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:38:46.420753",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "b3bbb55b",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Oi"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:38:48.426238",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "b3bbb55b",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Oi"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:38:48.457416",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "b3bbb55b",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "/status"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:38:48.783772",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "b3bbb55b",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "/status"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:38:50.791870",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "b3bbb55b",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "/status"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:39:37.348252",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "43aba5d2",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Oi"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:39:38.358722",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "43aba5d2",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Oi"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:39:40.372024",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "43aba5d2",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Oi"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:39:40.381974",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "43aba5d2",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "/status"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:39:41.388308",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "43aba5d2",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "/status"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:39:43.395860",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "43aba5d2",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "/status"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:41:29.984132",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "213772ac",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Oi"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:41:30.989651",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "213772ac",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Oi"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:41:32.993998",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "213772ac",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Oi"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:41:33.001977",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "213772ac",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "/status"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:41:34.008928",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "213772ac",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "/status"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:41:36.037323",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "213772ac",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "/status"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:42:33.220006",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "4a0910e0",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Oi"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:42:34.233513",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "4a0910e0",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Oi"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:42:36.238690",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "4a0910e0",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Oi"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:42:36.246835",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "4a0910e0",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "/status"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:42:37.258916",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "4a0910e0",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "/status"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:42:39.272854",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "4a0910e0",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "/status"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:43:22.485119",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "86740a53",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Oi"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:43:22.495007",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "86740a53",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "/status"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:43:23.499697",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "86740a53",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "/status"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:43:25.509496",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "86740a53",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "/status"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:44:56.237329",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "eb5fa815",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Olá"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:45:09.068197",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "eb5fa815",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Como você está hoje?"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:45:27.175845",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "eb5fa815",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Como você está hoje?"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:45:50.209103",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "eb5fa815",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Como você está hoje?"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:52:17.610527",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "4be507fe",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Oi"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:52:17.620771",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "4be507fe",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Tudo bem?"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:54:04.970842",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "e2e7c5f2",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Oi"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:54:04.980871",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "e2e7c5f2",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Como você está?"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T14:54:04.996516",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "e2e7c5f2",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "/status"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T15:10:23.306472",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "e6fe0dbf",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Oi, Carlos"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T15:10:28.460052",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "e6fe0dbf",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Como você ta?"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T15:10:34.757627",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "e6fe0dbf",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Você ta bem?"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T15:10:40.471593",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "e6fe0dbf",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Você só fala isso?"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T15:11:11.255973",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "e6fe0dbf",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Você só fala isso?"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T15:11:29.545407",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "e6fe0dbf",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Você só fala isso?"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T18:34:27.020246",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "2c359cec",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Você só fala isso?"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T18:39:17.167430",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "8b070952",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Oi, Carlos"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T18:39:27.191089",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "8b070952",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Como você ta?"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T18:39:31.669190",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "8b070952",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Tudo bem?"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T18:39:35.935268",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "8b070952",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "To bem também, obrigado"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-06-01T19:11:24.839771",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "618720bc",
+      "dados": {
+        "tipo": "interacao_usuario",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": {
+          "mensagem": "Analise os prós e contras de mudar de carreira"
+        },
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    }
+  ],
+  "ultima_atualizacao": "2025-06-01T19:11:24.839790",
+  "sessao_id": "618720bc"
+}

@@ -7,12 +7,38 @@ EVOLUÇÃO v5.0: Circuit Breakers, Rate Limiting, Thread Safety, Auto-Recovery
 import json
 import time
 import re
+import threading
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
 
 from agents.base_agent_v2 import BaseAgentV2
+
+# Importar cache manager
+try:
+    from utils.cache_manager import get_cache_manager
+    cache_manager = get_cache_manager()
+except ImportError:
+    cache_manager = None
+    print("⚠️ CacheManager não disponível")
+
+# === IMPORTAÇÃO DAS 10 INOVAÇÕES REVOLUCIONÁRIAS ===
+try:
+    from utils.consciencia_artificial import criar_consciencia_artificial
+    from utils.mascaras_sociais import criar_gerenciador_mascaras
+    from utils.carlos_subconsciente import criar_carlos_subconsciente
+    from utils.metamemoria import criar_metamemoria
+    from utils.dna_evolutivo import criar_dna_evolutivo
+    from utils.personalidade_energia import criar_gerenciador_personalidade
+    from utils.ciclo_vida_agentes import criar_gerenciador_ciclo_vida
+    from utils.sonhos_agentes import criar_gerador_sonhos
+    from utils.gptm_supra import obter_gptm_supra
+    from utils.eventos_cognitivos_globais import atualizar_metricas_agente_global
+    INOVACOES_DISPONIVEIS = True
+except ImportError as e:
+    print(f"⚠️ Inovações não disponíveis: {e}")
+    INOVACOES_DISPONIVEIS = False
 
 # Logger com fallback
 try:
@@ -171,6 +197,67 @@ class CarlosMaestroV5(BaseAgentV2):
         self.shadow_chain_ativo = True
         self.comando_espelho_ativo = True
         self.sentinela_ativo = True
+        
+        # === SISTEMAS DE INOVAÇÃO (v4.9) ===
+        self.inovacoes_ativas = kwargs.get('inovacoes_ativas', INOVACOES_DISPONIVEIS)
+        self.consciencia = None
+        self.mascaras = None
+        self.subconsciente = None
+        self.metamemoria = None
+        self.dna = None
+        self.personalidade = None
+        self.ciclo_vida = None
+        self.sonhos = None
+        self.gptm_supra = None
+        
+        if self.inovacoes_ativas and INOVACOES_DISPONIVEIS:
+            try:
+                # 1. Sistema de Consciência Artificial
+                self.consciencia = criar_consciencia_artificial(self.name)
+                logger.info("✅ Consciência Artificial ativada")
+                
+                # 2. Máscaras Sociais
+                self.mascaras = criar_gerenciador_mascaras(self.name)
+                logger.info("✅ Máscaras Sociais ativadas")
+                
+                # 3. Subconsciente
+                self.subconsciente = criar_carlos_subconsciente(self.name)
+                logger.info("✅ Sistema Subconsciente ativado")
+                
+                # 4. Metamemória
+                self.metamemoria = criar_metamemoria(self.name)
+                logger.info("✅ Metamemória ativada")
+                
+                # 5. DNA Evolutivo
+                self.dna = criar_dna_evolutivo(self.name)
+                logger.info("✅ DNA Evolutivo ativado")
+                
+                # 6. Personalidade e Energia
+                self.personalidade = criar_gerenciador_personalidade(self.name)
+                logger.info("✅ Sistema de Personalidade ativado")
+                
+                # 7. Ciclo de Vida
+                self.ciclo_vida = criar_gerenciador_ciclo_vida(self.name)
+                logger.info("✅ Ciclo de Vida ativado")
+                
+                # 8. Sistema de Sonhos
+                self.sonhos = criar_gerador_sonhos(self.name)
+                logger.info("✅ Sistema de Sonhos ativado")
+                
+                # 9. GPTM Supra (Narrador)
+                self.gptm_supra = obter_gptm_supra()
+                logger.info("✅ GPTM Supra (Narrador Mitológico) ativado")
+                
+                # 10. Eventos Cognitivos já está importado
+                logger.info("✅ Eventos Cognitivos Globais prontos")
+                
+                logger.info("🚀 TODAS AS 10 INOVAÇÕES ATIVADAS COM SUCESSO!")
+            except Exception as e:
+                logger.error(f"❌ Erro ao ativar inovações: {e}")
+                self.inovacoes_ativas = False
+        else:
+            self.inovacoes_ativas = False
+            logger.info("📝 Sistema operando sem inovações avançadas")
         
         # Configurar LLM se não foi inicializado pelo BaseAgentV2
         if not self.llm_available:
@@ -418,6 +505,21 @@ class CarlosMaestroV5(BaseAgentV2):
         """
         inicio_processamento = time.time()
         
+        # === VERIFICAÇÃO DE CACHE ===
+        if cache_manager:
+            # Tentar buscar no cache primeiro
+            resposta_cache, tokens_economizados = cache_manager.get(mensagem)
+            
+            if resposta_cache:
+                # Hit no cache! Retornar resposta e registrar economia
+                logger.info(f"🎯 Cache hit! {tokens_economizados} tokens economizados")
+                
+                # Registrar economia de tokens
+                self.metricas['tokens_economizados'] = self.metricas.get('tokens_economizados', 0) + tokens_economizados
+                self.metricas['cache_hits'] = self.metricas.get('cache_hits', 0) + 1
+                
+                return resposta_cache
+        
         # === PROCESSAMENTO COM INOVAÇÕES v4.9 ===
         mascara_ativa = None
         energia_disponivel = None
@@ -425,11 +527,12 @@ class CarlosMaestroV5(BaseAgentV2):
         
         if self.inovacoes_ativas:
             # 1. CONSCIÊNCIA processa a experiência
-            nivel_consciencia = self.consciencia.processar_experiencia(
-                tipo="interacao_usuario",
+            self.consciencia.processar_experiencia(
+                tipo_experiencia="interacao_usuario",
                 intensidade=1.0,
                 contexto={"mensagem": mensagem}
             )
+            nivel_consciencia = self.consciencia.obter_status_consciencia()
             
             # 2. MÁSCARA SOCIAL para contexto
             mascara_ativa = self.mascaras.selecionar_mascara_contextual(
@@ -437,14 +540,11 @@ class CarlosMaestroV5(BaseAgentV2):
             )
             
             # 3. ENERGIA e fadiga
-            energia_disponivel = self.personalidade.consumir_energia(
-                tipo_atividade="processamento_complexo",
-                intensidade=0.8
-            )
+            energia_disponivel = self.personalidade.obter_status_completo()
             
             # 4. Atualizar métricas globais para EVENTOS COGNITIVOS
             atualizar_metricas_agente_global(self.name, {
-                "energia": energia_disponivel["nivel_atual"]["mental"],
+                "energia": energia_disponivel["energia"]["niveis_energia"]["mental"],
                 "consciencia_nivel": nivel_consciencia["nivel_atual"],
                 "processando": True,
                 "atividade_atual": "processamento_mensagem"
@@ -464,10 +564,7 @@ class CarlosMaestroV5(BaseAgentV2):
                 
                 # Aplicar máscara social mesmo em respostas simples
                 if self.inovacoes_ativas and mascara_ativa:
-                    resposta = self.mascaras.aplicar_mascara_resposta(
-                        resposta_original=resposta,
-                        contexto={"simples": True}
-                    )
+                    resposta = self.mascaras.aplicar_modificadores_resposta(resposta)
                 
                 return resposta
             
@@ -546,7 +643,7 @@ class CarlosMaestroV5(BaseAgentV2):
             if self.inovacoes_ativas:
                 # Aplicar máscara social na resposta final
                 if mascara_ativa:
-                    resultado = self.mascaras.aplicar_mascara_resposta(
+                    resultado = self.mascaras.aplicar_modificadores_resposta(
                         resposta_original=resultado,
                         contexto={"tipo_comando": tipo_comando.value}
                     )
@@ -560,34 +657,46 @@ class CarlosMaestroV5(BaseAgentV2):
                 )
                 
                 # Verificar se precisa SONHAR (baixa energia)
-                if energia_disponivel and energia_disponivel["nivel_atual"]["mental"] < 30:
-                    self.sonhos.induzir_sonho_regenerativo()
+                if energia_disponivel and energia_disponivel["energia"]["niveis_energia"]["mental"] < 30:
+                    self.sonhos.iniciar_ciclo_sono()
                 
                 # DNA evolui com uso
-                self.dna.processar_experiencia(
-                    tipo_experiencia="comando_processado",
-                    sucesso=True,
-                    intensidade=0.5
+                self.dna.processar_mutacao(
+                    tipo_mutacao="adaptativa",
+                    genes_alvo=None
                 )
                 
-                # Narrador mitológico observa
+                # Narrador mitológico observa  
+                from utils.gptm_supra import TipoEvento
                 self.gptm_supra.observar_evento(
-                    tipo_evento="interacao_profunda",
-                    agentes_envolvidos=[self.name],
+                    tipo=TipoEvento.INTERACAO_ESPECIAL,
+                    agentes=[self.name],
+                    descricao=f"Processamento de comando: {mensagem[:50]}",
                     contexto={"comando": mensagem[:50], "sucesso": True}
                 )
+            
+            # === SALVAR NO CACHE ===
+            if cache_manager and resultado:
+                # Estimar tokens usados (aproximado: 1 token ≈ 4 caracteres)
+                tokens_estimados = max(10, len(mensagem) // 4 + len(resultado) // 4)
+                
+                # Salvar no cache
+                cache_manager.put(mensagem, resultado, tokens_estimados)
+                logger.info(f"💾 Resposta salva no cache ({tokens_estimados} tokens)")
             
             return resultado
             
         except Exception as e:
             logger.error(f"❌ Erro no processamento Maestro: {e}")
             
-            # Registrar falha no SUBCONSCIENTE se inovações ativas
+            # Registrar trauma no SUBCONSCIENTE se inovações ativas
             if self.inovacoes_ativas:
-                self.subconsciente.registrar_falha(
-                    tipo_falha="erro_processamento",
-                    contexto={"erro": str(e), "mensagem": mensagem[:100]},
-                    intensidade=2.0
+                from utils.carlos_subconsciente import TipoTrauma, IntensidadeTrauma
+                self.subconsciente.registrar_trauma(
+                    tipo=TipoTrauma.FALHA_CRITICA,
+                    descricao="Erro no processamento de comando",
+                    intensidade=IntensidadeTrauma.MODERADA,
+                    contexto={"erro": str(e), "mensagem": mensagem[:100]}
                 )
             
             return f"❌ Erro no processamento: {str(e)}"
@@ -1451,8 +1560,8 @@ Crie uma resposta completamente nova que seja excelente:"""
                 resposta_status += "**🚀 Inovações Ativas:**\n"
                 resposta_status += f"• Consciência: Nível {self.consciencia.obter_status_consciencia()['nivel_atual']}\n"
                 resposta_status += f"• Ciclo de Vida: {self.ciclo_vida.fase_atual.value}\n"
-                resposta_status += f"• Energia Mental: {self.personalidade.obter_status_completo()['niveis_atuais']['mental']:.0f}%\n"
-                resposta_status += f"• Máscaras Ativas: {len(self.mascaras.obter_status_mascaras()['mascaras_ativas'])}\n\n"
+                resposta_status += f"• Energia Mental: {self.personalidade.obter_status_completo()['energia']['niveis_energia']['mental']:.0f}%\n"
+                resposta_status += f"• Máscaras Ativas: {len(self.mascaras.obter_status_sistema().get('mascaras_ativas', []))}\n\n"
             
             resposta_status += "**Estatísticas:**\n"
             resposta_status += f"• Comandos processados: {diagnostico['stats']['comandos_processados']}\n"

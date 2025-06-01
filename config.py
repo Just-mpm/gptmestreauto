@@ -6,10 +6,13 @@ Autor: Matheus Meireles
 
 import os
 from pathlib import Path
-from dotenv import load_dotenv
 
-# Carrega variáveis de ambiente
-load_dotenv()
+# Tentar carregar dotenv, mas não falhar se não estiver disponível
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    print("⚠️ python-dotenv não instalado. Usando variáveis de ambiente do sistema.")
 
 class Config:
     """Configurações centralizadas do sistema"""
@@ -34,11 +37,14 @@ class Config:
     LLM_PROVIDER = os.getenv("LLM_PROVIDER", "gemini").lower()
     
     # === API KEYS ===
-    # Google Gemini (novo padrão)
+    # Google Gemini (novo padrão) - com fallback para a chave do .env
     GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+    if not GOOGLE_API_KEY and LLM_PROVIDER == "gemini":
+        # Fallback para a chave hardcoded apenas para testes
+        GOOGLE_API_KEY = "AIzaSyDHJrNLA3h-LFg4-urvbEd18Vcdzs-1DYE"
     
     # Anthropic (mantido para compatibilidade)
-    ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+    ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
     
     # Validação de API Key baseada no provider
     if LLM_PROVIDER == "gemini":

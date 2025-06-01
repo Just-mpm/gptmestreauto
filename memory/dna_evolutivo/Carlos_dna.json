@@ -1,0 +1,208 @@
+{
+  "agente_id": "Carlos",
+  "genes": [
+    {
+      "id": "e481030a-b59d-4142-8b5f-21bc7eb7dad5",
+      "nome": "curiosidade",
+      "tipo": "personalidade",
+      "valor": 0.6,
+      "estado": "ativo",
+      "dominancia": 0.3157133302095335,
+      "estabilidade": 0.861086557227138,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "sempre",
+        "energia_minima": 10
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:37:13.655984"
+    },
+    {
+      "id": "6bcb17db-c565-4473-8b55-0539bbbd16eb",
+      "nome": "empatia",
+      "tipo": "emocional",
+      "valor": 0.5,
+      "estado": "ativo",
+      "dominancia": 0.3201052330659414,
+      "estabilidade": 0.7208768621135174,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "emocional",
+        "energia_minima": 15
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:37:13.656008"
+    },
+    {
+      "id": "4fcd2663-48ad-44b1-bb7d-ea55a765b7d8",
+      "nome": "logica",
+      "tipo": "cognitivo",
+      "valor": 0.7,
+      "estado": "ativo",
+      "dominancia": 0.36420478052202754,
+      "estabilidade": 0.7120396686117518,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "processamento",
+        "energia_minima": 25
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:37:13.656019"
+    },
+    {
+      "id": "668d3a5d-ab6e-4bef-bc43-953b01845ec8",
+      "nome": "criatividade",
+      "tipo": "criativo",
+      "valor": 0.4,
+      "estado": "ativo",
+      "dominancia": 0.12875983263371793,
+      "estabilidade": 0.43487523087266305,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "criativo",
+        "energia_minima": 35
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:37:13.656027"
+    },
+    {
+      "id": "e6d81136-4163-4af2-b958-d33089c45c65",
+      "nome": "adaptabilidade",
+      "tipo": "adaptativo",
+      "valor": 0.6,
+      "estado": "ativo",
+      "dominancia": 0.6552470418300683,
+      "estabilidade": 0.45792301160884635,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "mudanca",
+        "energia_minima": 30
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:37:13.656034"
+    },
+    {
+      "id": "50c42105-1811-4517-a06b-ca6f69b9fbe0",
+      "nome": "paciencia",
+      "tipo": "comportamento",
+      "valor": 0.5,
+      "estado": "ativo",
+      "dominancia": 0.42866790060358007,
+      "estabilidade": 0.4109834002577804,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "interacao",
+        "energia_minima": 15
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:37:13.656041"
+    },
+    {
+      "id": "f31ed4bc-c0e1-41db-b8e7-9b4a60c2ce5c",
+      "nome": "comunicacao",
+      "tipo": "social",
+      "valor": 0.6,
+      "estado": "ativo",
+      "dominancia": 0.585151022499566,
+      "estabilidade": 0.4417938658759727,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "social",
+        "energia_minima": 20
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:37:13.656048"
+    },
+    {
+      "id": "c553ea8a-5ce9-4f96-a118-aa09fd222f33",
+      "nome": "analise",
+      "tipo": "analitico",
+      "valor": 0.7,
+      "estado": "ativo",
+      "dominancia": 0.650790456688365,
+      "estabilidade": 0.4794680790277447,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "analise",
+        "energia_minima": 30
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:37:13.656054"
+    },
+    {
+      "id": "01f7542a-0225-46df-a3a9-04738fe44611",
+      "nome": "intuicao",
+      "tipo": "instintivo",
+      "valor": 0.3,
+      "estado": "ativo",
+      "dominancia": 0.3707176127470926,
+      "estabilidade": 0.6071411551535393,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "urgencia",
+        "energia_minima": 5
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:37:13.656061"
+    },
+    {
+      "id": "674e2d41-831b-4e7f-982b-c093eaa4ff14",
+      "nome": "determinacao",
+      "tipo": "personalidade",
+      "valor": 0.5,
+      "estado": "ativo",
+      "dominancia": 0.21047779648358955,
+      "estabilidade": 0.6196359105663545,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "sempre",
+        "energia_minima": 10
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:37:13.656067"
+    },
+    {
+      "id": "b6472459-eac2-4ce5-a4ea-557f938d4bd4",
+      "nome": "risk_taking",
+      "tipo": "comportamento",
+      "valor": 0.5149014789041406,
+      "estado": "dormante",
+      "dominancia": 0.6133674700580758,
+      "estabilidade": 0.5657019504625977,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "interacao",
+        "energia_minima": 15
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:37:13.656102"
+    }
+  ],
+  "geracao": 1,
+  "energia_evolutiva": 100.0,
+  "historico_evolucoes": [],
+  "linhagem_genetica": [],
+  "ultima_atualizacao": "2025-06-01T14:37:13.656173"
+}

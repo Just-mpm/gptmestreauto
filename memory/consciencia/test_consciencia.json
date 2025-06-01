@@ -1,0 +1,38 @@
+{
+  "agente_id": "test",
+  "nivel_atual": 1,
+  "experiencia_nivel": {
+    "1": 111.0,
+    "2": 0.0,
+    "3": 0.0,
+    "4": 0.0,
+    "5": 0.0
+  },
+  "transicoes_realizadas": 0,
+  "momento_ultima_evolucao": null,
+  "bloqueios_evolutivos": [],
+  "insights_acumulados": [],
+  "historico_consciencia": [
+    {
+      "timestamp": "2025-06-01T14:42:48.197854",
+      "tipo_evento": "experiencia",
+      "nivel_consciencia": 1,
+      "sessao_id": "acbf2419",
+      "dados": {
+        "tipo": "teste",
+        "intensidade": 1.0,
+        "ganho": 11.0,
+        "contexto": null,
+        "resultado": {
+          "nivel_anterior": 1,
+          "experiencia_processada": true,
+          "evolucao_ocorreu": false,
+          "insights_gerados": [],
+          "bloqueios_detectados": []
+        }
+      }
+    }
+  ],
+  "ultima_atualizacao": "2025-06-01T14:42:48.197877",
+  "sessao_id": "acbf2419"
+}

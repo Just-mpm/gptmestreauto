@@ -1,0 +1,226 @@
+{
+  "agente_id": "test",
+  "genes": [
+    {
+      "id": "378bf48a-c34c-4bed-88fb-17c4000b9639",
+      "nome": "curiosidade",
+      "tipo": "personalidade",
+      "valor": 0.6,
+      "estado": "ativo",
+      "dominancia": 0.4391411062795378,
+      "estabilidade": 0.5056225006049637,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "sempre",
+        "energia_minima": 10
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:50:16.792339"
+    },
+    {
+      "id": "694ed0f3-96ca-4a71-a95b-3acf552aa189",
+      "nome": "empatia",
+      "tipo": "emocional",
+      "valor": 0.5,
+      "estado": "ativo",
+      "dominancia": 0.4905867422329334,
+      "estabilidade": 0.5250162150946998,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "emocional",
+        "energia_minima": 15
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:50:16.792365"
+    },
+    {
+      "id": "3363fd55-2db0-4c0a-8dc9-e8865f4b14e7",
+      "nome": "logica",
+      "tipo": "cognitivo",
+      "valor": 0.7,
+      "estado": "ativo",
+      "dominancia": 0.33910569556897396,
+      "estabilidade": 0.7957131901423549,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "processamento",
+        "energia_minima": 25
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:50:16.792377"
+    },
+    {
+      "id": "9aa64b02-2c58-425a-82c5-33e73602045f",
+      "nome": "criatividade",
+      "tipo": "criativo",
+      "valor": 0.4,
+      "estado": "ativo",
+      "dominancia": 0.3623695744892743,
+      "estabilidade": 0.8007072798970296,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "criativo",
+        "energia_minima": 35
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:50:16.792387"
+    },
+    {
+      "id": "eacb0c29-d008-4711-8572-ccec9616d4b9",
+      "nome": "adaptabilidade",
+      "tipo": "adaptativo",
+      "valor": 0.6,
+      "estado": "ativo",
+      "dominancia": 0.7086866484405057,
+      "estabilidade": 0.598537165457167,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "mudanca",
+        "energia_minima": 30
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:50:16.792399"
+    },
+    {
+      "id": "378fc057-509f-469d-92de-ab72ee87be3a",
+      "nome": "paciencia",
+      "tipo": "comportamento",
+      "valor": 0.5,
+      "estado": "ativo",
+      "dominancia": 0.2895348470744897,
+      "estabilidade": 0.8411865571572086,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "interacao",
+        "energia_minima": 15
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:50:16.792411"
+    },
+    {
+      "id": "81297a26-af6b-4511-86a5-b62221edd834",
+      "nome": "comunicacao",
+      "tipo": "social",
+      "valor": 0.6,
+      "estado": "ativo",
+      "dominancia": 0.7640548177158083,
+      "estabilidade": 0.5381618274137411,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "social",
+        "energia_minima": 20
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:50:16.792423"
+    },
+    {
+      "id": "7fede20e-6884-42fb-9601-f906f6aeb2fb",
+      "nome": "analise",
+      "tipo": "analitico",
+      "valor": 0.7,
+      "estado": "ativo",
+      "dominancia": 0.40876965546570737,
+      "estabilidade": 0.523162821487035,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "analise",
+        "energia_minima": 30
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:50:16.792434"
+    },
+    {
+      "id": "4e63c984-6b15-4f91-805f-b0d31ef0da5d",
+      "nome": "intuicao",
+      "tipo": "instintivo",
+      "valor": 0.3,
+      "estado": "ativo",
+      "dominancia": 0.45769705854243836,
+      "estabilidade": 0.6782475337748877,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "urgencia",
+        "energia_minima": 5
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:50:16.792446"
+    },
+    {
+      "id": "d5af180e-1d99-42c8-9724-493d3548b411",
+      "nome": "determinacao",
+      "tipo": "personalidade",
+      "valor": 0.5,
+      "estado": "ativo",
+      "dominancia": 0.2316621096380129,
+      "estabilidade": 0.5457087709781689,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "sempre",
+        "energia_minima": 10
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:50:16.792457"
+    },
+    {
+      "id": "8fcd1a21-7539-4bdc-9d18-19246a698fc9",
+      "nome": "memoria_eidética",
+      "tipo": "habilidade",
+      "valor": 0.30965770542031856,
+      "estado": "dormante",
+      "dominancia": 0.347426652522487,
+      "estabilidade": 0.7903567294458258,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "tarefa_especifica",
+        "energia_minima": 20
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:50:16.792512"
+    },
+    {
+      "id": "e1ffa0cc-8ea8-4504-a16a-e81bfcbd515e",
+      "nome": "perfeccionismo",
+      "tipo": "personalidade",
+      "valor": 0.2441663267038868,
+      "estado": "dormante",
+      "dominancia": 0.4825819258493461,
+      "estabilidade": 0.8735649393173002,
+      "expressao_atual": 0.0,
+      "genes_interagindo": [],
+      "condicoes_ativacao": {
+        "contexto": "sempre",
+        "energia_minima": 10
+      },
+      "historico_mutacoes": [],
+      "origem": "natural",
+      "timestamp_criacao": "2025-06-01T14:50:16.792527"
+    }
+  ],
+  "geracao": 1,
+  "energia_evolutiva": 100.0,
+  "historico_evolucoes": [],
+  "linhagem_genetica": [],
+  "ultima_atualizacao": "2025-06-01T14:50:16.792634"
+}

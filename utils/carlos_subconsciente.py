@@ -192,6 +192,22 @@ class CarlosSubconsciente:
         
         return list(set(gatilhos))  # Remove duplicatas
     
+    def _aplicar_influencia_trauma(self, trauma: TraumaSubconsciente):
+        """Aplica a influência do trauma no comportamento atual"""
+        
+        for aspecto, intensidade in trauma.impacto_comportamental.items():
+            # Aplicar influência com redução baseada na repressão
+            influencia_efetiva = intensidade * (1.0 - trauma.repressao_nivel)
+            
+            # Acumular influências ativas
+            if aspecto in self.influencias_ativas:
+                self.influencias_ativas[aspecto] += influencia_efetiva
+            else:
+                self.influencias_ativas[aspecto] = influencia_efetiva
+            
+            # Limitar influências para não ficarem extremas
+            self.influencias_ativas[aspecto] = max(-1.0, min(1.0, self.influencias_ativas[aspecto]))
+    
     def _calcular_impacto_inicial(self, tipo: TipoTrauma, 
                                  intensidade: IntensidadeTrauma) -> Dict[str, float]:
         """Calcula impacto comportamental inicial do trauma"""

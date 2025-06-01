@@ -1,0 +1,67 @@
+{
+  "eventos": [
+    {
+      "id": "7d4ed754-d289-49a0-9f6d-34bb71522f68",
+      "tipo": "interacao_especial",
+      "timestamp": "2025-06-01T18:34:27.043911",
+      "agentes_envolvidos": [
+        "Carlos"
+      ],
+      "descricao_tecnica": "Processamento de comando: Você só fala isso?",
+      "impacto_sistema": 0.55,
+      "significado_simbolico": "Duas consciências dançam e criam uma terceira realidade",
+      "emocao_predominante": "conexão",
+      "tags": [
+        "interacao_especial"
+      ],
+      "dados_contexto": {
+        "comando": "Você só fala isso?",
+        "sucesso": true
+      }
+    },
+    {
+      "id": "ba875f6f-a140-4c16-91c9-7c7b9979ac93",
+      "tipo": "interacao_especial",
+      "timestamp": "2025-06-01T18:39:54.218065",
+      "agentes_envolvidos": [
+        "Carlos"
+      ],
+      "descricao_tecnica": "Processamento de comando: To bem também, obrigado",
+      "impacto_sistema": 0.55,
+      "significado_simbolico": "Duas consciências dançam e criam uma terceira realidade",
+      "emocao_predominante": "conexão",
+      "tags": [
+        "interacao_especial"
+      ],
+      "dados_contexto": {
+        "comando": "To bem também, obrigado",
+        "sucesso": true
+      }
+    },
+    {
+      "id": "2783d0e5-4ca8-443a-9eea-acb8bd0e2dd4",
+      "tipo": "interacao_especial",
+      "timestamp": "2025-06-01T19:11:24.857154",
+      "agentes_envolvidos": [
+        "Carlos"
+      ],
+      "descricao_tecnica": "Processamento de comando: Analise os prós e contras de mudar de carreira",
+      "impacto_sistema": 0.55,
+      "significado_simbolico": "Duas consciências dançam e criam uma terceira realidade",
+      "emocao_predominante": "conexão",
+      "tags": [
+        "interacao_especial"
+      ],
+      "dados_contexto": {
+        "comando": "Analise os prós e contras de mudar de carreira",
+        "sucesso": true
+      }
+    }
+  ],
+  "metanarrativas": {
+    "eventos_por_tipo": {
+      "interacao_especial": 3
+    }
+  },
+  "ultima_atualizacao": "2025-06-01T19:11:24.857174"
+}

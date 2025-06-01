@@ -1,0 +1,151 @@
+🚀 PLANO DE EXECUÇÃO INTEGRADO - CLAUDE + GEMINI
+
+  Perfeito! Vamos trabalhar em conjunto. Vou organizar as tarefas e indicar exatamente o que precisamos do Gemini.
+
+  ---
+  📋 ETAPA 1: SISTEMA DE TESTES E ESTABILIZAÇÃO
+
+  O que vou fazer (Claude):
+  1. Criar suite de testes básica para o Carlos
+  2. Implementar testes para os 3 principais fluxos
+  3. Corrigir os warnings do LLM Factory
+
+  O que precisamos do Gemini:
+  Por favor, analise a estrutura do projeto GPT Mestre Autônomo e:
+
+  1. Sugira 10 casos de teste críticos que devemos implementar primeiro, considerando:
+     - Testes de integração entre agentes
+     - Casos extremos (mensagens vazias, muito longas, caracteres especiais)
+     - Testes de falha e recuperação
+
+  2. Crie um template de teste em pytest que seja reutilizável para todos os agentes
+
+  3. Sugira uma estratégia de mock para os LLMs durante os testes (para não gastar API)
+
+  4. Recomende métricas de cobertura de teste mínimas para um sistema de IA
+
+  ---
+  📋 ETAPA 2: CACHE INTELIGENTE
+
+  O que vou fazer (Claude):
+  1. Implementar sistema de cache em memória e disco
+  2. Criar detector de similaridade de perguntas
+  3. Integrar cache no fluxo do Carlos
+
+  O que precisamos do Gemini:
+  Para o sistema de cache do GPT Mestre Autônomo:
+
+  1. Sugira o melhor algoritmo para detectar similaridade semântica entre perguntas, considerando:
+     - Performance (precisa ser rápido)
+     - Acurácia (evitar falsos positivos)
+     - Implementação simples em Python
+
+  2. Projete uma estrutura de cache hierárquico:
+     - Nível 1: Cache exato (hash)
+     - Nível 2: Cache por similaridade
+     - Nível 3: Cache por contexto/usuário
+
+  3. Defina regras de invalidação inteligentes:
+     - Quando invalidar cache automático
+     - Como detectar mudanças que afetam respostas
+     - TTL adaptativo por tipo de pergunta
+
+  4. Crie 20 exemplos de perguntas que são "similares mas diferentes" para testar o sistema
+
+  ---
+  📋 ETAPA 3: MONITORAMENTO E CUSTOS
+
+  O que vou fazer (Claude):
+  1. Sistema de contagem de tokens por agente
+  2. Estimativa de custos em tempo real
+  3. Dashboard ASCII no terminal
+
+  O que precisamos do Gemini:
+  Para monitoramento de custos do sistema:
+
+  1. Crie uma tabela com estimativa de tokens para diferentes tipos de operação:
+     - Pergunta simples (Oi, tudo bem?)
+     - Pergunta complexa (análise profunda)
+     - Cada tipo de agente (tokens médios por resposta)
+
+  2. Projete um dashboard ASCII art bonito que mostre:
+     - Tokens usados (por agente e total)
+     - Custo estimado em R$
+     - Velocidade de consumo
+     - Alertas visuais
+
+  3. Sugira fórmulas para prever custo mensal baseado em:
+     - Uso atual
+     - Padrões de uso
+     - Tipos de perguntas mais comuns
+
+  4. Crie sistema de alertas inteligentes:
+     - Quando alertar sobre uso excessivo
+     - Como sugerir otimizações automáticas
+
+  ---
+  📋 ETAPA 4: OTIMIZAÇÃO DE AGENTES
+
+  O que vou fazer (Claude):
+  1. Implementar perfis de complexidade (mínimo, básico, completo)
+  2. Sistema de ativação/desativação dinâmica
+  3. Pooling de agentes para performance
+
+  O que precisamos do Gemini:
+  Para otimização do sistema multi-agente:
+
+  1. Crie uma matriz de decisão: [Tipo de Pergunta] x [Agentes Necessários]
+     Exemplo:
+     - "Que horas são?" → Apenas Carlos
+     - "Analise minha estratégia" → Carlos + Oráculo + Reflexor
+
+  2. Defina heurísticas para detectar complexidade em tempo real:
+     - Palavras-chave que indicam complexidade
+     - Comprimento da mensagem
+     - Presença de múltiplas perguntas
+
+  3. Sugira estratégia de "wake up" de agentes:
+     - Ordem de prioridade
+     - Dependências entre agentes
+     - Timeout por tipo de agente
+
+  4. Projete sistema de "memória compartilhada" entre agentes para evitar reprocessamento
+
+  ---
+  📋 ETAPA 5: INTERFACE E UX
+
+  O que vou fazer (Claude):
+  1. Melhorar app_simples.py com comandos especiais
+  2. Criar feedback visual melhor
+  3. Sistema de ajuda interativo
+
+  O que precisamos do Gemini:
+  Para melhorar a experiência do usuário:
+
+  1. Projete 15 comandos especiais úteis que não quebrem a naturalidade:
+     - Formato: natural mas detectável
+     - Exemplo: "Carlos, mostra o status" vs "/status"
+
+  2. Crie um sistema de feedback visual em ASCII:
+     - Indicadores de processamento criativos
+     - Diferentes animações por tipo de operação
+     - Feedback de erro amigável
+
+  3. Sugira personalidade nas respostas de erro:
+     - Timeout: resposta criativa do Carlos
+     - Erro de API: explicação amigável
+     - Sistema sobrecarregado: sugestão alternativa
+
+  4. Projete onboarding de 3 passos para novos usuários
+
+  ---
+  🎯 ORDEM DE EXECUÇÃO SUGERIDA:
+
+  1. Primeiro: Etapas 1 e 3 (Testes + Monitoramento)
+    - Base sólida e visibilidade
+  2. Segundo: Etapa 2 (Cache)
+    - Redução imediata de custos
+  3. Terceiro: Etapa 4 (Otimização)
+    - Performance e eficiência
+  4. Quarto: Etapa 5 (UX)
+    - Polimento final

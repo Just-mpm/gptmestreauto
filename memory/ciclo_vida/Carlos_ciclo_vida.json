@@ -1,0 +1,40 @@
+{
+  "agente_id": "Carlos",
+  "fase_atual": "nascimento",
+  "idade_cronologica_seconds": 32400,
+  "idade_desenvolvimental": 0.29148,
+  "estado_desenvolvimento": {
+    "experiencia_vida": 92.2,
+    "maturidade_emocional": 0.0,
+    "complexidade_cognitiva": 0.0,
+    "sabedoria_acumulada": 0.0,
+    "capacidade_adaptacao": 0.8,
+    "resiliencia": 0.3,
+    "auto_conhecimento": 0.0,
+    "competencias_sociais": 14.88,
+    "estabilidade_identidade": 2.2319999999999998
+  },
+  "marcos_desenvolvimento": [
+    {
+      "id": "16b59d9c-82b0-40ff-8b97-293b89cd3db9",
+      "timestamp": "2025-06-01T14:37:18.968605",
+      "fase_vida": "nascimento",
+      "tipo_marco": "nascimento",
+      "descricao": "Nascimento do agente Carlos",
+      "impacto_positivo": true,
+      "competencias_adquiridas": [
+        "consciencia_basica",
+        "processamento_linguagem"
+      ],
+      "mudancas_personalidade": {},
+      "contexto": {
+        "primeiro_momento": true
+      }
+    }
+  ],
+  "crises_vivenciadas": [],
+  "stress_acumulado": 0.0,
+  "suporte_social": 0.5,
+  "timestamp_nascimento": "2025-06-01T14:37:18.968613",
+  "ultima_atualizacao": "2025-06-01T19:11:24.854625"
+}

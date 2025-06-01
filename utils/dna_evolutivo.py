@@ -166,6 +166,9 @@ class DNAEvolutivo:
         # Definir condições de ativação baseadas no tipo
         gene.condicoes_ativacao = self._definir_condicoes_ativacao(tipo)
         
+        # CORREÇÃO: Adicionar o gene ao dicionário
+        self.genes[gene_id] = gene
+        
         return gene_id
     
     def _definir_condicoes_ativacao(self, tipo: TipoGene) -> Dict[str, Any]:
@@ -448,6 +451,90 @@ class DNAEvolutivo:
         return {
             "sucesso": True,
             "tipo": "natural",
+            "mutacoes": mutacoes,
+            "total_mutacoes": len(mutacoes)
+        }
+    
+    def _mutacao_adaptativa(self, genes_alvo: List[str] = None) -> Dict[str, Any]:
+        """Mutação adaptativa direcionada por pressão seletiva"""
+        
+        if not genes_alvo:
+            # Selecionar genes com baixa performance
+            genes_alvo = [
+                gene.id for gene in self.genes.values()
+                if gene.estado == EstadoGene.ATIVO and gene.expressao_atual < 0.3
+            ]
+        
+        if not genes_alvo:
+            return {
+                "sucesso": False,
+                "erro": "Nenhum gene válido para mutação adaptativa"
+            }
+        
+        mutacoes = []
+        
+        for gene_id in genes_alvo:
+            if gene_id in self.genes:
+                gene = self.genes[gene_id]
+                
+                if gene.estado == EstadoGene.CRISTALIZADO:
+                    continue
+                
+                # Mutação adaptativa: aumentar valor e dominância
+                valor_anterior = gene.valor
+                dominancia_anterior = gene.dominancia
+                
+                # Boost adaptativo
+                gene.valor = min(1.0, gene.valor + random.uniform(0.1, 0.3))
+                gene.dominancia = min(1.0, gene.dominancia + random.uniform(0.05, 0.15))
+                
+                mutacao_info = {
+                    "gene_id": gene.id,
+                    "gene_nome": gene.nome,
+                    "tipo_mutacao": "adaptativa",
+                    "valor_anterior": valor_anterior,
+                    "valor_novo": gene.valor,
+                    "dominancia_anterior": dominancia_anterior,
+                    "dominancia_nova": gene.dominancia,
+                    "origem": "adaptativa",
+                    "timestamp": datetime.now().isoformat()
+                }
+                
+                gene.historico_mutacoes.append(mutacao_info)
+                mutacoes.append(mutacao_info)
+        
+        return {
+            "sucesso": True,
+            "tipo": "adaptativa",
+            "mutacoes": mutacoes,
+            "total_mutacoes": len(mutacoes)
+        }
+    
+    def _mutacao_dirigida(self, genes_alvo: List[str] = None) -> Dict[str, Any]:
+        """Mutação dirigida para genes específicos"""
+        
+        if not genes_alvo:
+            return {
+                "sucesso": False,
+                "erro": "Genes alvo não especificados para mutação dirigida"
+            }
+        
+        mutacoes = []
+        
+        for gene_id in genes_alvo:
+            if gene_id in self.genes:
+                gene = self.genes[gene_id]
+                
+                if gene.estado == EstadoGene.CRISTALIZADO:
+                    continue
+                
+                # Mutação dirigida: variação controlada
+                mutacao = self._aplicar_mutacao_gene(gene, "dirigida")
+                mutacoes.append(mutacao)
+        
+        return {
+            "sucesso": True,
+            "tipo": "dirigida",
             "mutacoes": mutacoes,
             "total_mutacoes": len(mutacoes)
         }
