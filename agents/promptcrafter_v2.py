@@ -86,6 +86,10 @@ class PromptCrafterV2(BaseAgentV2):
         
         logger.info("🎨 PromptCrafter v2.0 inicializado com módulos avançados")
     
+    def _processar_interno(self, entrada: str, contexto: Optional[Dict] = None) -> str:
+        """Implementação do método abstrato do BaseAgentV2"""
+        return self.processar(entrada, contexto)
+    
     def processar(self, entrada: str, contexto: Optional[Dict] = None) -> str:
         """Processa requisições de engenharia de prompts"""
         try:
@@ -123,10 +127,23 @@ class PromptCrafterV2(BaseAgentV2):
             logger.error(f"❌ Erro no PromptCrafter: {e}")
             return self._gerar_erro_resposta(str(e))
     
-    def _criar_prompt(self, entrada: str, contexto: Dict) -> str:
+    def _revisar_prompt(self, entrada: str, contexto: Optional[Dict] = None) -> str:
+        """Revisa prompt existente"""
+        return "🔧 Funcionalidade de revisão em desenvolvimento"
+    
+    def _registrar_shadow_learning(self, mensagem: str, resultado_a: str, resultado_b: str, melhor: str):
+        """Registra aprendizado do Shadow Chain"""
+        self._registrar_evento("shadow_learning", {
+            "mensagem": mensagem[:50],
+            "melhor_escolhido": "A" if melhor == resultado_a else "B"
+        })
+    
+    def _criar_prompt(self, entrada: str, contexto: Optional[Dict] = None) -> str:
         """Cria novo prompt com DNA completo"""
         try:
             # Extrair parâmetros
+            if contexto is None:
+                contexto = {}
             params = self._extrair_parametros(entrada, contexto)
             
             # Gerar prompt base
@@ -260,9 +277,11 @@ Diretrizes de marca:
         
         return prompt
     
-    def _gerar_kit(self, entrada: str, contexto: Dict) -> str:
+    def _gerar_kit(self, entrada: str, contexto: Optional[Dict] = None) -> str:
         """🧩 Gera kit completo de prompts interconectados"""
         try:
+            if contexto is None:
+                contexto = {}
             params = self._extrair_parametros(entrada, contexto)
             produto = params.get("produto", "produto genérico")
             
@@ -308,7 +327,7 @@ Diretrizes de marca:
             logger.error(f"❌ Erro ao gerar kit: {e}")
             return f"❌ Erro na geração do kit: {str(e)}"
     
-    def _aplicar_lock(self, entrada: str, contexto: Dict) -> str:
+    def _aplicar_lock(self, entrada: str, contexto: Optional[Dict] = None) -> str:
         """🧊 Aplica lock em prompt crítico"""
         try:
             # Extrair ID do prompt
@@ -352,7 +371,7 @@ Diretrizes de marca:
             logger.error(f"❌ Erro ao aplicar lock: {e}")
             return f"❌ Erro no PromptLock: {str(e)}"
     
-    def _mostrar_lineage(self, entrada: str, contexto: Dict) -> str:
+    def _mostrar_lineage(self, entrada: str, contexto: Optional[Dict] = None) -> str:
         """🌱 Mostra árvore genealógica de versões do prompt"""
         try:
             prompt_id = self._extrair_prompt_id(entrada)
@@ -836,7 +855,7 @@ Categorias essenciais:
         
         return sorted(descendentes)
     
-    def _ativar_chaos(self, entrada: str, contexto: Dict) -> str:
+    def _ativar_chaos(self, entrada: str, contexto: Optional[Dict] = None) -> str:
         """Ativa modo chaos criativo"""
         try:
             # Extrair nível de chaos se especificado
@@ -887,9 +906,11 @@ Use `promptchaos nivel 0` para desativar.
         content = json.dumps(params, sort_keys=True)
         return hashlib.md5(content.encode()).hexdigest()[:8]
     
-    def _gerar_variacoes(self, entrada: str, contexto: Dict) -> str:
+    def _gerar_variacoes(self, entrada: str, contexto: Optional[Dict] = None) -> str:
         """Gera variações de prompt para diferentes contextos"""
         try:
+            if contexto is None:
+                contexto = {}
             params = self._extrair_parametros(entrada, contexto)
             base_prompt = self._gerar_prompt_base(params)
             
