@@ -1220,50 +1220,24 @@ def main():
 
 # ===== FOOTER v2.1 =====
 def show_footer():
-    """🎨 Footer Premium v5.0"""
-    st.markdown("""
-    <div class="glass-card" style="text-align: center; margin-top: 3rem; padding: 2rem;">
-        <div style="margin-bottom: 1.5rem;">
-            <h3 style="margin: 0; background: linear-gradient(45deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-                🧠 GPT Mestre Autônomo v5.0
-            </h3>
-            <p style="margin: 0.5rem 0; color: #666; font-size: 1rem;">
-                Sistema Revolucionário com Assembleia Dinâmica
-            </p>
-        </div>
-        
-        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin: 1.5rem 0;">
-            <span class="badge badge-primary">🛡️ BaseAgentV2</span>
-            <span class="badge badge-success">🧠 LangChain + Claude 3</span>
-            <span class="badge badge-warning">⚡ 9 Agentes v2.0</span>
-            <span class="badge badge-primary">🔍 ScoutAI v1.3A</span>
-        </div>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0; text-align: left;">
-            <div>
-                <h4 style="margin: 0 0 0.5rem 0; color: #333; font-size: 0.9rem;">🤖 Agentes Core</h4>
-                <p style="margin: 0; color: #666; font-size: 0.8rem;">Carlos v5.0 • Oráculo v9.0 • AutoMaster v2.0</p>
-            </div>
-            <div>
-                <h4 style="margin: 0 0 0.5rem 0; color: #333; font-size: 0.9rem;">🔧 Robustez</h4>
-                <p style="margin: 0; color: #666; font-size: 0.8rem;">Circuit Breakers • Rate Limiting • Thread Safety</p>
-            </div>
-            <div>
-                <h4 style="margin: 0 0 0.5rem 0; color: #333; font-size: 0.9rem;">🧠 IA Real</h4>
-                <p style="margin: 0; color: #666; font-size: 0.8rem;">LangChain • Claude 3 Haiku • ChromaDB</p>
-            </div>
-        </div>
-        
-        <div style="border-top: 1px solid rgba(0,0,0,0.1); padding-top: 1.5rem; margin-top: 1.5rem;">
-            <p style="margin: 0; color: #666; font-size: 0.9rem;">
-                ✨ <strong>Desenvolvido por Matheus Meireles</strong> com arquitetura revolucionária
-            </p>
-            <p style="margin: 0.5rem 0 0 0; color: #999; font-size: 0.8rem;">
-                🚀 O futuro da autonomia artificial • Único sistema com assembleia dinâmica no mundo
-            </p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    """🎨 Footer Premium v5.0 - Fixed"""
+    st.markdown("---")
+    st.markdown("## 🧠 GPT Mestre Autônomo v5.0")
+    st.markdown("*Sistema Revolucionário com Assembleia Dinâmica*")
+    
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.info("🛡️ BaseAgentV2")
+    with col2:
+        st.success("🧠 LangChain + Claude 3")
+    with col3:
+        st.warning("⚡ 9 Agentes v2.0")
+    with col4:
+        st.info("🔍 ScoutAI v1.3A")
+    
+    st.markdown("---")
+    st.markdown("✨ **Desenvolvido por Matheus Meireles** com arquitetura revolucionária")
+    st.caption("🚀 O futuro da autonomia artificial • Único sistema com assembleia dinâmica no mundo")
 
 # ===== EXECUÇÃO PRINCIPAL =====
 if __name__ == "__main__":

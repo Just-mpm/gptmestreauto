@@ -299,74 +299,74 @@ class CarlosMaestroV5(BaseAgentV2):
                 logger.warning("⚠️ Módulo de memória não encontrado")
                 self.memoria_ativa = False
         
-        # SupervisorAI
+        # SupervisorAI v2.0
         if self.supervisor_ativo:
             try:
-                from agents.supervisor_ai import criar_supervisor_ai
-                self.supervisor = criar_supervisor_ai(llm=self.llm)
-                logger.info("🧠 SupervisorAI integrado ao Maestro!")
+                from agents.supervisor_ai_v2 import criar_supervisor_ai_v2
+                self.supervisor = criar_supervisor_ai_v2()
+                logger.info("🧠 SupervisorAI v2.0 integrado ao Maestro!")
             except ImportError:
-                logger.warning("⚠️ SupervisorAI não disponível")
+                logger.warning("⚠️ SupervisorAI v2.0 não disponível")
                 self.supervisor_ativo = False
         
-        # Reflexor
+        # Reflexor v2.0
         if self.reflexor_ativo:
             try:
-                from agents.reflexor import AgenteReflexor
-                self.reflexor = AgenteReflexor(llm=self.llm)
-                logger.info("Reflexor integrado ao Maestro!")
+                from agents.reflexor_v2 import criar_reflexor_v2
+                self.reflexor = criar_reflexor_v2()
+                logger.info("🔍 Reflexor v2.0 integrado ao Maestro!")
             except ImportError:
-                logger.warning("⚠️ Reflexor não disponível")
+                logger.warning("⚠️ Reflexor v2.0 não disponível")
                 self.reflexor_ativo = False
         
-        # DeepAgent
+        # DeepAgent v2.0
         if self.deepagent_ativo:
             try:
-                from agents.deep_agent import criar_deep_agent_websearch
-                self.deepagent = criar_deep_agent_websearch()
-                logger.info("🌐 DeepAgent integrado ao Maestro!")
+                from agents.deep_agent_v2 import criar_deep_agent_v2
+                self.deepagent = criar_deep_agent_v2()
+                logger.info("🌐 DeepAgent v2.0 integrado ao Maestro!")
             except ImportError:
-                logger.warning("⚠️ DeepAgent não disponível")
+                logger.warning("⚠️ DeepAgent v2.0 não disponível")
                 self.deepagent_ativo = False
         
-        # Oráculo
+        # Oráculo v9.0
         if self.oraculo_ativo:
             try:
-                from agents.oraculo import criar_oraculo_v8_plus
-                self.oraculo = criar_oraculo_v8_plus(llm=self.llm)
-                logger.info("🧠 Oráculo v8.1 integrado ao Maestro!")
+                from agents.oraculo_v2 import criar_oraculo_v9
+                self.oraculo = criar_oraculo_v9()
+                logger.info("🧠 Oráculo v9.0 integrado ao Maestro!")
             except ImportError:
-                logger.warning("⚠️ Oráculo não disponível")
+                logger.warning("⚠️ Oráculo v9.0 não disponível")
                 self.oraculo_ativo = False
         
-        # AutoMaster
+        # AutoMaster v2.0
         if self.automaster_ativo:
             try:
-                from agents.automaster import criar_automaster_v4
-                self.automaster = criar_automaster_v4(llm=self.llm)
-                logger.info("💼 AutoMaster v4.0 integrado ao Maestro!")
+                from agents.automaster_v2 import criar_automaster_v2
+                self.automaster = criar_automaster_v2()
+                logger.info("💼 AutoMaster v2.0 integrado ao Maestro!")
             except ImportError:
-                logger.warning("⚠️ AutoMaster não disponível")
+                logger.warning("⚠️ AutoMaster v2.0 não disponível")
                 self.automaster_ativo = False
         
-        # TaskBreaker
+        # TaskBreaker v2.0
         if self.taskbreaker_ativo:
             try:
-                from agents.task_breaker import criar_task_breaker
-                self.taskbreaker = criar_task_breaker(llm=self.llm)
-                logger.info("TaskBreaker v1.0 integrado ao Maestro!")
+                from agents.task_breaker_v2 import criar_task_breaker_v2
+                self.taskbreaker = criar_task_breaker_v2()
+                logger.info("🔨 TaskBreaker v2.0 integrado ao Maestro!")
             except ImportError:
-                logger.warning("⚠️ TaskBreaker não disponível")
+                logger.warning("⚠️ TaskBreaker v2.0 não disponível")
                 self.taskbreaker_ativo = False
         
-        # PsyMind
+        # PsyMind v2.0
         if self.psymind_ativo:
             try:
-                from agents.psymind import criar_psymind_v2
+                from agents.psymind_v2 import criar_psymind_v2
                 self.psymind = criar_psymind_v2()
                 logger.info("🧠 PsyMind v2.0 integrado ao Maestro!")
             except ImportError:
-                logger.warning("⚠️ PsyMind não disponível")
+                logger.warning("⚠️ PsyMind v2.0 não disponível")
                 self.psymind_ativo = False
     
     def _processar_interno(self, mensagem: str, contexto: Optional[Dict] = None) -> str:

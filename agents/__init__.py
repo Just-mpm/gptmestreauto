@@ -5,11 +5,10 @@ Centraliza todos os imports dos agentes do sistema com BaseAgentV2
 
 # Imports dos agentes base
 try:
-    from .base_agent import BaseAgent
     from .base_agent_v2 import BaseAgentV2
     BASE_AGENTS_AVAILABLE = True
 except ImportError as e:
-    print(f"⚠️ Erro ao importar agentes base: {e}")
+    print(f"⚠️ Erro ao importar BaseAgentV2: {e}")
     BASE_AGENTS_AVAILABLE = False
 
 # === AGENTES V2.0 (BaseAgentV2) - RECOMENDADOS ===
@@ -216,57 +215,17 @@ def criar_sistema_completo():
 
 __all__ = [
     # Agentes base
-    'BaseAgent',
     'BaseAgentV2',
     
-    # Agentes v2.0 (Recomendados)
-    'CarlosMaestroV5',
-    'OraculoV9', 
-    'PsyMindV2',
-    'AutoMasterV2',
-    'DeepAgentWebSearchV2',
-    'SupervisorAIV2',
-    'TaskBreakerV2',
-    'ReflexorV2',
-    'ScoutAI',
+    # Agentes v2.0 disponíveis
+    'CarlosMaestroV5', 'criar_carlos_maestro_v5', 'create_carlos',
     
-    # Funções de criação v2.0
-    'criar_carlos_maestro_v5',
-    'criar_oraculo_v9',
-    'criar_psymind_v2',
-    'criar_automaster_v2',
-    'criar_deep_agent_v2',
-    'criar_supervisor_ai_v2',
-    'criar_task_breaker_v2',
-    'criar_reflexor_v2',
-    'criar_scout_ai',
-    
-    # Funções de criação principais
-    'criar_carlos_maestro',  # Aponta para v5.0
-    
-    # Aliases para compatibilidade
-    'create_carlos',
-    'create_oraculo',
-    'create_automaster',
-    'create_psymind',
-    'create_scout',
-    'create_supervisor',
-    'create_taskbreaker',
-    'create_reflexor',
-    
-    # Funções de sistema
+    # Funções de verificação
     'verificar_agentes',
     'listar_agentes_v2',
-    'criar_sistema_completo',
-    'criar_sistema_v5_completo',
-    
-    # Estruturas de dados
-    'PlanoExecucao',
-    'Subtarefa',
     
     # Listas de agentes
     'AGENTES_V2_DISPONIVEIS',
-    'AGENTES_LEGADOS_DISPONIVEIS',
     'TODOS_AGENTES'
 ]
 
