@@ -41,7 +41,7 @@ GPT Mestre Autônomo/
 │
 ├── logs/                   # Application logs (auto-generated)
 │
-├── app_chainlit.py        # Main Chainlit application
+├── app.py                 # Main Chainlit application
 ├── chainlit.md            # Chainlit welcome message
 ├── config.py              # System configuration
 ├── requirements.txt       # Python dependencies
@@ -79,7 +79,7 @@ GPT Mestre Autônomo/
 
 To run the application with Chainlit:
 ```bash
-chainlit run app_chainlit.py -w
+chainlit run app.py -w
 ```
 
 The system is now clean and organized, ready for continued development.

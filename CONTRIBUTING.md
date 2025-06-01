@@ -87,7 +87,7 @@ GPT-Mestre-Autonomo/
 ├── utils/            # Utility functions
 ├── memory/           # Memory/storage systems
 ├── tests/            # Test files
-├── app_chainlit.py   # Main application
+├── app.py            # Main application
 ├── config.py         # Configuration
 └── requirements.txt  # Dependencies
 ```

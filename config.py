@@ -1,6 +1,6 @@
 """
 GPT MESTRE AUTÔNOMO - Configurações do Sistema
-Versão: 2.5 - Com Web Search Real
+Versão: 3.0 - Com suporte para Google Gemini 2.5 Flash
 Autor: Matheus Meireles
 """
 
@@ -16,7 +16,7 @@ class Config:
     
     # === CONFIGURAÇÕES BÁSICAS ===
     PROJECT_NAME = "GPT Mestre Autônomo"
-    VERSION = "2.5"  # 🆕 Versão com Web Search
+    VERSION = "3.0"  # 🆕 Versão com Google Gemini
     DEBUG = os.getenv("DEBUG", "False").lower() == "true"
     
     # === DIRETÓRIOS ===
@@ -29,17 +29,64 @@ class Config:
     for dir_path in [LOGS_DIR, MEMORY_DIR, AGENTS_DIR]:
         dir_path.mkdir(exist_ok=True)
     
+    # === CONFIGURAÇÃO DO LLM PROVIDER ===
+    # Escolha o provider: "gemini" ou "anthropic"
+    LLM_PROVIDER = os.getenv("LLM_PROVIDER", "gemini").lower()
+    
     # === API KEYS ===
+    # Google Gemini (novo padrão)
+    GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+    
+    # Anthropic (mantido para compatibilidade)
     ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
-    if not ANTHROPIC_API_KEY:
-        raise ValueError("ANTHROPIC_API_KEY não encontrada! Configure no arquivo .env")
     
-    # === CONFIGURAÇÕES DO LLM (Claude 3.5 Haiku com Web Search) ===
-    DEFAULT_MODEL = "claude-3-5-haiku-20241022"  # 🆕 Modelo atualizado com web search
-    MAX_TOKENS = 4000
-    TEMPERATURE = 0.7
+    # Validação de API Key baseada no provider
+    if LLM_PROVIDER == "gemini":
+        if not GOOGLE_API_KEY:
+            raise ValueError("GOOGLE_API_KEY não encontrada! Configure no arquivo .env")
+    elif LLM_PROVIDER == "anthropic":
+        if not ANTHROPIC_API_KEY:
+            raise ValueError("ANTHROPIC_API_KEY não encontrada! Configure no arquivo .env")
+    else:
+        raise ValueError(f"LLM_PROVIDER inválido: {LLM_PROVIDER}. Use 'gemini' ou 'anthropic'")
     
-    # 🆕 === CONFIGURAÇÕES DE WEB SEARCH ===
+    # === CONFIGURAÇÕES DO LLM ===
+    if LLM_PROVIDER == "gemini":
+        # Configurações do Google Gemini 2.5 Flash
+        DEFAULT_MODEL = "models/gemini-2.5-flash-preview-05-20"
+        MAX_TOKENS = 8192  # Gemini suporta até 8K tokens
+        TEMPERATURE = 0.7
+        TOP_P = 0.95
+        TOP_K = 40
+    else:
+        # Configurações do Anthropic Claude (compatibilidade)
+        DEFAULT_MODEL = "claude-3-5-haiku-20241022"
+        MAX_TOKENS = 4000
+        TEMPERATURE = 0.7
+        TOP_P = None  # Anthropic não usa top_p
+        TOP_K = None  # Anthropic não usa top_k
+    
+    # 🆕 === CONFIGURAÇÕES ESPECÍFICAS DO GEMINI ===
+    GEMINI_SAFETY_SETTINGS = [
+        {
+            "category": "HARM_CATEGORY_HARASSMENT",
+            "threshold": "BLOCK_ONLY_HIGH"
+        },
+        {
+            "category": "HARM_CATEGORY_HATE_SPEECH",
+            "threshold": "BLOCK_ONLY_HIGH"
+        },
+        {
+            "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            "threshold": "BLOCK_ONLY_HIGH"
+        },
+        {
+            "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+            "threshold": "BLOCK_ONLY_HIGH"
+        }
+    ]
+    
+    # === CONFIGURAÇÕES DE WEB SEARCH ===
     WEB_SEARCH_ENABLED = True
     WEB_SEARCH_MAX_USES = 3  # Máximo de buscas por resposta
     WEB_SEARCH_TIMEOUT = 30  # Timeout em segundos
@@ -78,14 +125,14 @@ class Config:
     AGENTES_ATIVOS = [
         "carlos",      # Interface principal
         "reflexor",    # Auditor interno
-        "deepagent",   # 🆕 Com web search real!
+        "deepagent",   # Com web search real!
         "supervisor",  # Classificador inteligente
     ]
     
     # === CONFIGURAÇÕES DO STREAMLIT ===
     STREAMLIT_CONFIG = {
         "page_title": PROJECT_NAME,
-        "page_icon": "🌐",  # 🆕 Ícone atualizado para web
+        "page_icon": "🤖",  # Ícone atualizado para IA
         "layout": "wide",
         "initial_sidebar_state": "expanded"
     }
@@ -107,10 +154,14 @@ def validate_config():
     """Valida se todas as configurações necessárias estão presentes"""
     errors = []
     
-    if not config.ANTHROPIC_API_KEY:
-        errors.append("ANTHROPIC_API_KEY não configurada")
+    if config.LLM_PROVIDER == "gemini":
+        if not config.GOOGLE_API_KEY:
+            errors.append("GOOGLE_API_KEY não configurada")
+    elif config.LLM_PROVIDER == "anthropic":
+        if not config.ANTHROPIC_API_KEY:
+            errors.append("ANTHROPIC_API_KEY não configurada")
     
-    # 🆕 Validar configurações de web search
+    # Validar configurações de web search
     if config.WEB_SEARCH_ENABLED:
         if config.WEB_SEARCH_MAX_USES < 1 or config.WEB_SEARCH_MAX_USES > 10:
             errors.append("WEB_SEARCH_MAX_USES deve estar entre 1 e 10")
@@ -126,21 +177,27 @@ def validate_config():
 if __name__ == "__main__":
     validate_config()
     print(f"✅ Configuração do {config.PROJECT_NAME} v{config.VERSION} validada com sucesso!")
-    print(f"🌐 Claude 3.5 Haiku: {config.DEFAULT_MODEL}")
+    print(f"🤖 LLM Provider: {config.LLM_PROVIDER.upper()}")
+    print(f"🤖 Modelo: {config.DEFAULT_MODEL}")
     print(f"🔍 Web Search: {'✅ ATIVO' if config.WEB_SEARCH_ENABLED else '❌ Inativo'}")
 
 # === COMPATIBILIDADE - Variáveis diretas ===
+# Mantidas para compatibilidade com código existente
+LLM_PROVIDER = config.LLM_PROVIDER
+GOOGLE_API_KEY = config.GOOGLE_API_KEY
 ANTHROPIC_API_KEY = config.ANTHROPIC_API_KEY
 DEFAULT_MODEL = config.DEFAULT_MODEL
-CLAUDE_MODEL = config.DEFAULT_MODEL
+CLAUDE_MODEL = config.DEFAULT_MODEL  # Alias para compatibilidade
 MAX_TOKENS = config.MAX_TOKENS
-CLAUDE_MAX_TOKENS = config.MAX_TOKENS
+CLAUDE_MAX_TOKENS = config.MAX_TOKENS  # Alias para compatibilidade
 TEMPERATURE = config.TEMPERATURE
-CLAUDE_TEMPERATURE = config.TEMPERATURE
+CLAUDE_TEMPERATURE = config.TEMPERATURE  # Alias para compatibilidade
+TOP_P = config.TOP_P
+TOP_K = config.TOP_K
 LOG_LEVEL = config.LOG_LEVEL
 LOG_FORMAT = config.LOG_FORMAT
 
-# 🆕 Web Search
+# Web Search
 WEB_SEARCH_ENABLED = config.WEB_SEARCH_ENABLED
 WEB_SEARCH_MAX_USES = config.WEB_SEARCH_MAX_USES
 WEB_SEARCH_ALLOWED_DOMAINS = config.WEB_SEARCH_ALLOWED_DOMAINS
@@ -166,5 +223,9 @@ LOG_ROTATION = "100 MB"
 LOG_RETENTION = "30 days"
 
 print(f"🔧 Variáveis de compatibilidade configuradas")
-print(f"🔑 ANTHROPIC_API_KEY: {'✅ Configurada' if ANTHROPIC_API_KEY else '❌ Não encontrada'}")
+print(f"🤖 LLM Provider: {LLM_PROVIDER}")
+if LLM_PROVIDER == "gemini":
+    print(f"🔑 GOOGLE_API_KEY: {'✅ Configurada' if GOOGLE_API_KEY else '❌ Não encontrada'}")
+else:
+    print(f"🔑 ANTHROPIC_API_KEY: {'✅ Configurada' if ANTHROPIC_API_KEY else '❌ Não encontrada'}")
 print(f"🌐 WEB SEARCH: {'✅ Habilitado' if WEB_SEARCH_ENABLED else '❌ Desabilitado'}")

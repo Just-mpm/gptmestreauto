@@ -5,6 +5,7 @@
 [![Python](https://img.shields.io/badge/Python-3.13+-blue.svg)](https://python.org)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.34+-red.svg)](https://streamlit.io)
 [![LangChain](https://img.shields.io/badge/LangChain-0.3+-green.svg)](https://langchain.com)
+[![Gemini](https://img.shields.io/badge/Gemini-2.5%20Flash-blue.svg)](https://ai.google.dev)
 [![Claude 3](https://img.shields.io/badge/Claude%203-Haiku-orange.svg)](https://anthropic.com)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -59,17 +60,33 @@ pip install -r requirements.txt
 # Copie o arquivo de exemplo
 cp .env.example .env
 
-# Edite com sua chave da Anthropic
+# Edite com sua chave API
 nano .env  # ou use seu editor preferido
 ```
 
-**Importante**: Você precisa de uma chave API da Anthropic. [Obtenha aqui](https://console.anthropic.com/)
+**🆕 Escolha seu Provider de IA:**
+
+#### **Opção A: Google Gemini (Recomendado)**
+- Obtenha sua chave em: https://makersuite.google.com/app/apikey
+- Configure no `.env`:
+  ```
+  LLM_PROVIDER=gemini
+  GOOGLE_API_KEY=sua_chave_aqui
+  ```
+
+#### **Opção B: Anthropic Claude**
+- Obtenha sua chave em: https://console.anthropic.com/
+- Configure no `.env`:
+  ```
+  LLM_PROVIDER=anthropic
+  ANTHROPIC_API_KEY=sua_chave_aqui
+  ```
 
 ### 3. **Executar**
 
 #### **Interface Chainlit**
 ```bash
-chainlit run app_chainlit.py -w
+chainlit run app.py -w
 ```
 
 - **-w**: Watch mode (auto-reload em alterações)
@@ -142,10 +159,16 @@ graph TD
 ### **Tecnologias**
 - **Backend**: Python 3.13 + FastAPI
 - **Frontend**: Streamlit (mobile-ready)
-- **IA**: LangChain + Claude 3 Haiku
+- **IA**: Multi-Provider (Google Gemini 2.5 Flash + Claude 3 Haiku)
 - **Memória**: ChromaDB + Vector Store
 - **Cache**: Redis-like interno
 - **Deploy**: Streamlit Cloud → AWS/GCP
+
+### 🆕 **Multi-Provider LLM Support**
+- **Google Gemini 2.5 Flash**: Modelo padrão ultra-rápido
+- **Anthropic Claude**: Suporte mantido para compatibilidade
+- **Troca fácil**: Mude o provider com uma variável de ambiente
+- **Custo otimizado**: Gemini é mais barato e rápido
 
 ## 💰 Modelo de Negócio
 
@@ -238,6 +261,6 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 
 ---
 
-**🧠 Desenvolvido com IA Revolucionária | Powered by Claude 3 + LangChain**
+**🧠 Desenvolvido com IA Revolucionária | Powered by Google Gemini + Claude 3 + LangChain**
 
 *O futuro da autonomia artificial começa aqui.* 🚀

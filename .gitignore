@@ -71,11 +71,19 @@ Thumbs.db
 *.temp
 temp/
 tmp/
+test_*.py
+fix_*.bat
+instalar_*.bat
+CORRIGIR_ERROS.md
+CONFIGURAR_GEMINI_AGORA.md
 
 # Backup files
 *.bak
 *_backup.py
 *_old.py
+backup_cleanup/
+backup_cleanup_*/
+backup_temporary_files_final/
 
 # Test coverage
 htmlcov/

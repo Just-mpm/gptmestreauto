@@ -100,23 +100,59 @@ class DeepAgentWebSearchV2(BaseAgentV2):
         }
     
     def _inicializar_cliente_anthropic(self):
-        """Inicializa cliente Anthropic para web search"""
+        """Inicializa cliente direto para web search - Suporta Gemini e Anthropic"""
         try:
-            import anthropic
             import config
             
-            if not hasattr(config, 'ANTHROPIC_API_KEY') or not config.ANTHROPIC_API_KEY:
-                raise ValueError("ANTHROPIC_API_KEY não configurada")
+            # Verificar qual provider está configurado
+            provider = getattr(config, 'LLM_PROVIDER', 'anthropic')
             
-            self.anthropic_client = anthropic.Anthropic(
-                api_key=config.ANTHROPIC_API_KEY
-            )
-            
-            # Configurações do modelo
-            self.model_name = getattr(config, 'DEFAULT_MODEL', 'claude-3-5-haiku-20241022')
-            self.max_tokens = getattr(config, 'MAX_TOKENS', 4000)
-            
-            logger.info(f"🌐 Cliente Anthropic inicializado: {self.model_name}")
+            if provider == 'gemini':
+                # Usar Gemini diretamente
+                import google.generativeai as genai
+                
+                if not hasattr(config, 'GOOGLE_API_KEY') or not config.GOOGLE_API_KEY:
+                    raise ValueError("GOOGLE_API_KEY não configurada")
+                
+                genai.configure(api_key=config.GOOGLE_API_KEY)
+                
+                # Configurações do modelo
+                self.model_name = getattr(config, 'DEFAULT_MODEL', 'models/gemini-2.5-flash-preview-05-20')
+                self.max_tokens = getattr(config, 'MAX_TOKENS', 8192)
+                
+                # Criar modelo Gemini
+                generation_config = {
+                    "temperature": getattr(config, 'TEMPERATURE', 0.7),
+                    "top_p": getattr(config, 'TOP_P', 0.95),
+                    "top_k": getattr(config, 'TOP_K', 40),
+                    "max_output_tokens": self.max_tokens,
+                }
+                
+                self.gemini_model = genai.GenerativeModel(
+                    model_name=self.model_name.replace("models/", ""),
+                    generation_config=generation_config
+                )
+                self.anthropic_client = None  # Não usar cliente Anthropic
+                
+                logger.info(f"🌐 Cliente Gemini inicializado: {self.model_name}")
+                
+            else:
+                # Usar Anthropic (comportamento original)
+                import anthropic
+                
+                if not hasattr(config, 'ANTHROPIC_API_KEY') or not config.ANTHROPIC_API_KEY:
+                    raise ValueError("ANTHROPIC_API_KEY não configurada")
+                
+                self.anthropic_client = anthropic.Anthropic(
+                    api_key=config.ANTHROPIC_API_KEY
+                )
+                self.gemini_model = None
+                
+                # Configurações do modelo
+                self.model_name = getattr(config, 'DEFAULT_MODEL', 'claude-3-5-haiku-20241022')
+                self.max_tokens = getattr(config, 'MAX_TOKENS', 4000)
+                
+                logger.info(f"🌐 Cliente Anthropic inicializado: {self.model_name}")
             
         except Exception as e:
             logger.error(f"❌ Erro ao inicializar cliente: {e}")
@@ -263,20 +299,34 @@ class DeepAgentWebSearchV2(BaseAgentV2):
                     timestamp=datetime.now().isoformat()
                 )
             
-            # Fallback para Anthropic se disponível
-            elif self.anthropic_client:
-                # Código original do Anthropic...
+            # Fallback para cliente direto se disponível
+            elif self.anthropic_client or hasattr(self, 'gemini_model'):
                 prompt = self._construir_prompt_pesquisa(produto)
-                response = self.anthropic_client.messages.create(
-                    model=self.model_name,
-                    max_tokens=self.max_tokens,
-                    temperature=0.3,
-                    messages=[{
-                        "role": "user",
-                        "content": prompt
-                    }]
-                )
-                return self._processar_resposta(response, produto, False)
+                
+                if self.anthropic_client:
+                    # Usar Anthropic
+                    response = self.anthropic_client.messages.create(
+                        model=self.model_name,
+                        max_tokens=self.max_tokens,
+                        temperature=0.3,
+                        messages=[{
+                            "role": "user",
+                            "content": prompt
+                        }]
+                    )
+                    return self._processar_resposta(response, produto, False)
+                    
+                elif hasattr(self, 'gemini_model') and self.gemini_model:
+                    # Usar Gemini
+                    response = self.gemini_model.generate_content(prompt)
+                    
+                    # Converter resposta Gemini para formato compatível
+                    class GeminiResponseAdapter:
+                        def __init__(self, gemini_response):
+                            self.content = [type('', (), {'text': gemini_response.text})]
+                    
+                    adapted_response = GeminiResponseAdapter(response)
+                    return self._processar_resposta(adapted_response, produto, False)
             
             else:
                 raise Exception("Nenhum método de web search disponível")

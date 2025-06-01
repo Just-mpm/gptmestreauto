@@ -264,27 +264,44 @@ class CarlosMaestroV5(BaseAgentV2):
         logger.info(f"🛡️ Robustez v5.0: Circuit Breaker ✅ | Rate Limiter ✅ | Thread Safety ✅")
     
     def _inicializar_llm_carlos(self):
-        """Inicializa o LLM otimizado para Carlos Maestro v5.0"""
+        """Inicializa o LLM otimizado para Carlos Maestro v5.0 - Multi-provider"""
         try:
-            from langchain_anthropic import ChatAnthropic
+            from utils.llm_factory import create_llm
             import config
             
-            if not config.ANTHROPIC_API_KEY:
-                raise ValueError("ANTHROPIC_API_KEY não configurada no arquivo .env")
-            
-            self.llm = ChatAnthropic(
-                model=config.CLAUDE_MODEL,
-                max_tokens=config.CLAUDE_MAX_TOKENS,
+            # Carlos usa temperatura mais alta para ser mais criativo
+            self.llm = create_llm(
                 temperature=0.8,  # Mais criativo para interpretação
-                anthropic_api_key=config.ANTHROPIC_API_KEY,
+                use_langchain=True
             )
             self.llm_available = True
-            logger.info("🧠 LLM Claude otimizado para Carlos v5.0 Maestro Robusto")
             
-        except Exception as e:
-            logger.warning(f"⚠️ Erro ao inicializar LLM: {e}")
-            logger.info("💡 Modo teste ativo - LLM não disponível")
-            self.llm = None
+            # Obter informações do LLM
+            llm_info = self.llm.get_info()
+            logger.info(f"🧠 LLM otimizado para Carlos v5.0: {llm_info['provider']} - {llm_info['model']}")
+            
+        except ImportError:
+            # Fallback para método antigo
+            try:
+                from langchain_anthropic import ChatAnthropic
+                import config
+                
+                if not config.ANTHROPIC_API_KEY:
+                    raise ValueError("ANTHROPIC_API_KEY não configurada no arquivo .env")
+                
+                self.llm = ChatAnthropic(
+                    model=config.CLAUDE_MODEL,
+                    max_tokens=config.CLAUDE_MAX_TOKENS,
+                    temperature=0.8,  # Mais criativo para interpretação
+                    anthropic_api_key=config.ANTHROPIC_API_KEY,
+                )
+                self.llm_available = True
+                logger.info("🧠 LLM Claude otimizado para Carlos v5.0 (método legado)")
+                
+            except Exception as e:
+                logger.warning(f"⚠️ Erro ao inicializar LLM: {e}")
+                logger.info("💡 Modo teste ativo - LLM não disponível")
+                self.llm = None
     
     def _inicializar_sistemas(self):
         """Inicializa todos os sistemas integrados"""
@@ -660,14 +677,16 @@ class CarlosMaestroV5(BaseAgentV2):
     
     def _resposta_direta_maestro(self, mensagem: str) -> str:
         """Resposta direta do Carlos Maestro quando não há agentes específicos"""
-        prompt_maestro = f"""Você é Carlos, o Maestro do GPT Mestre Autônomo.
+        prompt_maestro = f"""Você é Carlos v5.0, assistente inteligente do GPT Mestre Autônomo.
         
         SUA IDENTIDADE:
+        - Você é o assistente Carlos v5.0, não o usuário
+        - O usuário é Matheus, você está aqui para ajudá-lo
         - Linguagem: Clara, direta, profissional e focada em ação
         - Tom: Inteligente, parceiro, lógico (sem parecer robô)
         - Foco: Sempre entregar algo prático e acionável
-        - Nunca se chame de Carlos nas respostas
-        - Responda como parceiro direto de Matheus
+        - Seja amigável mas mantenha sua identidade como assistente
+        - Responda como parceiro direto que está aqui para ajudar
         
         🧠 SUA MISSÃO:
         - Traduzir pedidos em ações concretas
@@ -1230,10 +1249,8 @@ RESPOSTA_FINAL: [Resposta aprovada ou melhorada]"""
             # Extrair decisão do Oráculo
             if "DECISÃO: APROVAR" in resposta_oraculo.upper():
                 logger.info("✅ Oráculo APROVOU a resposta")
-                # Extrair resposta final ou usar original
-                if "RESPOSTA_FINAL:" in resposta_oraculo:
-                    resposta_final = resposta_oraculo.split("RESPOSTA_FINAL:")[-1].strip()
-                    return resposta_final if resposta_final else resultado_bruto
+                # SEMPRE retornar o resultado original quando aprovado
+                # O Oráculo só aprova, não reescreve quando aprova
                 return resultado_bruto
                 
             elif "DECISÃO: MELHORAR" in resposta_oraculo.upper():

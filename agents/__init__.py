@@ -85,19 +85,20 @@ except ImportError as e:
     print(f"⚠️ Erro ao importar ScoutAI v1.3A: {e}")
     SCOUT_AI_AVAILABLE = False
 
-# PromptCrafter v2.0 (Engenheiro de Prompts) - NOVO!
+# PromptCrafter v3.0 (Engenheiro de Prompts Adaptativo) - ATUALIZADO!
 try:
-    from .promptcrafter_v2 import PromptCrafterV2, criar_promptcrafter
-    PROMPTCRAFTER_V2_AVAILABLE = True
+    from .promptcrafter_v2 import PromptCrafterV3, criar_promptcrafter
+    PROMPTCRAFTER_V3_AVAILABLE = True
 except ImportError as e:
-    print(f"⚠️ Erro ao importar PromptCrafter v2.0: {e}")
-    PROMPTCRAFTER_V2_AVAILABLE = False
+    print(f"⚠️ Erro ao importar PromptCrafter v3.0: {e}")
+    PROMPTCRAFTER_V3_AVAILABLE = False
 
 # === AGENTES LEGADOS - REMOVIDOS ===
 # Versões v1.0 foram removidas para manter apenas as versões definitivas v2.0
 # Todas as funcionalidades estão disponíveis nas versões v2.0 com robustez superior
 
 CARLOS_LEGADO_AVAILABLE = False
+PROMPTCRAFTER_V2_AVAILABLE = PROMPTCRAFTER_V3_AVAILABLE  # Compatibilidade
 REFLEXOR_LEGADO_AVAILABLE = False
 ORACULO_LEGADO_AVAILABLE = False
 AUTOMASTER_LEGADO_AVAILABLE = False

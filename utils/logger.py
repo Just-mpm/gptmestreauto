@@ -4,10 +4,18 @@ Sistema de logging avançado para o GPT Mestre Autônomo - VERSÃO COMPLETA
 
 import os
 import sys
-from loguru import logger
 from datetime import datetime
 import functools
 import traceback
+
+# Try loguru first, fallback to standard logging
+try:
+    from loguru import logger
+    LOGURU_AVAILABLE = True
+except ImportError:
+    LOGURU_AVAILABLE = False
+    from .fallback_logger import get_fallback_logger
+    logger = get_fallback_logger("gpt_mestre")
 
 # Tentar importar config, se não existir, usar valores padrão
 try:
@@ -25,48 +33,53 @@ except ImportError:
     LOG_ROTATION = "100 MB"
     LOG_RETENTION = "30 days"
 
-# Remover logger padrão
-logger.remove()
+# Configure logger only if loguru is available
+if LOGURU_AVAILABLE:
+    # Remover logger padrão
+    logger.remove()
 
-# Configurar logger para console
-logger.add(
-    sys.stdout,
-    format=LOG_FORMAT,
-    level=LOG_LEVEL,
-    colorize=True
-)
+    # Configurar logger para console
+    logger.add(
+        sys.stdout,
+        format=LOG_FORMAT,
+        level=LOG_LEVEL,
+        colorize=True
+    )
 
-# Criar pasta de logs se não existir
-os.makedirs("logs", exist_ok=True)
+    # Criar pasta de logs se não existir
+    os.makedirs("logs", exist_ok=True)
 
-# Configurar logger para arquivo principal
-logger.add(
-    LOG_FILE,
-    format=LOG_FORMAT,
-    level=LOG_LEVEL,
-    rotation=LOG_ROTATION,
-    retention=LOG_RETENTION,
-    compression="zip"
-)
+    # Configurar logger para arquivo principal
+    logger.add(
+        LOG_FILE,
+        format=LOG_FORMAT,
+        level=LOG_LEVEL,
+        rotation=LOG_ROTATION,
+        retention=LOG_RETENTION,
+        compression="zip"
+    )
 
-# Logger específico para agentes
-logger.add(
-    "logs/agents.log",
-    format=LOG_FORMAT,
-    level="DEBUG",
-    rotation="50 MB",
-    retention="15 days",
-    filter=lambda record: "agent" in record["name"].lower()
-)
+    # Logger específico para agentes
+    logger.add(
+        "logs/agents.log",
+        format=LOG_FORMAT,
+        level="DEBUG",
+        rotation="50 MB",
+        retention="15 days",
+        filter=lambda record: "agent" in record["name"].lower()
+    )
 
-# Logger específico para erros
-logger.add(
-    "logs/errors.log",
-    format=LOG_FORMAT,
-    level="ERROR",
-    rotation="10 MB",
-    retention="60 days"
-)
+    # Logger específico para erros
+    logger.add(
+        "logs/errors.log",
+        format=LOG_FORMAT,
+        level="ERROR",
+        rotation="10 MB",
+        retention="60 days"
+    )
+else:
+    # Fallback configuration
+    os.makedirs("logs", exist_ok=True)
 
 # ===== FUNÇÕES PRINCIPAIS =====
 
@@ -80,7 +93,10 @@ def get_logger(name: str):
     Returns:
         Logger configurado
     """
-    return logger.bind(name=name)
+    if LOGURU_AVAILABLE:
+        return logger.bind(name=name)
+    else:
+        return get_fallback_logger(name)
 
 def log_agent_interaction(agent_name: str, input_data: str, output_data: str, success: bool = True):
     """Log específico para interações de agentes"""
@@ -336,7 +352,10 @@ log_user = log_user_action
 
 # Inicialização do sistema de logging
 system_logger = get_logger("system")
-system_logger.info("🚀 Sistema de logging GPT Mestre Autônomo v2.0 inicializado")
+if LOGURU_AVAILABLE:
+    system_logger.info("🚀 Sistema de logging GPT Mestre Autônomo v2.0 inicializado (loguru)")
+else:
+    system_logger.info("🚀 Sistema de logging GPT Mestre Autônomo v2.0 inicializado (fallback)")
 
 # Lista completa de exports
 __all__ = [

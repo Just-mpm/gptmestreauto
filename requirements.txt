@@ -1,7 +1,12 @@
 # GPT MESTRE AUTÔNOMO - Dependências CORRETAS Python 3.13
-# Fase 2.5: Busca Web Real com Claude 3.5 Haiku
+# Fase 3.0: Suporte para Google Gemini 2.5 Flash + Claude (multi-provider)
 
 # Core LLM e Orquestração - VERSÕES COMPATÍVEIS ✅
+# Google Gemini (novo)
+google-generativeai>=0.4.0           # SDK oficial do Google Gemini
+langchain-google-genai>=1.0.0        # Integração Gemini com LangChain
+
+# Anthropic (mantido para compatibilidade)
 anthropic>=0.25.0                    # Web search support
 langchain>=0.3.0                     # Versão atual compatível
 langchain-core>=0.3.0                # Core atualizado  
@@ -13,9 +18,9 @@ streamlit-chat==0.1.1
 chainlit==1.2.0
 
 # Backend API
-fastapi==0.111.0
-uvicorn==0.29.0
-pydantic==2.7.1
+fastapi>=0.111.0
+uvicorn>=0.25.0,<0.26.0  # Compatível com chainlit 1.2.0
+pydantic>=2.7.1
 
 # === MEMÓRIA VETORIAL ===
 chromadb==0.5.0
@@ -49,3 +54,9 @@ httpx>=0.24.0                        # Para requisições HTTP
 beautifulsoup4>=4.12.0               # Para parsing HTML (opcional)
 urllib3>=2.0.0                       # Para URLs
 duckduckgo-search>=6.2.0             # 🦆 Web search GRATUITO!
+
+# 🧠 MACHINE LEARNING - Funcionalidades avançadas (opcionais)
+scikit-learn>=1.3.0                 # Para PromptCrafter v3.0
+networkx>=3.0                        # Para grafos de colaboração
+psutil>=5.9.0                        # Para monitoramento de performance
+aiohttp>=3.9.0                       # Para requisições async otimizadas

@@ -770,8 +770,8 @@ _[Sistema em auto-recuperação... Status: {self.circuit_breaker.state}]_"""
             prompt = f"""Você é o AutoMaster v4.0, agente especialista em autonomia econômica e estratégica.
 
 PERFIL DO USUÁRIO:
-- Profissão: {perfil.perfil_profissional.value}
-- Fase: {perfil.fase_vida.value}
+- Profissão: {getattr(perfil.perfil_profissional, 'value', perfil.perfil_profissional)}
+- Fase: {getattr(perfil.fase_vida, 'value', perfil.fase_vida)}
 - Objetivos: {', '.join(perfil.objetivos_principais)}
 - Preferência de exposição: {perfil.preferencia_exposicao}
 - Tempo disponível: {perfil.tempo_disponivel}
@@ -801,18 +801,18 @@ Responda de forma direta e prática (máximo 3 parágrafos):"""
     def _gerar_estrategia_template(self, perfil: PerfilUsuario, tipo: str) -> str:
         """📋 Gera estratégia usando template"""
         templates = {
-            "curso_digital": f"Crie um curso digital baseado em sua expertise em {perfil.perfil_profissional.value}. Estruture o conteúdo em módulos práticos, use plataforma de ensino adequada e implemente estratégia de lançamento gradual com comunidade de alunos.",
+            "curso_digital": f"Crie um curso digital baseado em sua expertise em {getattr(perfil.perfil_profissional, 'value', perfil.perfil_profissional)}. Estruture o conteúdo em módulos práticos, use plataforma de ensino adequada e implemente estratégia de lançamento gradual com comunidade de alunos.",
             
-            "nomade_digital": f"Transforme seu trabalho como {perfil.perfil_profissional.value} em modelo 100% remoto. Diversifique fontes de renda, automatize processos e crie sistemas que funcionem independente de localização geográfica.",
+            "nomade_digital": f"Transforme seu trabalho como {getattr(perfil.perfil_profissional, 'value', perfil.perfil_profissional)} em modelo 100% remoto. Diversifique fontes de renda, automatize processos e crie sistemas que funcionem independente de localização geográfica.",
             
-            "plano_completo": f"Desenvolva ecossistema completo de autonomia como {perfil.perfil_profissional.value}. Combine prestação de serviços, produtos digitais e construção de autoridade para criar múltiplas fontes de renda sustentáveis."
+            "plano_completo": f"Desenvolva ecossistema completo de autonomia como {getattr(perfil.perfil_profissional, 'value', perfil.perfil_profissional)}. Combine prestação de serviços, produtos digitais e construção de autoridade para criar múltiplas fontes de renda sustentáveis."
         }
         
         return templates.get(tipo, templates["plano_completo"])
     
     def _gerar_plano_90_dias(self, perfil: PerfilUsuario, modulos: List[int]) -> str:
         """📅 Gera plano de 90 dias"""
-        return f"""PLANO 90 DIAS - {perfil.perfil_profissional.value.upper()}
+        return f"""PLANO 90 DIAS - {getattr(perfil.perfil_profissional, 'value', perfil.perfil_profissional).upper()}
 
 MÊS 1 - ESTRUTURAÇÃO:
 • Definir narrativa profissional e posicionamento único

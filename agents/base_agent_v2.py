@@ -452,9 +452,32 @@ class BaseAgentV2(ABC):
         return merged_config
     
     def _inicializar_llm(self, **kwargs):
-        """Inicializa LLM com fallback robusto"""
+        """Inicializa LLM com fallback robusto - Suporta múltiplos providers"""
         try:
-            # Tentar imports opcionais
+            # Primeiro tentar o novo sistema LLM Factory
+            try:
+                from utils.llm_factory import create_llm
+                
+                # Permitir override do provider via kwargs
+                provider = kwargs.get('llm_provider', None)
+                temperature = kwargs.get('temperature', 0.7)
+                
+                self.llm = create_llm(
+                    provider=provider,
+                    temperature=temperature,
+                    use_langchain=True  # Sempre usar LangChain para compatibilidade
+                )
+                self.llm_available = True
+                
+                # Obter informações do LLM
+                llm_info = self.llm.get_info()
+                logger.info(f"✅ LLM inicializado para {self.name}: {llm_info['provider']} - {llm_info['model']}")
+                return
+                
+            except ImportError:
+                logger.warning("LLM Factory não disponível, tentando método legado...")
+            
+            # Fallback para método antigo (compatibilidade)
             try:
                 from langchain_anthropic import ChatAnthropic
                 from langchain.schema import HumanMessage, AIMessage, SystemMessage
@@ -480,7 +503,7 @@ class BaseAgentV2(ABC):
                     anthropic_api_key=config.ANTHROPIC_API_KEY,
                 )
                 self.llm_available = True
-                logger.info(f"LLM inicializado para {self.name}")
+                logger.info(f"LLM inicializado para {self.name} (método legado)")
             else:
                 logger.warning(f"LLM não configurado para {self.name}")
                 

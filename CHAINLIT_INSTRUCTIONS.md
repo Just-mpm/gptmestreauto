@@ -9,7 +9,7 @@ python -c "import chainlit; print('✅ Chainlit OK')"
 
 ### 2. **Executar o sistema:**
 ```powershell
-chainlit run app_chainlit.py -w
+chainlit run app.py -w
 ```
 
 ### 3. **Acessar no browser:**
@@ -47,4 +47,4 @@ chainlit run app_chainlit.py -w
 pip install chainlit --upgrade
 ```
 
-**Depois execute:** `chainlit run app_chainlit.py -w`
+**Depois execute:** `chainlit run app.py -w`

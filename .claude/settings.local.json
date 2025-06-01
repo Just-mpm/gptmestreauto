@@ -18,7 +18,11 @@
       "Bash(rg:*)",
       "Bash(find:*)",
       "Bash(python:*)",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "Bash(apt list:*)",
+      "Bash(mkdir:*)",
+      "Bash(touch:*)",
+      "WebFetch(domain:www.hostinger.com)"
     ],
     "deny": []
   }
