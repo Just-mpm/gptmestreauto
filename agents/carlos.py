@@ -154,6 +154,8 @@ class CarlosMaestroV5(BaseAgentV2):
         self.deepagent = None
         self.psymind_ativo = psymind_ativo
         self.psymind = None
+        self.promptcrafter_ativo = kwargs.get('promptcrafter_ativo', True)
+        self.promptcrafter = None
         self.modo_proativo = modo_proativo
         
         # === AGENDA INTERNA ESTRATÉGICA ===
@@ -368,6 +370,16 @@ class CarlosMaestroV5(BaseAgentV2):
             except ImportError:
                 logger.warning("⚠️ PsyMind v2.0 não disponível")
                 self.psymind_ativo = False
+        
+        # PromptCrafter v2.0
+        if self.promptcrafter_ativo:
+            try:
+                from agents.promptcrafter_v2 import criar_promptcrafter
+                self.promptcrafter = criar_promptcrafter()
+                logger.info("🎨 PromptCrafter v2.0 integrado ao Maestro!")
+            except ImportError:
+                logger.warning("⚠️ PromptCrafter v2.0 não disponível")
+                self.promptcrafter_ativo = False
     
     def _processar_interno(self, mensagem: str, contexto: Optional[Dict] = None) -> str:
         """
@@ -609,6 +621,11 @@ class CarlosMaestroV5(BaseAgentV2):
                     resultado_automaster = self.automaster.processar(mensagem)
                     resultados.append(f"💼 AutoMaster: {resultado_automaster}")
                     agentes_acionados.append('automaster')
+                
+                elif agente_nome == 'promptcrafter' and self.promptcrafter_ativo:
+                    resultado_promptcrafter = self.promptcrafter.processar(mensagem)
+                    resultados.append(f"🎨 PromptCrafter: {resultado_promptcrafter}")
+                    agentes_acionados.append('promptcrafter')
                 
             except Exception as e:
                 logger.warning(f"⚠️ Erro no agente {agente_nome}: {e}")
@@ -1010,7 +1027,8 @@ class CarlosMaestroV5(BaseAgentV2):
             "planejamento": ["automaster"] if self.automaster_ativo else ["supervisor"],
             "auditoria": ["reflexor"] if self.reflexor_ativo else [],
             "decomposicao": ["taskbreaker"] if self.taskbreaker_ativo else [],
-            "coordenacao": ["supervisor"] if self.supervisor_ativo else []
+            "coordenacao": ["supervisor"] if self.supervisor_ativo else [],
+            "engenharia_prompts": ["promptcrafter"] if self.promptcrafter_ativo else []
         }
         
         agentes_selecionados = set()
@@ -1035,6 +1053,8 @@ class CarlosMaestroV5(BaseAgentV2):
         mapa_capacidades = {
             TipoComando.ANALISE_PRODUTO: ["pesquisa_web", "analise"],
             TipoComando.DECISAO_COMPLEXA: ["decisao_complexa", "analise"],
+            TipoComando.CRIACAO_PROMPT: ["engenharia_prompts", "auditoria"],
+            TipoComando.OTIMIZACAO_COPY: ["engenharia_prompts", "auditoria"],
             TipoComando.PLANEJAMENTO_CARREIRA: ["planejamento", "analise"],
             TipoComando.DIAGNOSTICO_SISTEMA: ["analise", "auditoria"],
             TipoComando.COMANDO_GENERICO: ["coordenacao"]
@@ -1377,6 +1397,7 @@ def criar_carlos_maestro(modo_proativo: bool = True, **kwargs) -> CarlosMaestroV
         'reflexor_ativo': kwargs.pop('reflexor_ativo', True),
         'supervisor_ativo': kwargs.pop('supervisor_ativo', True),
         'memoria_ativa': kwargs.pop('memoria_ativa', True),
+        'promptcrafter_ativo': kwargs.pop('promptcrafter_ativo', True),
         'deepagent_ativo': kwargs.pop('deepagent_ativo', True),
         'oraculo_ativo': kwargs.pop('oraculo_ativo', True),
         'automaster_ativo': kwargs.pop('automaster_ativo', True),

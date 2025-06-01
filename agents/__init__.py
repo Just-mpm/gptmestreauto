@@ -85,6 +85,14 @@ except ImportError as e:
     print(f"⚠️ Erro ao importar ScoutAI v1.3A: {e}")
     SCOUT_AI_AVAILABLE = False
 
+# PromptCrafter v2.0 (Engenheiro de Prompts) - NOVO!
+try:
+    from .promptcrafter_v2 import PromptCrafterV2, criar_promptcrafter
+    PROMPTCRAFTER_V2_AVAILABLE = True
+except ImportError as e:
+    print(f"⚠️ Erro ao importar PromptCrafter v2.0: {e}")
+    PROMPTCRAFTER_V2_AVAILABLE = False
+
 # === AGENTES LEGADOS - REMOVIDOS ===
 # Versões v1.0 foram removidas para manter apenas as versões definitivas v2.0
 # Todas as funcionalidades estão disponíveis nas versões v2.0 com robustez superior
@@ -114,7 +122,8 @@ AGENTES_V2_STATUS = {
     "supervisor_v2": SUPERVISOR_V2_AVAILABLE,
     "taskbreaker_v2": TASKBREAKER_V2_AVAILABLE,
     "reflexor_v2": REFLEXOR_V2_AVAILABLE,
-    "scout_ai": SCOUT_AI_AVAILABLE
+    "scout_ai": SCOUT_AI_AVAILABLE,
+    "promptcrafter_v2": PROMPTCRAFTER_V2_AVAILABLE
 }
 
 for agente, disponivel in AGENTES_V2_STATUS.items():
@@ -164,7 +173,8 @@ def listar_agentes_v2():
             "supervisor_v2": "Maestro de Raciocínio - SupervisorAI v2.0",
             "taskbreaker_v2": "Decomposição de Tarefas - TaskBreaker v2.0",
             "reflexor_v2": "Sistema de Auditoria - Reflexor v2.0",
-            "scout_ai": "Radar Estratégico - ScoutAI v1.3A"
+            "scout_ai": "Radar Estratégico - ScoutAI v1.3A",
+            "promptcrafter_v2": "Engenheiro de Prompts - PromptCrafter v2.0"
         }
     }
 
@@ -205,6 +215,9 @@ def criar_sistema_v5_completo():
     if SCOUT_AI_AVAILABLE:
         agentes_criados["scout"] = criar_scout_ai()
     
+    if PROMPTCRAFTER_V2_AVAILABLE:
+        agentes_criados["promptcrafter"] = criar_promptcrafter()
+    
     return agentes_criados
 
 def criar_sistema_completo():
@@ -233,7 +246,7 @@ __all__ = [
 
 print(f"🚀 GPT Mestre Autônomo v{__version__} - Sistema LIMPO e Robusto")
 print(f"⚡ BaseAgentV2: {'✅ Disponível' if BASE_AGENTS_AVAILABLE else '❌ Indisponível'}")
-print(f"🤖 Agentes v2.0: {len(AGENTES_V2_DISPONIVEIS)}/9 disponíveis")
+print(f"🤖 Agentes v2.0: {len(AGENTES_V2_DISPONIVEIS)}/10 disponíveis")
 print(f"🧹 Projeto Limpo: Apenas versões definitivas v2.0")
 print(f"🎯 Total de Agentes: {len(TODOS_AGENTES)}")
 
@@ -244,6 +257,9 @@ else:
 
 if SCOUT_AI_AVAILABLE:
     print("🔍 NOVO: ScoutAI v1.3A - Radar Estratégico Ativo!")
+
+if PROMPTCRAFTER_V2_AVAILABLE:
+    print("🎨 NOVO: PromptCrafter v2.0 - Engenheiro de Prompts Ativo!")
 
 print("💡 Use 'verificar_agentes()' para diagnóstico completo")
 print("🔧 Use 'criar_sistema_v5_completo()' para sistema completo")

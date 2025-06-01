@@ -56,14 +56,25 @@ pip install -r requirements.txt
 
 ### 2. **Configuração**
 ```bash
-# Crie arquivo .env
-echo "ANTHROPIC_API_KEY=sua_chave_aqui" > .env
+# Copie o arquivo de exemplo
+cp .env.example .env
+
+# Edite com sua chave da Anthropic
+nano .env  # ou use seu editor preferido
 ```
 
+**Importante**: Você precisa de uma chave API da Anthropic. [Obtenha aqui](https://console.anthropic.com/)
+
 ### 3. **Executar**
+
+#### **Interface Chainlit**
 ```bash
-streamlit run app.py
+chainlit run app_chainlit.py -w
 ```
+
+- **-w**: Watch mode (auto-reload em alterações)
+- Acesse: http://localhost:8000
+- Interface mais moderna e interativa
 
 ### 4. **Acesso Mobile**
 - Interface **responsiva** automática

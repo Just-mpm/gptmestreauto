@@ -99,3 +99,52 @@ coverage.xml
 *_temp.md
 CORREÇÕES*.md
 SISTEMA_FINAL*.md
+
+# Chainlit specific
+.chainlit/
+chainlit.db
+
+# Claude/Editor specific
+.claude/
+
+# Memory databases
+memory/chroma_db/
+memory/agents/
+*.db
+*.sqlite
+*.sqlite3
+
+# Session files
+sessions/
+*.session
+
+# Personal/sensitive files
+personal_data/
+sensitive/
+credentials/
+
+# Test outputs
+test_results/
+test_output/
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# Coverage reports
+.coverage
+htmlcov/
+.pytest_cache/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
