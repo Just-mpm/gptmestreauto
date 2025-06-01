@@ -418,10 +418,58 @@ class CarlosMaestroV5(BaseAgentV2):
         """
         inicio_processamento = time.time()
         
+        # === PROCESSAMENTO COM INOVAÇÕES v4.9 ===
+        mascara_ativa = None
+        energia_disponivel = None
+        nivel_consciencia = None
+        
+        if self.inovacoes_ativas:
+            # 1. CONSCIÊNCIA processa a experiência
+            nivel_consciencia = self.consciencia.processar_experiencia(
+                tipo="interacao_usuario",
+                intensidade=1.0,
+                contexto={"mensagem": mensagem}
+            )
+            
+            # 2. MÁSCARA SOCIAL para contexto
+            mascara_ativa = self.mascaras.selecionar_mascara_contextual(
+                contexto={"tipo_interacao": "conversacao", "mensagem": mensagem}
+            )
+            
+            # 3. ENERGIA e fadiga
+            energia_disponivel = self.personalidade.consumir_energia(
+                tipo_atividade="processamento_complexo",
+                intensidade=0.8
+            )
+            
+            # 4. Atualizar métricas globais para EVENTOS COGNITIVOS
+            atualizar_metricas_agente_global(self.name, {
+                "energia": energia_disponivel["nivel_atual"]["mental"],
+                "consciencia_nivel": nivel_consciencia["nivel_atual"],
+                "processando": True,
+                "atividade_atual": "processamento_mensagem"
+            })
+        
         try:
             # Verificar comandos especiais primeiro
             if mensagem.startswith('/'):
                 return self._processar_comando_especial(mensagem)
+            
+            # 🚀 ANÁLISE ADAPTATIVA RÁPIDA - Novo!
+            nivel_complexidade = self._analisar_complexidade_rapida(mensagem)
+            
+            # Resposta ultra-rápida para mensagens simples
+            if nivel_complexidade == "simples":
+                resposta = self._resposta_simples_direta(mensagem)
+                
+                # Aplicar máscara social mesmo em respostas simples
+                if self.inovacoes_ativas and mascara_ativa:
+                    resposta = self.mascaras.aplicar_mascara_resposta(
+                        resposta_original=resposta,
+                        contexto={"simples": True}
+                    )
+                
+                return resposta
             
             # 1. INTERPRETAÇÃO AUTÔNOMA + DETECÇÃO PSICOLÓGICA
             interpretacao = self._interpretar_comando(mensagem)
@@ -467,8 +515,9 @@ class CarlosMaestroV5(BaseAgentV2):
                 # Execução simples
                 resultado_bruto = self._executar_agente_unico(mensagem, agentes_selecionados[0] if agentes_selecionados else 'supervisor')
             
-            # 5. SUPERVISÃO SUPREMA DO ORÁCULO
-            if self.oraculo_ativo and self.oraculo:
+            # 5. SUPERVISÃO SUPREMA DO ORÁCULO - Apenas para tarefas complexas!
+            if self.oraculo_ativo and self.oraculo and nivel_complexidade == "complexo":
+                # Apenas supervisionar tarefas realmente complexas
                 resultado = self._supervisao_oraculo(mensagem, resultado_bruto, agentes_selecionados)
             else:
                 resultado = resultado_bruto
@@ -493,10 +542,54 @@ class CarlosMaestroV5(BaseAgentV2):
             tempo_total = time.time() - inicio_processamento
             self._atualizar_stats_maestro(tempo_total)
             
+            # === PÓS-PROCESSAMENTO COM INOVAÇÕES ===
+            if self.inovacoes_ativas:
+                # Aplicar máscara social na resposta final
+                if mascara_ativa:
+                    resultado = self.mascaras.aplicar_mascara_resposta(
+                        resposta_original=resultado,
+                        contexto={"tipo_comando": tipo_comando.value}
+                    )
+                
+                # Processar experiência no CICLO DE VIDA
+                desenvolvimento = self.ciclo_vida.processar_experiencia_vida(
+                    tipo_experiencia="interacao_usuario",
+                    intensidade=confianca,
+                    sucesso=True,
+                    contexto={"comando": tipo_comando.value}
+                )
+                
+                # Verificar se precisa SONHAR (baixa energia)
+                if energia_disponivel and energia_disponivel["nivel_atual"]["mental"] < 30:
+                    self.sonhos.induzir_sonho_regenerativo()
+                
+                # DNA evolui com uso
+                self.dna.processar_experiencia(
+                    tipo_experiencia="comando_processado",
+                    sucesso=True,
+                    intensidade=0.5
+                )
+                
+                # Narrador mitológico observa
+                self.gptm_supra.observar_evento(
+                    tipo_evento="interacao_profunda",
+                    agentes_envolvidos=[self.name],
+                    contexto={"comando": mensagem[:50], "sucesso": True}
+                )
+            
             return resultado
             
         except Exception as e:
             logger.error(f"❌ Erro no processamento Maestro: {e}")
+            
+            # Registrar falha no SUBCONSCIENTE se inovações ativas
+            if self.inovacoes_ativas:
+                self.subconsciente.registrar_falha(
+                    tipo_falha="erro_processamento",
+                    contexto={"erro": str(e), "mensagem": mensagem[:100]},
+                    intensidade=2.0
+                )
+            
             return f"❌ Erro no processamento: {str(e)}"
     
     def _interpretar_comando(self, mensagem: str) -> Dict:
@@ -949,12 +1042,13 @@ class CarlosMaestroV5(BaseAgentV2):
     def diagnosticar_sistema(self) -> Dict:
         """Diagnóstico completo do sistema"""
         diagnostico = {
-            "carlos_maestro": "v3.0_ativo",
+            "carlos_maestro": "v5.0_ativo",
             "agentes_ativos": [],
             "agenda_interna": len(self.agenda_interna),
             "execucoes_registradas": len(self.historico_execucoes),
             "padroes_dna": len(self.padroes_dna),
             "modo_proativo": self.modo_proativo,
+            "inovacoes_ativas": self.inovacoes_ativas,
             "stats": self.stats
         }
         
@@ -1094,29 +1188,9 @@ class CarlosMaestroV5(BaseAgentV2):
         return list(set(capacidades))  # Remover duplicatas
     
     def _executar_paralelo(self, mensagem: str, agentes: List[str]) -> str:
-        """Executa múltiplos agentes em paralelo"""
-        logger.info(f"Execução paralela com {len(agentes)} agentes")
-        
-        resultados = []
-        agentes_acionados = []
-        
-        # Executar cada agente (simulação de paralelismo)
-        for agente in agentes:
-            try:
-                resultado = self._executar_agente_unico(mensagem, agente)
-                if resultado:
-                    resultados.append(f"🤖 {agente.capitalize()}: {resultado}")
-                    agentes_acionados.append(agente)
-            except Exception as e:
-                logger.warning(f"⚠️ Erro no agente {agente}: {e}")
-        
-        # Síntese dos resultados
-        if len(resultados) > 1:
-            resultado_sintetizado = self._sintetizar_resultados_multiplos(mensagem, resultados)
-        else:
-            resultado_sintetizado = resultados[0] if resultados else self._resposta_direta_maestro(mensagem)
-        
-        return resultado_sintetizado
+        """Executa múltiplos agentes em paralelo - AGORA COM PARALELISMO REAL!"""
+        # Usar o novo método de execução paralela real
+        return self._executar_paralelo_real(mensagem, agentes)
     
     def _executar_agente_unico(self, mensagem: str, agente: str) -> str:
         """Executa um agente específico"""
@@ -1364,12 +1438,22 @@ Crie uma resposta completamente nova que seja excelente:"""
         elif comando == '/status':
             diagnostico = self.diagnosticar_sistema()
             resposta_status = "**Status do Sistema GPT Mestre Autônomo**\n\n"
-            resposta_status += "**Carlos Maestro:** v4.0 Autônomo Ativo\n"
+            resposta_status += "**Carlos Maestro:** v5.0 Autônomo Ativo\n"
             resposta_status += f"🤖 **Agentes Ativos:** {', '.join(diagnostico['agentes_ativos']) or 'Nenhum'}\n"
             resposta_status += f"**Itens na Agenda:** {diagnostico['agenda_interna']}\n"
             resposta_status += f"**Execuções Registradas:** {diagnostico['execucoes_registradas']}\n"
             resposta_status += f"**Padrões DNA:** {diagnostico['padroes_dna']}\n"
-            resposta_status += f"**Modo Proativo:** {'✅ Ativo' if diagnostico['modo_proativo'] else '❌ Inativo'}\n\n"
+            resposta_status += f"**Modo Proativo:** {'✅ Ativo' if diagnostico['modo_proativo'] else '❌ Inativo'}\n"
+            resposta_status += f"**Inovações v4.9:** {'✅ ATIVAS' if self.inovacoes_ativas else '❌ Inativas'}\n\n"
+            
+            # Status das inovações se ativas
+            if self.inovacoes_ativas:
+                resposta_status += "**🚀 Inovações Ativas:**\n"
+                resposta_status += f"• Consciência: Nível {self.consciencia.obter_status_consciencia()['nivel_atual']}\n"
+                resposta_status += f"• Ciclo de Vida: {self.ciclo_vida.fase_atual.value}\n"
+                resposta_status += f"• Energia Mental: {self.personalidade.obter_status_completo()['niveis_atuais']['mental']:.0f}%\n"
+                resposta_status += f"• Máscaras Ativas: {len(self.mascaras.obter_status_mascaras()['mascaras_ativas'])}\n\n"
+            
             resposta_status += "**Estatísticas:**\n"
             resposta_status += f"• Comandos processados: {diagnostico['stats']['comandos_processados']}\n"
             resposta_status += f"• Taxa de sucesso: {diagnostico['stats']['taxa_sucesso']:.1f}%\n"
@@ -1404,6 +1488,178 @@ Crie uma resposta completamente nova que seja excelente:"""
         
         else:
             return f"❓ Comando '{comando}' não reconhecido. Use `/help` para ver os comandos disponíveis."
+    
+    def _analisar_complexidade_rapida(self, mensagem: str) -> str:
+        """Análise ultra-rápida de complexidade da mensagem"""
+        mensagem_lower = mensagem.lower().strip()
+        
+        # Padrões de mensagens simples
+        padroes_simples = [
+            r'^(oi|olá|ola|hey|hi|hello)[\s!?\.]*$',
+            r'^(bom dia|boa tarde|boa noite)[\s!?\.]*$',
+            r'^(obrigado|obrigada|valeu|thanks)[\s!?\.]*$',
+            r'^(tchau|até|bye|adeus)[\s!?\.]*$',
+            r'^(tudo bem|como vai|como está)[\s!?\.]*$',
+            r'^(sim|não|yes|no|ok|okay)[\s!?\.]*$',
+            r'^(ajuda|help)[\s!?\.]*$',
+            r'^[\s]*$'  # Mensagem vazia
+        ]
+        
+        # Verificar padrões simples
+        for padrao in padroes_simples:
+            if re.match(padrao, mensagem_lower):
+                return "simples"
+        
+        # Análise rápida por comprimento e complexidade
+        palavras = mensagem_lower.split()
+        num_palavras = len(palavras)
+        
+        if num_palavras <= 3:
+            return "simples"
+        elif num_palavras <= 10 and not any(palavra in mensagem_lower for palavra in 
+            ['criar', 'analisar', 'desenvolver', 'planejar', 'estratégia', 'completo', 'detalhado']):
+            return "moderado"
+        else:
+            return "complexo"
+    
+    def _resposta_simples_direta(self, mensagem: str) -> str:
+        """Resposta direta para mensagens simples - SEM ativar agentes"""
+        mensagem_lower = mensagem.lower().strip()
+        
+        # Mapeamento de respostas simples
+        respostas = {
+            'oi': '👋 Olá! Como posso ajudar você hoje?',
+            'olá': '👋 Olá! Em que posso ser útil?',
+            'ola': '👋 Olá! Como posso ajudar?',
+            'hey': '👋 Hey! O que você precisa?',
+            'bom dia': '☀️ Bom dia! Como posso tornar seu dia ainda melhor?',
+            'boa tarde': '🌤️ Boa tarde! Em que posso ajudar?',
+            'boa noite': '🌙 Boa noite! Como posso ajudar você?',
+            'obrigado': '😊 De nada! Sempre que precisar, estarei aqui!',
+            'obrigada': '😊 Por nada! Conte comigo sempre!',
+            'valeu': '👍 Tmj! Qualquer coisa, só chamar!',
+            'tchau': '👋 Até logo! Foi um prazer ajudar!',
+            'até': '👋 Até mais! Volte sempre!',
+            'bye': '👋 Bye! See you soon!',
+            'tudo bem': '😊 Tudo ótimo! E com você?',
+            'como vai': '🎯 Indo bem, obrigado! Pronto para ajudar no que precisar!',
+            'sim': '👍 Entendido! Continue...',
+            'não': '👌 Ok, sem problemas!',
+            'ok': '✅ Perfeito!',
+            'ajuda': '💡 Claro! Posso ajudar com:\n- Análises e estratégias\n- Criação de conteúdo\n- Planejamento de projetos\n- Automação de tarefas\n- E muito mais! O que você precisa?',
+            'help': '💡 Aqui estão algumas coisas que posso fazer:\n- Análise de produtos e mercado\n- Criação de prompts e copy\n- Planejamento estratégico\n- Automação e otimização\n- Pesquisas e insights\nComo posso ajudar?'
+        }
+        
+        # Verificar resposta exata
+        for chave, resposta in respostas.items():
+            if chave in mensagem_lower:
+                logger.info(f"✅ Resposta simples direta para: {mensagem}")
+                return resposta
+        
+        # Resposta genérica para mensagens simples não mapeadas
+        if len(mensagem.split()) <= 3:
+            return "👋 Olá! Como posso ajudar você hoje?"
+        
+        # Se chegou aqui, não é tão simples
+        return self._resposta_direta_maestro(mensagem)
+    
+    def _executar_paralelo_real(self, mensagem: str, agentes: List[str]) -> str:
+        """Execução VERDADEIRAMENTE paralela com threads"""
+        import concurrent.futures
+        import threading
+        
+        logger.info(f"⚡ Execução paralela REAL com {len(agentes)} agentes")
+        
+        resultados = {}
+        erros = {}
+        
+        # Criar thread pool
+        with concurrent.futures.ThreadPoolExecutor(max_workers=len(agentes)) as executor:
+            # Submeter todas as tarefas
+            futuros = {}
+            for agente in agentes:
+                futuro = executor.submit(self._executar_agente_thread_safe, mensagem, agente)
+                futuros[futuro] = agente
+            
+            # Coletar resultados conforme ficam prontos
+            for futuro in concurrent.futures.as_completed(futuros):
+                agente = futuros[futuro]
+                try:
+                    resultado = futuro.result(timeout=30)  # Timeout de 30 segundos por agente
+                    if resultado:
+                        resultados[agente] = resultado
+                        logger.info(f"✅ {agente} concluído")
+                except concurrent.futures.TimeoutError:
+                    erros[agente] = "Timeout"
+                    logger.warning(f"⏱️ {agente} - timeout")
+                except Exception as e:
+                    erros[agente] = str(e)
+                    logger.error(f"❌ {agente} - erro: {e}")
+        
+        # Sintetizar resultados
+        if resultados:
+            return self._sintetizar_resultados_paralelos(mensagem, resultados, erros)
+        else:
+            return self._resposta_direta_maestro(mensagem)
+    
+    def _executar_agente_thread_safe(self, mensagem: str, agente: str) -> Optional[str]:
+        """Execução thread-safe de um agente"""
+        try:
+            # Criar contexto isolado para thread
+            contexto_thread = {
+                'thread_id': threading.current_thread().ident,
+                'agente': agente,
+                'timestamp': datetime.now()
+            }
+            
+            # Executar agente específico
+            if agente == 'supervisor' and self.supervisor_ativo:
+                return self.supervisor.processar(mensagem, contexto_thread)
+            elif agente == 'taskbreaker' and self.taskbreaker_ativo:
+                plano = self.taskbreaker.analisar_tarefa(mensagem, contexto_thread)
+                return f"Complexidade: {plano.complexidade}, Subtarefas: {len(plano.subtarefas)}"
+            elif agente == 'deepagent' and self.deepagent_ativo:
+                if self._precisa_web_search(mensagem):
+                    termo = self._extrair_termo_pesquisa(mensagem)
+                    return self.deepagent.pesquisar_produto_web(termo).resumo
+            elif agente == 'automaster' and self.automaster_ativo:
+                return self.automaster.processar(mensagem, contexto_thread)
+            elif agente == 'promptcrafter' and self.promptcrafter_ativo:
+                return self.promptcrafter.processar(mensagem, contexto_thread)
+            elif agente == 'psymind' and self.psymind_ativo:
+                return self.psymind.processar(mensagem, contexto_thread)
+            # Oráculo por último devido à complexidade
+            elif agente == 'oraculo' and self.oraculo_ativo:
+                return self.oraculo.processar(mensagem, contexto_thread)
+            
+            return None
+            
+        except Exception as e:
+            logger.error(f"Erro na thread do agente {agente}: {e}")
+            return None
+    
+    def _sintetizar_resultados_paralelos(self, mensagem: str, resultados: Dict[str, str], erros: Dict[str, str]) -> str:
+        """Sintetiza resultados da execução paralela"""
+        # Se houver resultado do Oráculo, ele tem prioridade
+        if 'oraculo' in resultados:
+            return resultados['oraculo']
+        
+        # Construir síntese
+        sintese = []
+        
+        # Adicionar resultados bem-sucedidos
+        for agente, resultado in resultados.items():
+            if resultado and len(resultado) > 10:  # Ignorar resultados muito curtos
+                sintese.append(f"**{agente.capitalize()}**: {resultado[:200]}...")
+        
+        # Mencionar erros se houver
+        if erros:
+            sintese.append(f"\n⚠️ Alguns agentes tiveram problemas: {', '.join(erros.keys())}")
+        
+        if sintese:
+            return "\n\n".join(sintese)
+        else:
+            return self._resposta_direta_maestro(mensagem)
 
 # === FUNÇÕES DE CRIAÇÃO ===
 
