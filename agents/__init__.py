@@ -86,63 +86,18 @@ except ImportError as e:
     print(f"⚠️ Erro ao importar ScoutAI v1.3A: {e}")
     SCOUT_AI_AVAILABLE = False
 
-# === AGENTES LEGADOS (BaseAgent) - COMPATIBILIDADE ===
+# === AGENTES LEGADOS - REMOVIDOS ===
+# Versões v1.0 foram removidas para manter apenas as versões definitivas v2.0
+# Todas as funcionalidades estão disponíveis nas versões v2.0 com robustez superior
 
-# Carlos v3.0 Maestro (Legado)
-try:
-    from .carlos import CarlosMaestro, criar_carlos_maestro
-    CARLOS_LEGADO_AVAILABLE = True
-except ImportError as e:
-    CARLOS_LEGADO_AVAILABLE = False
-
-# Reflexor Legado
-try:
-    from .reflexor import AgenteReflexor, criar_reflexor_gpt_mestre
-    REFLEXOR_LEGADO_AVAILABLE = True
-except ImportError as e:
-    REFLEXOR_LEGADO_AVAILABLE = False
-
-# Oráculo v8.1 Plus+ (Legado)
-try:
-    from .oraculo import OraculoV8Plus, criar_oraculo_v8_plus
-    ORACULO_LEGADO_AVAILABLE = True
-except ImportError as e:
-    ORACULO_LEGADO_AVAILABLE = False
-
-# AutoMaster v4.0 (Legado)
-try:
-    from .automaster import AutoMasterV4, criar_automaster_v4
-    AUTOMASTER_LEGADO_AVAILABLE = True
-except ImportError as e:
-    AUTOMASTER_LEGADO_AVAILABLE = False
-
-# TaskBreaker v1.0 (Legado)
-try:
-    from .task_breaker import TaskBreaker, criar_task_breaker, PlanoExecucao, Subtarefa
-    TASKBREAKER_LEGADO_AVAILABLE = True
-except ImportError as e:
-    TASKBREAKER_LEGADO_AVAILABLE = False
-
-# PsyMind v1.0 (Legado)
-try:
-    from .psymind import PsyMindV1, criar_psymind_v1
-    PSYMIND_LEGADO_AVAILABLE = True
-except ImportError as e:
-    PSYMIND_LEGADO_AVAILABLE = False
-
-# DeepAgent v1.0 (Legado)
-try:
-    from .deep_agent import DeepAgentWebSearch, criar_deep_agent_websearch
-    DEEPAGENT_LEGADO_AVAILABLE = True
-except ImportError as e:
-    DEEPAGENT_LEGADO_AVAILABLE = False
-
-# SupervisorAI v1.4 (Legado)
-try:
-    from .supervisor_ai import SupervisorAI, criar_supervisor_ai
-    SUPERVISOR_LEGADO_AVAILABLE = True
-except ImportError as e:
-    SUPERVISOR_LEGADO_AVAILABLE = False
+CARLOS_LEGADO_AVAILABLE = False
+REFLEXOR_LEGADO_AVAILABLE = False
+ORACULO_LEGADO_AVAILABLE = False
+AUTOMASTER_LEGADO_AVAILABLE = False
+TASKBREAKER_LEGADO_AVAILABLE = False
+PSYMIND_LEGADO_AVAILABLE = False
+DEEPAGENT_LEGADO_AVAILABLE = False
+SUPERVISOR_LEGADO_AVAILABLE = False
 
 # Versão do módulo de agentes
 __version__ = "5.0.0"
@@ -167,25 +122,12 @@ for agente, disponivel in AGENTES_V2_STATUS.items():
     if disponivel:
         AGENTES_V2_DISPONIVEIS.append(agente)
 
-# Agentes Legados (Compatibilidade)
-AGENTES_LEGADOS_DISPONIVEIS = []
-AGENTES_LEGADOS_STATUS = {
-    "carlos_legado": CARLOS_LEGADO_AVAILABLE,
-    "reflexor_legado": REFLEXOR_LEGADO_AVAILABLE,
-    "oraculo_legado": ORACULO_LEGADO_AVAILABLE,
-    "automaster_legado": AUTOMASTER_LEGADO_AVAILABLE,
-    "taskbreaker_legado": TASKBREAKER_LEGADO_AVAILABLE,
-    "psymind_legado": PSYMIND_LEGADO_AVAILABLE,
-    "deepagent_legado": DEEPAGENT_LEGADO_AVAILABLE,
-    "supervisor_legado": SUPERVISOR_LEGADO_AVAILABLE
-}
+# Agentes Legados - REMOVIDOS para projeto limpo
+AGENTES_LEGADOS_DISPONIVEIS = []  # Lista vazia - todos migrados para v2.0
+AGENTES_LEGADOS_STATUS = {}  # Status vazio - versões legadas removidas
 
-for agente, disponivel in AGENTES_LEGADOS_STATUS.items():
-    if disponivel:
-        AGENTES_LEGADOS_DISPONIVEIS.append(agente)
-
-# Total de agentes
-TODOS_AGENTES = AGENTES_V2_DISPONIVEIS + AGENTES_LEGADOS_DISPONIVEIS
+# Total de agentes (apenas v2.0)
+TODOS_AGENTES = AGENTES_V2_DISPONIVEIS
 
 # === FUNÇÕES DE VERIFICAÇÃO ===
 
@@ -299,23 +241,8 @@ __all__ = [
     'criar_reflexor_v2',
     'criar_scout_ai',
     
-    # Agentes legados (compatibilidade)
-    'CarlosMaestro',
-    'AgenteReflexor',
-    'OraculoV8Plus',
-    'AutoMasterV4',
-    'TaskBreaker',
-    'DeepAgentWebSearch',
-    'SupervisorAI',
-    
-    # Funções de criação legadas
-    'criar_carlos_maestro',
-    'criar_reflexor_gpt_mestre',
-    'criar_oraculo_v8_plus', 
-    'criar_automaster_v4',
-    'criar_task_breaker',
-    'criar_deep_agent_websearch',
-    'criar_supervisor_ai',
+    # Funções de criação principais
+    'criar_carlos_maestro',  # Aponta para v5.0
     
     # Aliases para compatibilidade
     'create_carlos',
@@ -345,10 +272,10 @@ __all__ = [
 
 # === INICIALIZAÇÃO ===
 
-print(f"🚀 GPT Mestre Autônomo v{__version__} - Sistema de Agentes Carregado")
+print(f"🚀 GPT Mestre Autônomo v{__version__} - Sistema LIMPO e Robusto")
 print(f"⚡ BaseAgentV2: {'✅ Disponível' if BASE_AGENTS_AVAILABLE else '❌ Indisponível'}")
 print(f"🤖 Agentes v2.0: {len(AGENTES_V2_DISPONIVEIS)}/9 disponíveis")
-print(f"📊 Agentes Legados: {len(AGENTES_LEGADOS_DISPONIVEIS)}/8 disponíveis")
+print(f"🧹 Projeto Limpo: Apenas versões definitivas v2.0")
 print(f"🎯 Total de Agentes: {len(TODOS_AGENTES)}")
 
 if AGENTES_V2_DISPONIVEIS:
