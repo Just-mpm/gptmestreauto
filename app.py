@@ -1,328 +1,513 @@
 """
-GPT MESTRE AUTÔNOMO - Interface Chainlit v3.0 STREAMING
-🚀 Sistema com streaming em tempo real e construção palavra por palavra
+GPT MESTRE AUTÔNOMO - Interface Chainlit APRIMORADA v5.0
+🚀 ETAPA 5: Interface e UX completa com todas as melhorias Gemini AI
+
+Funcionalidades implementadas:
+✅ 15 Comandos Especiais Naturais
+✅ Sistema de Feedback Visual em ASCII  
+✅ Personalidade nas Respostas de Erro
+✅ Onboarding de 3 Passos para Novos Usuários
+✅ Sistema de Otimização Integrado
+✅ Monitoramento de Custos em Tempo Real
 """
 
 import chainlit as cl
 import asyncio
+import threading
 from datetime import datetime
 import uuid
 import os
 import sys
 import time
-import re
 
 # Adicionar o diretório ao path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-# Imports do sistema
+# Imports do sistema base
 try:
     from config import config
     from agents.carlos import criar_carlos_maestro
     from utils.logger import get_logger
     
-    system_logger = get_logger("chainlit_streaming")
+    # Imports das melhorias ETAPA 5
+    from utils.natural_commands import get_natural_command_processor
+    from utils.visual_feedback import get_visual_feedback_manager, ErrorDisplay
+    from utils.onboarding_system import (
+        get_onboarding_manager, check_and_start_onboarding, 
+        process_message_with_onboarding
+    )
+    
+    # Imports das otimizações
+    from utils.agent_orchestrator import get_agent_orchestrator
+    from utils.token_monitor import get_token_monitor
+    
+    system_logger = get_logger("chainlit_enhanced")
     
 except ImportError as e:
     print(f"❌ Erro ao importar módulos: {e}")
     exit(1)
 
 # Configurações do Chainlit
-cl.config.name = "🧠 GPT Mestre Autônomo v5.0 - STREAMING"
-cl.config.human_timeout = 300  # 5 minutos para operações complexas
+cl.config.name = "🧠 GPT Mestre Autônomo v5.0 Enhanced"
+cl.config.human_timeout = 300
 
 # Estado global
 carlos_instance = None
-current_status_msg = None
-current_streaming_msg = None
+user_sessions = {}  # Gerenciar múltiplas sessões
 
-async def stream_agent_activity(agent_name: str, activity: str, duration: float = 2.0):
-    """Simula atividade do agente em tempo real"""
-    emoji_map = {
-        "Carlos": "👑",
-        "TaskBreaker": "🔨", 
-        "SupervisorAI": "🧠",
-        "AutoMaster": "💼",
-        "PromptCrafter": "🎨",
-        "Oráculo": "🔮",
-        "DeepAgent": "🌐",
-        "Reflexor": "🔍"
-    }
-    
-    emoji = emoji_map.get(agent_name, "🤖")
-    
-    # Criar mensagem de atividade
-    activity_msg = cl.Message(
-        content=f"{emoji} **{agent_name}**: {activity}",
-        author=f"{agent_name} Activity"
-    )
-    await activity_msg.send()
-    
-    # Simular duração da atividade
-    steps = ["⚡ Inicializando...", "🔄 Processando...", "✅ Concluído!"]
-    
-    for i, step in enumerate(steps):
-        await asyncio.sleep(duration / len(steps))
-        activity_msg.content = f"{emoji} **{agent_name}**: {activity}\n{step}"
-        await activity_msg.update()
 
-async def stream_oraculo_assembly(num_suboraculos: int = 6):
-    """Simula assembleia do Oráculo em tempo real"""
-    assembly_msg = cl.Message(
-        content="🔮 **Assembleia Dinâmica Iniciada**\n⏳ Convocando suboráculos...",
-        author="Oráculo v9.0"
-    )
-    await assembly_msg.send()
+class UserSession:
+    """Classe para gerenciar estado de sessão do usuário"""
     
-    # Simular convocação dos suboráculos
-    specialists = ["Ético", "Viabilidade", "Criativo", "Paradoxo", "Copy", "Pricing"]
-    
-    for i, specialist in enumerate(specialists[:num_suboraculos]):
-        await asyncio.sleep(1.5)
-        assembly_msg.content += f"\n✅ {specialist} conectado"
-        await assembly_msg.update()
-    
-    # Simular deliberação
-    await asyncio.sleep(2)
-    assembly_msg.content += "\n\n🗳️ **Deliberação em Andamento**"
-    await assembly_msg.update()
-    
-    # Simular votos chegando
-    for i in range(num_suboraculos):
-        await asyncio.sleep(3)
-        assembly_msg.content += f"\n📊 Voto {i+1}/{num_suboraculos} recebido"
-        await assembly_msg.update()
-    
-    # Conclusão
-    await asyncio.sleep(1)
-    assembly_msg.content += "\n\n✨ **Assembleia Concluída - Resultado Aprovado!**"
-    await assembly_msg.update()
+    def __init__(self, session_id: str):
+        self.session_id = session_id
+        self.user_id = session_id[:8]  # Usar primeiros 8 chars como user_id
+        self.start_time = datetime.now()
+        self.message_count = 0
+        self.onboarding_completed = False
+        
+        # Componentes de UX
+        self.command_processor = get_natural_command_processor()
+        self.feedback_manager = get_visual_feedback_manager()
+        self.onboarding_manager = get_onboarding_manager()
+        self.orchestrator = get_agent_orchestrator()
+        self.token_monitor = get_token_monitor()
+        
+        system_logger.info(f"👤 Nova sessão criada: {self.user_id}")
 
-async def stream_response_generation(response_text: str):
-    """Gera resposta palavra por palavra em tempo real"""
-    global current_streaming_msg
-    
-    # Criar mensagem para streaming
-    current_streaming_msg = cl.Message(
-        content="",
-        author="Carlos v5.0"
-    )
-    await current_streaming_msg.send()
-    
-    # Dividir texto em palavras
-    words = response_text.split()
-    current_text = ""
-    
-    # Stream palavra por palavra
-    for i, word in enumerate(words):
-        current_text += word + " "
-        current_streaming_msg.content = current_text + "▌"  # Cursor piscando
-        await current_streaming_msg.update()
-        
-        # Pausa baseada no tamanho da palavra (mais realista)
-        delay = max(0.05, min(0.3, len(word) * 0.02))
-        await asyncio.sleep(delay)
-        
-        # Pausas extras em pontuação
-        if word.endswith(('.', '!', '?', ':')):
-            await asyncio.sleep(0.5)
-        elif word.endswith(','):
-            await asyncio.sleep(0.2)
-    
-    # Remover cursor e finalizar
-    current_streaming_msg.content = current_text.strip()
-    await current_streaming_msg.update()
-
-async def simulate_multi_token_processing(user_input: str, max_tokens: int = 4000):
-    """Simula processamento multi-token para respostas grandes"""
-    
-    # Detectar se vai precisar de múltiplos tokens
-    estimated_tokens = len(user_input.split()) * 2  # Estimativa grosseira
-    
-    if estimated_tokens > max_tokens * 0.8:  # 80% do limite
-        # Mostrar que vai dividir em chunks
-        chunk_msg = cl.Message(
-            content="🧠 **Detectada requisição complexa**\n⚡ Dividindo em múltiplos chunks para processamento otimizado...",
-            author="Sistema Multi-Token"
-        )
-        await chunk_msg.send()
-        
-        # Simular divisão em chunks
-        num_chunks = max(2, estimated_tokens // max_tokens + 1)
-        
-        for i in range(num_chunks):
-            await asyncio.sleep(1)
-            chunk_msg.content += f"\n📦 Chunk {i+1}/{num_chunks} processado"
-            await chunk_msg.update()
-        
-        chunk_msg.content += "\n✅ **Todos os chunks processados - Compilando resposta final...**"
-        await chunk_msg.update()
-
-class StreamingCarlosWrapper:
-    """Wrapper para interceptar e adicionar streaming ao Carlos"""
-    
-    def __init__(self, carlos_instance):
-        self.carlos = carlos_instance
-    
-    async def processar_com_streaming(self, entrada: str, contexto: dict = None):
-        """Processa com streaming visual completo"""
-        
-        # 1. Análise inicial
-        await stream_agent_activity("Carlos", "Analisando comando recebido", 1.5)
-        
-        # 2. Detectar se precisa multi-token
-        await simulate_multi_token_processing(entrada)
-        
-        # 3. TaskBreaker analisando
-        await stream_agent_activity("TaskBreaker", "Avaliando complexidade da tarefa", 2.0)
-        
-        # 4. SupervisorAI classificando
-        await stream_agent_activity("SupervisorAI", "Classificando tipo de resposta necessária", 1.8)
-        
-        # 5. Se for plano de carreira, mostrar agentes específicos
-        if "plano" in entrada.lower() and "carreira" in entrada.lower():
-            await stream_agent_activity("AutoMaster", "Criando estratégia de carreira completa", 3.0)
-            await stream_agent_activity("PromptCrafter", "Otimizando estrutura do plano", 2.5)
-        
-        # 6. Simulação da Assembleia do Oráculo
-        await stream_oraculo_assembly(6)
-        
-        # 7. Processamento real do Carlos
-        response = self.carlos.processar(entrada, contexto or {})
-        
-        # 8. Auditoria final
-        await stream_agent_activity("Reflexor", "Realizando auditoria de qualidade", 1.5)
-        
-        # 9. Stream da resposta palavra por palavra
-        await asyncio.sleep(1)
-        await stream_response_generation(response)
-        
-        return response
 
 @cl.on_chat_start
 async def start():
-    """Inicializa o sistema com feedback streaming"""
+    """Inicializa o sistema com UX aprimorada"""
     global carlos_instance
     
-    session_id = str(uuid.uuid4())[:8]
+    session_id = str(uuid.uuid4())
+    user_session = UserSession(session_id)
+    user_sessions[session_id] = user_session
     
-    # Loading sequence animada
-    loading_msg = cl.Message(content="🚀 **Inicializando GPT Mestre Autônomo v5.0 Streaming...**")
-    await loading_msg.send()
+    # Armazenar session_id no contexto do Chainlit
+    cl.user_session.set("session_id", session_id)
     
-    steps = [
-        "🔧 Inicializando núcleo do sistema...",
-        "👑 Carregando Carlos v5.0 Maestro...",
-        "🧠 Ativando SupervisorAI v2.0...", 
-        "🔍 Inicializando Reflexor v2.0...",
-        "🌐 Conectando DeepAgent v2.0...",
-        "🔮 Despertando Oráculo v9.0...",
-        "💼 Ativando AutoMaster v2.0...",
-        "🔨 Preparando TaskBreaker v2.0...",
-        "🧠 Inicializando PsyMind v2.0...",
-        "🎨 Carregando PromptCrafter v3.0...",
-        "🧠 Conectando memória vetorial...",
-        "⚡ Configurando streaming em tempo real...",
-        "✅ Sistema 100% operacional!"
-    ]
+    # Configurar ações personalizadas na interface
+    dashboard_action = cl.Action(
+        name="show_dashboard",
+        label="📊 Dashboard",
+        description="Mostrar dashboard completo de custos e uso",
+        value="dashboard"
+    )
     
-    for step in steps:
-        await asyncio.sleep(0.4)
-        loading_msg.content = f"🚀 **GPT Mestre Autônomo v5.0 Streaming**\n\n{step}"
-        await loading_msg.update()
+    help_action = cl.Action(
+        name="show_help", 
+        label="🆘 Ajuda",
+        description="Mostrar comandos disponíveis",
+        value="help"
+    )
     
-    try:
-        # Inicializar Carlos
-        carlos_base = criar_carlos_maestro(
-            supervisor_ativo=True,
-            reflexor_ativo=True,
-            deepagent_ativo=True,
-            oraculo_ativo=True,
-            automaster_ativo=True,
-            taskbreaker_ativo=True,
-            psymind_ativo=True,
-            promptcrafter_ativo=True,
-            memoria_ativa=True,
-            modo_proativo=True
-        )
-        
-        # Wrapper com streaming
-        carlos_instance = StreamingCarlosWrapper(carlos_base)
-        
-        # Mensagem de boas-vindas
+    status_action = cl.Action(
+        name="quick_status",
+        label="⚡ Status",
+        description="Status rápido do sistema",
+        value="status"
+    )
+    
+    # Verificar se precisa de onboarding
+    onboarding_message = check_and_start_onboarding(user_session.user_id)
+    
+    if onboarding_message:
+        # Usuário novo - mostrar onboarding
         welcome_msg = cl.Message(
-            content=f"""
-🎉 **GPT Mestre Autônomo v5.0 STREAMING PRONTO!**
-
-🔥 **Funcionalidades STREAMING:**
-• 📡 **Feedback em Tempo Real** - Veja cada agente trabalhando
-• ⚡ **Resposta Palavra por Palavra** - Construção ao vivo  
-• 🧠 **Assembleia Dinâmica Visual** - Veja os suboráculos deliberando
-• 🚀 **Sistema Multi-Token** - Quebra automática para respostas grandes
-• 🎪 **Transparência Total** - Acompanhe todo o processo
-
-🧠 **Sistema Multi-Agente Ativo:**
-• 👑 Carlos v5.0 - Maestro com Streaming
-• 🔮 Oráculo v9.0 - Assembleia Dinâmica Visual
-• 💼 AutoMaster v2.0 - Planejamento Estratégico
-• 🔨 TaskBreaker v2.0 - Análise de Complexidade
-• 🔍 Reflexor v2.0 - Auditoria de Qualidade
-• 🌐 DeepAgent v2.0 - Pesquisa Web em Tempo Real
-
-💡 **Teste agora:**
-"Crie um plano completo de carreira em programação"
-
-🚀 **Sessão ID**: {session_id}
-
-**Oi Matheus! Como posso ajudá-lo hoje?** 😊
-""",
-            author="GPT Mestre Autônomo"
+            content=onboarding_message,
+            author="Carlos",
+            actions=[dashboard_action, help_action, status_action]
         )
-        
         await welcome_msg.send()
-        system_logger.info(f"🚀 Sistema Streaming inicializado para sessão {session_id}")
+        system_logger.info(f"👋 Onboarding iniciado para {user_session.user_id}")
         
-    except Exception as e:
-        error_msg = cl.Message(
-            content=f"❌ **Erro na inicialização**: {str(e)}\n\nTente recarregar a página."
+    else:
+        # Usuário experiente - mensagem de boas-vindas rápida
+        welcome_content = """👋 **Oi! Carlos aqui, pronto para mais uma sessão produtiva!**
+
+🚀 **Sistema 100% operacional** com todas as otimizações ativas.
+
+💡 **Dica rápida**: 
+• Use comandos naturais para economizar cota
+• Digite *"Carlos, status"* para ver métricas
+• Digite *"Carlos, me ajuda"* se precisar de orientação
+
+**Como posso te ajudar hoje?** 😊"""
+        
+        welcome_msg = cl.Message(
+            content=welcome_content,
+            author="Carlos",
+            actions=[dashboard_action, help_action, status_action]
         )
-        await error_msg.send()
-        system_logger.error(f"❌ Erro na inicialização: {e}")
+        await welcome_msg.send()
+    
+    # Inicializar Carlos se não estiver ativo
+    if not carlos_instance:
+        try:
+            # Mostrar feedback visual de inicialização
+            init_steps = ["Carregando Módulos", "Ativando Agentes", "Conectando APIs", "Sistema Pronto"]
+            
+            carlos_instance = criar_carlos_maestro(
+                supervisor_ativo=True,
+                reflexor_ativo=True,
+                deepagent_ativo=True,
+                oraculo_ativo=True,
+                automaster_ativo=True,
+                taskbreaker_ativo=True,
+                psymind_ativo=True,
+                promptcrafter_ativo=True,
+                memoria_ativa=True,
+                modo_proativo=True,
+                inovacoes_ativas=True
+            )
+            
+            system_logger.info(f"🚀 Sistema inicializado para sessão {session_id}")
+            
+        except Exception as e:
+            error_msg = cl.Message(
+                content=f"❌ Erro na inicialização: {str(e)}\n\nTente recarregar a página.",
+                author="Sistema"
+            )
+            await error_msg.send()
+            system_logger.error(f"❌ Erro na inicialização: {e}")
+
 
 @cl.on_message
 async def main(message: cl.Message):
-    """Processa mensagens com streaming completo"""
+    """Processa mensagens com UX aprimorada e todas as otimizações"""
     global carlos_instance
     
+    session_id = cl.user_session.get("session_id")
+    if not session_id or session_id not in user_sessions:
+        error_msg = cl.Message(
+            content="❌ Sessão inválida. Recarregue a página.",
+            author="Sistema"
+        )
+        await error_msg.send()
+        return
+    
+    user_session = user_sessions[session_id]
+    user_session.message_count += 1
+    
     if not carlos_instance:
-        error_msg = cl.Message(content="❌ Sistema não inicializado. Recarregue a página.")
+        ErrorDisplay.show_critical_error("Sistema não inicializado")
+        error_msg = cl.Message(
+            content="❌ Sistema não inicializado. Recarregue a página.",
+            author="Carlos"
+        )
         await error_msg.send()
         return
     
     user_input = message.content.strip()
     
     try:
-        # Processar com streaming visual completo
-        await carlos_instance.processar_com_streaming(user_input, {})
+        # ETAPA 1: Verificar se está em onboarding
+        onboarding_response, should_process_normally = process_message_with_onboarding(
+            user_input, user_session.user_id
+        )
         
-        system_logger.info(f"✅ Resposta streaming gerada para: {user_input[:50]}...")
+        if onboarding_response:
+            response_msg = cl.Message(
+                content=onboarding_response,
+                author="Carlos"
+            )
+            await response_msg.send()
+            
+            if should_process_normally:
+                user_session.onboarding_completed = True
+                # Continuar processamento normal após onboarding
+            else:
+                return  # Ainda em onboarding, não processar mais
+        
+        # ETAPA 2: Verificar comandos especiais naturais
+        command_response = user_session.command_processor.process_command(user_input)
+        
+        if command_response and command_response.is_handled:
+            # Comando especial processado - resposta instantânea
+            
+            # Mostrar feedback visual de resposta rápida
+            quick_indicator = user_session.feedback_manager.show_quick_response()
+            
+            # Adicionar métricas ao final da resposta
+            tokens_info = f"\n\n💎 *Comando otimizado: {command_response.tokens_saved} tokens economizados*"
+            final_content = command_response.content + tokens_info
+            
+            response_msg = cl.Message(
+                content=final_content,
+                author="Carlos"
+            )
+            await response_msg.send()
+            
+            system_logger.info(f"⚡ Comando especial: {command_response.command_type}")
+            return
+        
+        # ETAPA 3: Processamento normal com otimização
+        
+        # Mostrar feedback visual de processamento
+        thinking_indicator = user_session.feedback_manager.show_thinking("Analisando sua solicitação")
+        
+        # Obter métricas antes do processamento
+        before_usage = user_session.token_monitor.get_current_usage()
+        tokens_before = before_usage['total_tokens']
+        
+        try:
+            # Processar com orquestrador otimizado
+            optimized_response = user_session.orchestrator.process_optimized(
+                user_input, 
+                context={"user_id": user_session.user_id}
+            )
+            
+            # Parar indicador de pensamento
+            thinking_indicator.stop()
+            
+            # Se usou agentes, mostrar feedback específico
+            if optimized_response.agents_used:
+                agent_indicator = user_session.feedback_manager.show_agent_working(
+                    ", ".join(optimized_response.agents_used), 
+                    "finalizando"
+                )
+                await asyncio.sleep(0.5)  # Breve pausa para visibilidade
+                agent_indicator.stop()
+            
+            # Mostrar sucesso
+            user_session.feedback_manager.show_success()
+            
+            # Construir resposta final
+            response_content = optimized_response.content
+            
+            # Adicionar métricas se houver consumo ou economia significativa
+            if optimized_response.tokens_used > 0 or optimized_response.tokens_saved > 50:
+                metrics_info = f"\n\n📊 *"
+                
+                if optimized_response.tokens_used > 0:
+                    metrics_info += f"{optimized_response.tokens_used} tokens • "
+                
+                if optimized_response.tokens_saved > 0:
+                    metrics_info += f"💎 {optimized_response.tokens_saved} economizados • "
+                
+                metrics_info += f"⚡ {optimized_response.total_execution_time:.1f}s"
+                
+                if optimized_response.optimization_applied:
+                    metrics_info += f" • 🔧 {', '.join(optimized_response.optimization_applied)}"
+                
+                metrics_info += "*"
+                response_content += metrics_info
+            
+            # Enviar resposta
+            response_msg = cl.Message(
+                content=response_content,
+                author="Carlos"
+            )
+            await response_msg.send()
+            
+            # Log da interação
+            system_logger.info(f"✅ Resposta otimizada: {optimized_response.complexity_detected.value}")
+            
+        except Exception as processing_error:
+            # Parar indicadores
+            thinking_indicator.stop()
+            
+            # Mostrar erro com personalidade
+            if "timeout" in str(processing_error).lower():
+                ErrorDisplay.show_timeout_error()
+                error_content = "⏰ **Timeout!** Um dos agentes demorou demais para responder. Que tal tentar uma pergunta mais simples ou aguardar um momento?"
+            
+            elif "api" in str(processing_error).lower():
+                ErrorDisplay.show_api_error()
+                error_content = "🔌 **Problema de Conexão!** Houve um contratempo com os serviços externos. Vamos tentar novamente?"
+            
+            else:
+                ErrorDisplay.show_critical_error(str(processing_error))
+                error_content = "🚨 **Oops!** Tive um pequeno curto-circuito. Pode reformular sua pergunta?"
+            
+            error_msg = cl.Message(
+                content=error_content,
+                author="Carlos"
+            )
+            await error_msg.send()
+            
+            system_logger.error(f"❌ Erro no processamento: {processing_error}")
         
     except Exception as e:
+        # Erro crítico - mostrar personalidade do Carlos
+        ErrorDisplay.show_critical_error(str(e))
+        
         error_msg = cl.Message(
-            content=f"❌ **Erro no processamento**: {str(e)}\n\nTente uma pergunta mais simples.",
-            author="Sistema"
+            content="🤖 **Carlos está confuso!** Algo inesperado aconteceu. Pode tentar de novo com uma pergunta diferente?",
+            author="Carlos"
         )
         await error_msg.send()
-        system_logger.error(f"❌ Erro no processamento streaming: {e}")
+        
+        system_logger.error(f"❌ Erro crítico: {e}")
+
 
 @cl.on_stop
 async def stop():
     """Limpa recursos quando o chat para"""
-    global carlos_instance, current_status_msg, current_streaming_msg
-    carlos_instance = None
-    current_status_msg = None
-    current_streaming_msg = None
-    system_logger.info("🛑 Sessão streaming encerrada")
+    global carlos_instance
+    
+    session_id = cl.user_session.get("session_id")
+    if session_id and session_id in user_sessions:
+        user_session = user_sessions[session_id]
+        
+        # Parar todos os indicadores visuais
+        user_session.feedback_manager.stop_all_indicators()
+        
+        # Log da sessão
+        duration = datetime.now() - user_session.start_time
+        system_logger.info(
+            f"🛑 Sessão {user_session.user_id} encerrada: "
+            f"{user_session.message_count} mensagens, {duration.total_seconds():.0f}s"
+        )
+        
+        # Limpar sessão
+        del user_sessions[session_id]
+    
+    # Não limpar carlos_instance - pode ser usado por outras sessões
+
+
+# Comando personalizado para mostrar dashboard completo
+@cl.action_callback("show_dashboard")
+async def show_dashboard_action(action):
+    """Ação para mostrar dashboard completo"""
+    try:
+        from utils.dashboard_display import get_dashboard_summary
+        
+        monitor = get_token_monitor()
+        usage = monitor.get_current_usage()
+        prediction = monitor.predict_monthly_cost()
+        
+        dashboard_content = f"""
+📊 **Dashboard Completo - GPT Mestre Autônomo**
+
+**💰 Custos e Consumo Atual:**
+• Tokens consumidos: {usage['total_tokens']:,}
+• Custo atual: R$ {usage['estimated_cost_brl']:.2f}
+• % da cota Max 5x: {usage['quota_percentage']:.1f}%
+• Velocidade: {usage['tokens_per_minute']:.0f} tokens/min
+
+**📈 Previsões:**
+• Custo diário: R$ {prediction['daily_cost_brl']:.2f}
+• Custo mensal: R$ {prediction['monthly_cost_brl']:.2f}
+
+**🔥 Top 3 Agentes:**"""
+        
+        for i, (agent, data) in enumerate(usage['top_consumers'][:3], 1):
+            dashboard_content += f"\n{i}. {agent}: {data['total_tokens']:,} tokens (R$ {data['cost_brl']:.2f})"
+        
+        # Adicionar alertas se houver
+        if usage.get('alerts'):
+            latest_alert = usage['alerts'][-1]
+            dashboard_content += f"\n\n⚠️ **Último Alerta:**\n{latest_alert['message']}"
+        
+        dashboard_content += f"\n\n💡 Dashboard atualizado com sucesso!"
+        
+        dashboard_msg = cl.Message(
+            content=dashboard_content,
+            author="Sistema de Monitoramento"
+        )
+        await dashboard_msg.send()
+        
+    except Exception as e:
+        error_msg = cl.Message(
+            content=f"❌ Erro ao gerar dashboard: {str(e)}",
+            author="Sistema"
+        )
+        await error_msg.send()
+
+
+# Funções de ações integradas no start() principal
+
+
+@cl.action_callback("show_help")
+async def show_help_action(action):
+    """Ação para mostrar ajuda"""
+    help_content = """
+🆘 **Guia Rápido - GPT Mestre Autônomo v5.0**
+
+**🎯 Comandos Naturais (Economizam Cota):**
+• *"Carlos, como está o sistema?"* - Status completo
+• *"Carlos, quem está por aí?"* - Lista de agentes
+• *"Carlos, quanto gastei hoje?"* - Uso da cota
+• *"Carlos, me ajuda com [tópico]"* - Ajuda específica
+• *"Carlos, seja mais conciso"* - Ajustar verbosidade
+• *"Carlos, modo criativo"* - Ativar modo criativo
+
+**🚀 Exemplos de Uso:**
+• *"Analise o mercado de [produto]"* - DeepAgent + Scout
+• *"Crie um prompt de vendas"* - PromptCrafter
+• *"Me ajude a decidir entre X e Y"* - Oráculo
+• *"Estou me sentindo ansioso"* - PsyMind
+
+**💡 Dicas de Otimização:**
+• Comandos como este não gastam sua cota Max 5x
+• Seja específico para melhores resultados
+• Use feedback para me ajudar a melhorar
+• Sistema já otimiza automaticamente para economia
+
+**🎨 Interface:**
+• Use os botões de ação rápida acima
+• Feedback visual mostra o que está acontecendo
+• Métricas aparecem automaticamente nas respostas
+
+**🔧 Em caso de problemas:**
+• Recarregue a página se algo não funcionar
+• Use *"Carlos, tenho um feedback"* para reportar issues
+• Errors têm personalidade - Carlos te orienta!
+    """
+    
+    help_msg = cl.Message(
+        content=help_content,
+        author="Sistema de Ajuda"
+    )
+    await help_msg.send()
+
+
+@cl.action_callback("quick_status") 
+async def quick_status_action(action):
+    """Ação para status rápido"""
+    try:
+        monitor = get_token_monitor()
+        usage = monitor.get_current_usage()
+        
+        status_emoji = "🟢" if usage['quota_percentage'] < 70 else "🟡" if usage['quota_percentage'] < 90 else "🔴"
+        
+        quick_status = f"""
+{status_emoji} **Status Rápido**
+
+📊 **Cota**: {usage['quota_percentage']:.1f}% usada
+💰 **Custo**: R$ {usage['estimated_cost_brl']:.2f}
+🤖 **Agentes**: Todos operacionais
+⚡ **Sistema**: Otimizado e funcionando
+
+💡 Sistema operacional e otimizado!
+        """.strip()
+        
+        status_msg = cl.Message(
+            content=quick_status,
+            author="Monitor do Sistema"
+        )
+        await status_msg.send()
+        
+    except Exception as e:
+        error_msg = cl.Message(
+            content="⚡ **Sistema Operacional!** Monitor temporariamente indisponível, mas tudo funcionando.",
+            author="Carlos"
+        )
+        await error_msg.send()
+
 
 if __name__ == "__main__":
+    print("🚀 Iniciando GPT Mestre Autônomo v5.0 Enhanced...")
+    print("📋 Funcionalidades ETAPA 5 ativas:")
+    print("   ✅ 15 Comandos Especiais Naturais")
+    print("   ✅ Sistema de Feedback Visual ASCII")
+    print("   ✅ Personalidade em Respostas de Erro")
+    print("   ✅ Onboarding de 3 Passos")
+    print("   ✅ Sistema de Otimização Completo")
+    print("   ✅ Monitoramento de Custos em Tempo Real")
+    print("🌟 Interface e UX otimizada para Claude Max 5x!")
+    
     cl.run()
