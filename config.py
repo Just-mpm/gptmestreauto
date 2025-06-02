@@ -37,11 +37,11 @@ class Config:
     LLM_PROVIDER = os.getenv("LLM_PROVIDER", "gemini").lower()
     
     # === API KEYS ===
-    # Google Gemini (novo padrão) - com fallback para a chave do .env
+    # Google Gemini (novo padrão) - sempre usar variável de ambiente
     GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
     if not GOOGLE_API_KEY and LLM_PROVIDER == "gemini":
-        # Fallback para a chave hardcoded apenas para testes
-        GOOGLE_API_KEY = "AIzaSyDHJrNLA3h-LFg4-urvbEd18Vcdzs-1DYE"
+        print("⚠️ GOOGLE_API_KEY não configurada! Configure no arquivo .env")
+        GOOGLE_API_KEY = None
     
     # Anthropic (mantido para compatibilidade)
     ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")

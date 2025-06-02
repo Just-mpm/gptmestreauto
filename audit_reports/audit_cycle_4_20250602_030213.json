@@ -1,0 +1,656 @@
+{
+  "timestamp": "2025-06-02T03:02:13.538970",
+  "cycle": 4,
+  "stats": {
+    "OK": 45,
+    "WARNING": 29,
+    "ERROR": 6,
+    "FIXED": 0
+  },
+  "fixes_applied": 0,
+  "system_ok": false,
+  "errors": 6,
+  "warnings": 29,
+  "results": [
+    {
+      "category": "file_structure",
+      "item": "app.py",
+      "status": "OK",
+      "message": "Arquivo principal da aplicação encontrado",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "file_structure",
+      "item": "config.py",
+      "status": "OK",
+      "message": "Configurações do sistema encontrado",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "file_structure",
+      "item": "requirements.txt",
+      "status": "OK",
+      "message": "Dependências Python encontrado",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "file_structure",
+      "item": ".env",
+      "status": "OK",
+      "message": "Variáveis de ambiente encontrado",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "file_structure",
+      "item": "chainlit.md",
+      "status": "OK",
+      "message": "Documentação do Chainlit encontrado",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "file_structure",
+      "item": "agents/",
+      "status": "OK",
+      "message": "Diretório de agentes encontrado",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "file_structure",
+      "item": "utils/",
+      "status": "OK",
+      "message": "Diretório de utilitários encontrado",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "file_structure",
+      "item": "memory/",
+      "status": "OK",
+      "message": "Diretório de memória encontrado",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "file_structure",
+      "item": "tests/",
+      "status": "OK",
+      "message": "Diretório de testes encontrado",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "file_structure",
+      "item": "logs/",
+      "status": "OK",
+      "message": "Diretório de logs encontrado",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "imports",
+      "item": "chainlit",
+      "status": "ERROR",
+      "message": "Interface principal FALHA DE IMPORT",
+      "details": "No module named 'chainlit'",
+      "suggested_fix": "pip install chainlit"
+    },
+    {
+      "category": "imports",
+      "item": "google.generativeai",
+      "status": "ERROR",
+      "message": "LLM Gemini FALHA DE IMPORT",
+      "details": "No module named 'google'",
+      "suggested_fix": "pip install google.generativeai"
+    },
+    {
+      "category": "imports",
+      "item": "langchain_google_genai",
+      "status": "ERROR",
+      "message": "LangChain Gemini FALHA DE IMPORT",
+      "details": "No module named 'langchain_google_genai'",
+      "suggested_fix": "pip install langchain_google_genai"
+    },
+    {
+      "category": "imports",
+      "item": "chromadb",
+      "status": "ERROR",
+      "message": "Banco vetorial FALHA DE IMPORT",
+      "details": "No module named 'chromadb'",
+      "suggested_fix": "pip install chromadb"
+    },
+    {
+      "category": "imports",
+      "item": "duckduckgo_search",
+      "status": "ERROR",
+      "message": "Web search FALHA DE IMPORT",
+      "details": "No module named 'duckduckgo_search'",
+      "suggested_fix": "pip install duckduckgo_search"
+    },
+    {
+      "category": "agents",
+      "item": "agents.carlos",
+      "status": "OK",
+      "message": "Carlos Maestro carregado com sucesso",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "agents",
+      "item": "agents.base_agent_v2",
+      "status": "OK",
+      "message": "BaseAgent v2 carregado com sucesso",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "agents",
+      "item": "agents.oraculo_v2",
+      "status": "OK",
+      "message": "Oráculo v9 carregado com sucesso",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "agents",
+      "item": "agents.psymind_v2",
+      "status": "OK",
+      "message": "PsyMind v2 carregado com sucesso",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "agents",
+      "item": "agents.automaster_v2",
+      "status": "OK",
+      "message": "AutoMaster v4 carregado com sucesso",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "agents",
+      "item": "agents.supervisor_ai_v2",
+      "status": "OK",
+      "message": "SupervisorAI v2 carregado com sucesso",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "agents",
+      "item": "agents.deep_agent_v2",
+      "status": "OK",
+      "message": "DeepAgent v2 carregado com sucesso",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "utils",
+      "item": "utils.logger",
+      "status": "OK",
+      "message": "Sistema de logging carregado com sucesso",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "utils",
+      "item": "utils.web_search",
+      "status": "OK",
+      "message": "Web search carregado com sucesso",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "utils",
+      "item": "utils.agent_wake_manager",
+      "status": "OK",
+      "message": "Wake Manager carregado com sucesso",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "utils",
+      "item": "utils.agent_orchestrator",
+      "status": "OK",
+      "message": "Orquestrador carregado com sucesso",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "agents",
+      "item": "BaseAgentV2",
+      "status": "ERROR",
+      "message": "BaseAgent v2 COM PROBLEMAS",
+      "details": "Can't instantiate abstract class BaseAgentV2 without an implementation for abstract method '_processar_interno'",
+      "suggested_fix": null
+    },
+    {
+      "category": "agents",
+      "item": "Carlos",
+      "status": "OK",
+      "message": "Carlos Maestro funcional",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "agents",
+      "item": "Oráculo v9",
+      "status": "OK",
+      "message": "Oráculo v9 criado com sucesso",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "agents",
+      "item": "PsyMind v2",
+      "status": "OK",
+      "message": "PsyMind v2 criado com sucesso",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "agents",
+      "item": "AutoMaster v4",
+      "status": "OK",
+      "message": "AutoMaster v4 criado com sucesso",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "agents",
+      "item": "SupervisorAI v2",
+      "status": "OK",
+      "message": "SupervisorAI v2 criado com sucesso",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "agents",
+      "item": "DeepAgent v2",
+      "status": "OK",
+      "message": "DeepAgent v2 criado com sucesso",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "config",
+      "item": "GOOGLE_API_KEY",
+      "status": "WARNING",
+      "message": "Chave API do Gemini NÃO CONFIGURADA",
+      "details": null,
+      "suggested_fix": "Definir GOOGLE_API_KEY no arquivo .env"
+    },
+    {
+      "category": "config",
+      "item": "LLM_PROVIDER",
+      "status": "WARNING",
+      "message": "Provedor de LLM NÃO CONFIGURADA",
+      "details": null,
+      "suggested_fix": "Definir LLM_PROVIDER no arquivo .env"
+    },
+    {
+      "category": "config",
+      "item": "config.py",
+      "status": "OK",
+      "message": "Arquivo de configuração carregado",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "config",
+      "item": "DEFAULT_MODEL",
+      "status": "OK",
+      "message": "Modelo padrão: models/gemini-2.5-flash-preview-05-20",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "tests",
+      "item": "tests/test_oraculo_migration.py",
+      "status": "OK",
+      "message": "Arquivo de teste encontrado",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "tests",
+      "item": "tests/test_oraculo_migration.py_content",
+      "status": "OK",
+      "message": "Testes válidos encontrados",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "tests",
+      "item": "tests/test_psymind_migration.py",
+      "status": "OK",
+      "message": "Arquivo de teste encontrado",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "tests",
+      "item": "tests/test_psymind_migration.py_content",
+      "status": "OK",
+      "message": "Testes válidos encontrados",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "tests",
+      "item": "tests/test_automaster_migration.py",
+      "status": "OK",
+      "message": "Arquivo de teste encontrado",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "tests",
+      "item": "tests/test_automaster_migration.py_content",
+      "status": "OK",
+      "message": "Testes válidos encontrados",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "tests",
+      "item": "tests/test_supervisor_migration.py",
+      "status": "OK",
+      "message": "Arquivo de teste encontrado",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "tests",
+      "item": "tests/test_supervisor_migration.py_content",
+      "status": "OK",
+      "message": "Testes válidos encontrados",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "tests",
+      "item": "tests/test_deepagent_migration.py",
+      "status": "OK",
+      "message": "Arquivo de teste encontrado",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "tests",
+      "item": "tests/test_deepagent_migration.py_content",
+      "status": "OK",
+      "message": "Testes válidos encontrados",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "memory",
+      "item": "chroma_db",
+      "status": "OK",
+      "message": "Diretório ChromaDB encontrado",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "memory",
+      "item": "vector_store",
+      "status": "OK",
+      "message": "Sistema de memória vetorial funcional",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "memory",
+      "item": "cache_manager",
+      "status": "OK",
+      "message": "Cache manager funcional",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "logging",
+      "item": "logger",
+      "status": "OK",
+      "message": "Sistema de logging funcional",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "logging",
+      "item": "logs_dir",
+      "status": "OK",
+      "message": "Diretório de logs encontrado",
+      "details": null,
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_config.py",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./config.py",
+      "details": "Padrão encontrado: API_KEY",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_EXECUTE.md",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./EXECUTE.md",
+      "details": "Padrão encontrado: API_KEY",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_system_audit.py",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./system_audit.py",
+      "details": "Padrão encontrado: sk-",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_system_audit.py",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./system_audit.py",
+      "details": "Padrão encontrado: API_KEY",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_system_audit.py",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./system_audit.py",
+      "details": "Padrão encontrado: SECRET",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_system_audit.py",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./system_audit.py",
+      "details": "Padrão encontrado: PASSWORD",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_base_agent_v2.py",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./agents/base_agent_v2.py",
+      "details": "Padrão encontrado: API_KEY",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_carlos.py",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./agents/carlos.py",
+      "details": "Padrão encontrado: API_KEY",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_deep_agent_v2.py",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./agents/deep_agent_v2.py",
+      "details": "Padrão encontrado: API_KEY",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_config_fallback.py",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./archive/config_fallback.py",
+      "details": "Padrão encontrado: API_KEY",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_ANALISE_GEMINI_2.5_FLASH.md",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./archive/docs/ANALISE_GEMINI_2.5_FLASH.md",
+      "details": "Padrão encontrado: API_KEY",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_GEMINI_MIGRATION_GUIDE.md",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./archive/docs/GEMINI_MIGRATION_GUIDE.md",
+      "details": "Padrão encontrado: API_KEY",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_MIGRATION_SUMMARY.md",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./archive/docs/MIGRATION_SUMMARY.md",
+      "details": "Padrão encontrado: API_KEY",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_audit_cycle_1_20250602_030206.json",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./audit_reports/audit_cycle_1_20250602_030206.json",
+      "details": "Padrão encontrado: sk-",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_audit_cycle_1_20250602_030206.json",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./audit_reports/audit_cycle_1_20250602_030206.json",
+      "details": "Padrão encontrado: API_KEY",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_audit_cycle_1_20250602_030206.json",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./audit_reports/audit_cycle_1_20250602_030206.json",
+      "details": "Padrão encontrado: SECRET",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_audit_cycle_1_20250602_030206.json",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./audit_reports/audit_cycle_1_20250602_030206.json",
+      "details": "Padrão encontrado: PASSWORD",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_audit_cycle_2_20250602_030208.json",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./audit_reports/audit_cycle_2_20250602_030208.json",
+      "details": "Padrão encontrado: sk-",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_audit_cycle_2_20250602_030208.json",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./audit_reports/audit_cycle_2_20250602_030208.json",
+      "details": "Padrão encontrado: API_KEY",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_audit_cycle_2_20250602_030208.json",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./audit_reports/audit_cycle_2_20250602_030208.json",
+      "details": "Padrão encontrado: SECRET",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_audit_cycle_2_20250602_030208.json",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./audit_reports/audit_cycle_2_20250602_030208.json",
+      "details": "Padrão encontrado: PASSWORD",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_audit_cycle_3_20250602_030211.json",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./audit_reports/audit_cycle_3_20250602_030211.json",
+      "details": "Padrão encontrado: sk-",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_audit_cycle_3_20250602_030211.json",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./audit_reports/audit_cycle_3_20250602_030211.json",
+      "details": "Padrão encontrado: API_KEY",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_audit_cycle_3_20250602_030211.json",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./audit_reports/audit_cycle_3_20250602_030211.json",
+      "details": "Padrão encontrado: SECRET",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_audit_cycle_3_20250602_030211.json",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./audit_reports/audit_cycle_3_20250602_030211.json",
+      "details": "Padrão encontrado: PASSWORD",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_conftest.py",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./tests/conftest.py",
+      "details": "Padrão encontrado: API_KEY",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": "exposed_key_llm_factory.py",
+      "status": "WARNING",
+      "message": "Possível chave exposta em ./utils/llm_factory.py",
+      "details": "Padrão encontrado: API_KEY",
+      "suggested_fix": null
+    },
+    {
+      "category": "security",
+      "item": ".env",
+      "status": "OK",
+      "message": "Arquivo .env encontrado (configurações seguras)",
+      "details": null,
+      "suggested_fix": null
+    }
+  ]
+}
