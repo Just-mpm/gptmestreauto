@@ -362,8 +362,8 @@ async def stop():
             f"{user_session.message_count} mensagens, {duration.total_seconds():.0f}s"
         )
         
-        # Limpar sessão
-        del user_sessions[session_id]
+        # Não deletar a sessão imediatamente - manter para próximas interações
+        # del user_sessions[session_id]
     
     # Não limpar carlos_instance - pode ser usado por outras sessões
 

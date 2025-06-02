@@ -484,6 +484,55 @@ class CarlosMaestroV5(BaseAgentV2):
             except ImportError:
                 logger.warning("⚠️ PromptCrafter v2.0 não disponível")
                 self.promptcrafter_ativo = False
+        
+        # Registrar todos os agentes no AgentWakeManager
+        self._registrar_agentes_wake_manager()
+    
+    def _registrar_agentes_wake_manager(self):
+        """Registra todos os agentes ativos no AgentWakeManager"""
+        try:
+            from utils.agent_wake_manager import get_wake_manager
+            wake_manager = get_wake_manager()
+            
+            # Registrar agentes ativos
+            agentes_registrados = []
+            
+            if self.supervisor_ativo and hasattr(self, 'supervisor'):
+                wake_manager.register_agent("supervisor", self.supervisor)
+                agentes_registrados.append("supervisor")
+            
+            if self.reflexor_ativo and hasattr(self, 'reflexor'):
+                wake_manager.register_agent("reflexor", self.reflexor)
+                agentes_registrados.append("reflexor")
+            
+            if self.deepagent_ativo and hasattr(self, 'deepagent'):
+                wake_manager.register_agent("deepagent", self.deepagent)
+                agentes_registrados.append("deepagent")
+            
+            if self.oraculo_ativo and hasattr(self, 'oraculo'):
+                wake_manager.register_agent("oraculo", self.oraculo)
+                agentes_registrados.append("oraculo")
+            
+            if self.automaster_ativo and hasattr(self, 'automaster'):
+                wake_manager.register_agent("automaster", self.automaster)
+                agentes_registrados.append("automaster")
+            
+            if self.taskbreaker_ativo and hasattr(self, 'taskbreaker'):
+                wake_manager.register_agent("taskbreaker", self.taskbreaker)
+                agentes_registrados.append("taskbreaker")
+            
+            if self.psymind_ativo and hasattr(self, 'psymind'):
+                wake_manager.register_agent("psymind", self.psymind)
+                agentes_registrados.append("psymind")
+            
+            if self.promptcrafter_ativo and hasattr(self, 'promptcrafter'):
+                wake_manager.register_agent("promptcrafter", self.promptcrafter)
+                agentes_registrados.append("promptcrafter")
+            
+            logger.info(f"🤖 Agentes registrados no WakeManager: {', '.join(agentes_registrados)}")
+            
+        except Exception as e:
+            logger.warning(f"⚠️ Falha ao registrar agentes no WakeManager: {e}")
     
     def _processar_interno(self, mensagem: str, contexto: Optional[Dict] = None) -> str:
         """
@@ -1792,7 +1841,19 @@ def criar_carlos_maestro(modo_proativo: bool = True, **kwargs) -> CarlosMaestroV
     # Combinar com kwargs restantes
     config_carlos.update(kwargs)
     
-    return CarlosMaestroV5(**config_carlos)
+    # Criar instância do Carlos
+    carlos = CarlosMaestroV5(**config_carlos)
+    
+    # Registrar Carlos no AgentWakeManager
+    try:
+        from utils.agent_wake_manager import get_wake_manager
+        wake_manager = get_wake_manager()
+        wake_manager.register_agent("carlos", carlos)
+        logger.info("🤖 Carlos registrado no AgentWakeManager")
+    except Exception as e:
+        logger.warning(f"⚠️ Falha ao registrar Carlos no WakeManager: {e}")
+    
+    return carlos
 
 # Alias para compatibilidade e novas versões
 create_carlos = criar_carlos_maestro
